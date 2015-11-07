@@ -2,8 +2,8 @@ import React from 'react'
 import { IndexRoute, Router, Route, Link, Redirect } from 'react-router'
 
 // Route components
-import Application from './Application.jsx'
-import Index from './Index.jsx'
+import Application from './layout/Application.jsx'
+import Index from './states/Index.jsx'
 
 import { createHistory } from 'history'
 
