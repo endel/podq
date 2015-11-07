@@ -112,9 +112,7 @@ gulp.task('images', function () {
 });
 
 gulp.task('fonts', function () {
-  return gulp.src(require('main-bower-files')({
-    filter: '**/*.{eot,svg,ttf,woff,woff2}'
-  }).concat('app/fonts/**/*'))
+  return gulp.src('app/fonts/**/*')
     .pipe(gulp.dest('.tmp/fonts'))
     .pipe(gulp.dest('../public/fonts'));
 });
