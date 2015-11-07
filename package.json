@@ -1,6 +1,9 @@
 {
   "scripts": {
     "postinstall": "npm --prefix ./frontend install && ./frontend/node_modules/gulp/bin/gulp.js --cwd ./frontend build"
+  },
+  "engines": {
+    "node": "4.1.1"
   }
 }
 
