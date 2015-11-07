@@ -32,6 +32,10 @@ FONT_SMALL = 1em
     display table
     clear both
 
+body, input, button, select, textarea
+  font-family 'Open Sans', sans-serif
+  font-size 10px
+
 html
   height 100%
 
@@ -39,9 +43,7 @@ body
   margin 0
   height 100%
   background-color $primary_color1
-  font-family 'Open Sans', sans-serif
   color $font_color3
-  font-size 10px
 
 .headline-1
   font-size 4.2em
@@ -61,5 +63,6 @@ body
 @import "sidebar.styl"
 @import 'states/browse'
 @import "components/audio-player.styl"
+@import "components/profile-widget.styl"
 @import 'components/item'
 @import 'components/cover'
