@@ -33,6 +33,9 @@ gem 'spring',        group: :development
 
 gem 'puma'
 
+# we should get rid of these:
+gem 'coffee_script'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
