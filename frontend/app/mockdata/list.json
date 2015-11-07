@@ -1,0 +1,34 @@
+{
+  "list": [
+    {
+      "id": "1",
+      "name": "Podcast A",
+      "feed": "dummy.xml",
+      "image": "http://romhustler.net/img/screenshots/mame_new/ingame/sf2cejb.png"
+    },
+    {
+      "id": "2",
+      "name": "Podcast B",
+      "feed": "dummy.xml",
+      "image": "http://romhustler.net/img/screenshots/mame_new/ingame/sf2cejb.png"
+    },
+    {
+      "id": "3",
+      "name": "Podcast C",
+      "feed": "dummy.xml",
+      "image": "http://romhustler.net/img/screenshots/mame_new/ingame/sf2cejb.png"
+    },
+    {
+      "id": "4",
+      "name": "Podcast D",
+      "feed": "dummy.xml",
+      "image": "http://romhustler.net/img/screenshots/mame_new/ingame/sf2cejb.png"
+    },
+    {
+      "id": "5",
+      "name": "Podcast E",
+      "feed": "dummy.xml",
+      "image": "http://romhustler.net/img/screenshots/mame_new/ingame/sf2cejb.png"
+    }
+  ]
+}
