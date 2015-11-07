@@ -9,7 +9,7 @@ class FeedWorker
     xml_feed = Feedjira::Feed.parse(xml)
 
     num_audio_matches = xml.scan(/\.#{AUDIO_FORMATS}/).length
-    if num_audio_matches < xml_feed.entries.length
+    if num_audio_matches < (xml_feed.entries.length / 2) # a high amount of mp3 shall be found
       logger.info("STATS: #{num_audio_matches} / #{xml_feed.entries.length}")
       raise 'invalid RSS file'
     end
@@ -47,6 +47,9 @@ class FeedWorker
         entry.audio_url = entry.image
         entry.image = nil
       end
+
+      # skip if can't find audio_url
+      next unless entry.audio_url
 
       entry.save
     end
