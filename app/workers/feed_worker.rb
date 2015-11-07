@@ -33,7 +33,7 @@ class FeedWorker
     xml_feed.entries.each do |xml_entry|
       keywords = xml_entry.try(:categories) || xml_entry.try(:itunes_keywords)
 
-      entry = Entry.find_or_create_by(permalink: xml_entry.url)
+      entry = Entry.find_or_create_by(permalink: Feed.normalize_url(xml_entry.url))
       entry.feed_id = feed._id
       entry.published = xml_entry.published
       entry.title = xml_entry.title
