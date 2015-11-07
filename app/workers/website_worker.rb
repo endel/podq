@@ -16,9 +16,9 @@ class WebsiteWorker
     #
     if (data = html.scan(/property=["|']og:(.*)["|'].*content=["|'](.*)["|']/))
       og = OpenStruct.new(Hash[ data ])
-      feed.title = og.title.strip unless feed.title
-      feed.description = og.description.strip unless feed.description
-      feed.image = og.image unless feed.image
+      feed.title = og.title.strip if !feed.title && og.title
+      feed.description = og.description.strip if !feed.description && og.description
+      feed.image = og.image if !feed.image && og.image
 
       if !feed.language && feed.description
         cld = CLD.detect_language(ActionView::Base.full_sanitizer.sanitize(feed.description))

@@ -5,7 +5,14 @@ class FeedsController < ApplicationController
     render json: { success: true }
   end
 
-  def search
+  def index
+    query = Feed.criteria
+
+    if params[:search]
+      query = query.where(:$text => { :$search => params[:search] })
+    end
+
+    render json: query
   end
 
 end

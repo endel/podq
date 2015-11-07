@@ -5,6 +5,12 @@ class Feed
   include Mongoid::Timestamps::Created
   include Mongoid::Timestamps::Updated
 
+  has_many :entries
+
+  # run 'rake db:mongoid:create_indexes' to create indexes
+  index({ permalink: 1 }, { unique: true, background: true })
+  index({ keywords: "text", description: "text" }, { default_language: "english", language_override: "english" })
+
   # Identifier
   field :permalink, type: String
   field :url, type: String
@@ -18,10 +24,6 @@ class Feed
   field :author, type: String
   field :language, type: String
   field :keywords, type: Array
-
-  # run 'rake db:mongoid:create_indexes' to create indexes
-  index({ permalink: 1 }, { unique: true, background: true })
-  index({ keywords: "text" })
 
   def self.normalize_url(url)
     Addressable::URI.parse(url.gsub('https://', 'http://')).normalize
