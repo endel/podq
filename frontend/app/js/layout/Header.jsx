@@ -7,9 +7,8 @@ import SearchBar from '../components/SearchBar.jsx'
 export default class Header extends React.Component {
 
   render () {
-    return <header class="main-header">
-      Header
-      <img class="logo" />
+    return <header className="main-header">
+      <span className="main-logo" />
       <SearchBar />
       <ProfileWidget />
     </header>
