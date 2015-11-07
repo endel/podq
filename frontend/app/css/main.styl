@@ -19,10 +19,20 @@ $font_color2 = #aeafad
 // Light font color. Used for dark backgrounds. e.g state
 $font_color3 = #d2d2d2
 
-@import 'components/item'
-@import 'components/cover'
+$layout_border_color = #181818
+
+.clearfix
+  &::before, &::after
+    content ""
+    display table
+    clear both
+
+html
+  height 100%
 
 body
+  margin 0
+  height 100%
   background-color $primary_color1
   font-family 'Open Sans', sans-serif
   color $font_color3
@@ -30,3 +40,20 @@ body
 
 .headline-1
   font-size 4.2em
+
+.app-container
+  height 100%
+
+.state-container
+  float left
+  width calc(100% - 251px)
+
+.headline-1
+  font-size 4.2em
+
+
+@import "header.styl"
+@import "sidebar.styl"
+@import "components/audio-player.styl"
+@import 'components/item'
+@import 'components/cover'

@@ -7,6 +7,8 @@ gem 'sass-rails', '~> 5.0.3'
 gem 'uglifier', '>= 1.3.0'
 
 gem 'databound', '3.1.3'
+gem 'cld', '~> 0.7.0'
+gem 'sidekiq-unique-jobs', '~> 4.0.8'
 
 gem 'omniauth'
 gem 'omniauth-twitter'

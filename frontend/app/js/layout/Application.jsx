@@ -14,12 +14,13 @@ export default class Application extends React.Component {
   }
 
   render () {
-    return <div>
+    return <div className="app-container">
       <Header />
       <Sidebar />
-      <main>
+      <main className="state-container">
         {this.props.children}
       </main>
+      <div className="clearfix" />
       <AudioPlayer />
     </div>
   }

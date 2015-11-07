@@ -1,0 +1,26 @@
+.main-header
+  background-color $primary_color2
+  height 55px
+  border-bottom 1px solid $layout_border_color
+
+  .main-logo
+    margin 14px
+    float left
+
+  .main-search
+    float left
+
+  .profile-widget
+    float right
+    width 180px
+    height 100%
+    border-left 1px solid $layout_border_color
+
+  &::before, &::after
+    content ""
+    display table
+    clear both
+
+.main-logo
+  sprite($logo)
+  display block
