@@ -18,8 +18,8 @@ class FeedWorker
 
     feed = Feed.find_or_create_by(permalink: Feed.normalize_url(xml_feed.url))
     feed.url = xml_feed.try(:itunes_new_feed_url) || feed_url
-    feed.title = xml_feed.title if xml_feed.try(:title)
-    feed.description = xml_feed.description if xml_feed.try(:description)
+    feed.title = xml_feed.title.strip if xml_feed.try(:title)
+    feed.description = xml_feed.description.strip if xml_feed.try(:description)
     feed.language = xml_feed.language if xml_feed.try(:language)
     feed.keywords = (keywords and sanitize_keywords(keywords))
     feed.image = xml_feed.itunes_image if xml_feed.try(:itunes_image)
@@ -38,7 +38,7 @@ class FeedWorker
       entry.published = xml_entry.published
       entry.title = xml_entry.title
       entry.description = xml_entry.try(:content) || xml_entry.try(:summary)
-      entry.keywords = keywords and sanitize_keywords(keywords)
+      entry.keywords = (keywords and sanitize_keywords(keywords))
       entry.audio_url = xml_entry.try(:enclosure_url)
       entry.image = xml_entry.try(:itunes_image) || xml_entry.try(:image)
 
@@ -51,6 +51,7 @@ class FeedWorker
       entry.save
     end
 
+    true
   end
 
   def sanitize_keywords(keywords)
