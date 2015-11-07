@@ -4,6 +4,7 @@ import { IndexRoute, Router, Route, Link, Redirect } from 'react-router'
 // Route components
 import Application from './layout/Application.jsx'
 import Index from './states/Index.jsx'
+import Browse from './states/Browse.jsx'
 
 import { createHistory } from 'history'
 
@@ -13,7 +14,7 @@ var container = document.getElementsByTagName('body')[0]
 React.render((
   <Router history={appHistory}>
     <Route path="/" component={Application}>
-      <IndexRoute component={Index} />
+      <IndexRoute component={Browse} />
 
       {/*<Route path="lobby" component={Lobby} />*/}
       {/*<Route path="watch" component={Watch} />*/}

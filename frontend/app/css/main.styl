@@ -19,7 +19,6 @@ $font_color2 = #aeafad
 // Light font color. Used for dark backgrounds. e.g state
 $font_color3 = #d2d2d2
 
-
 $layout_border_color = #181818
 
 .clearfix
@@ -39,6 +38,9 @@ body
   color $font_color3
   font-size 10px
 
+.headline-1
+  font-size 4.2em
+
 .app-container
   height 100%
 
@@ -49,7 +51,9 @@ body
 .headline-1
   font-size 4.2em
 
+
 @import "header.styl"
 @import "sidebar.styl"
-@import "audio-player.styl"
-
+@import "components/audio-player.styl"
+@import 'components/item'
+@import 'components/cover'
