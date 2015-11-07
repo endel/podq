@@ -49,7 +49,7 @@ gulp.task('sprites', function() {
     // Pipe image stream
     spriteData.img
       .pipe(gulp.dest('.tmp/images'))
-      .pipe(gulp.dest('dist/images'))
+      .pipe(gulp.dest('../public/images'))
 
     // Pipe CSS stream
     spriteData.css
@@ -71,7 +71,7 @@ gulp.task('javascript', function () {
       console.log(error.stack);
       this.emit('end');
     })
-    .pipe(gulp.dest('dist/js'))
+    .pipe(gulp.dest('../public/js'))
     .pipe($.sourcemaps.init())
     // .pipe($.uglify())
     .pipe($.sourcemaps.write('.'))
@@ -96,7 +96,7 @@ gulp.task('html', ['stylesheet'], function () {
     .pipe(assets.restore())
     .pipe($.useref())
     .pipe($.if('*.html', $.minifyHtml({conditionals: true, loose: true})))
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('../public'));
 });
 
 gulp.task('images', function () {
@@ -108,7 +108,7 @@ gulp.task('images', function () {
       // as hooks for embedding and styling
       svgoPlugins: [{cleanupIDs: false}]
     })))
-    .pipe(gulp.dest('dist/images'));
+    .pipe(gulp.dest('../public/images'));
 });
 
 gulp.task('fonts', function () {
@@ -116,7 +116,7 @@ gulp.task('fonts', function () {
     filter: '**/*.{eot,svg,ttf,woff,woff2}'
   }).concat('app/fonts/**/*'))
     .pipe(gulp.dest('.tmp/fonts'))
-    .pipe(gulp.dest('dist/fonts'));
+    .pipe(gulp.dest('../public/fonts'));
 });
 
 gulp.task('extras', function () {
@@ -125,10 +125,10 @@ gulp.task('extras', function () {
     '!app/*.html'
   ], {
     dot: true
-  }).pipe(gulp.dest('dist'));
+  }).pipe(gulp.dest('../public'));
 });
 
-gulp.task('clean', require('del').bind(null, ['.tmp', 'dist']));
+gulp.task('clean', require('del').bind(null, ['.tmp', '../public']));
 
 gulp.task('serve', ['stylesheet', 'javascript', 'fonts'], function () {
   browserSync({
@@ -156,16 +156,6 @@ gulp.task('serve', ['stylesheet', 'javascript', 'fonts'], function () {
   gulp.watch('bower.json', ['wiredep', 'fonts']);
 });
 
-gulp.task('serve:dist', function () {
-  browserSync({
-    notify: false,
-    port: 9000,
-    server: {
-      baseDir: ['dist']
-    }
-  });
-});
-
 // inject bower components
 gulp.task('wiredep', function () {
   var wiredep = require('wiredep').stream;
@@ -184,8 +174,8 @@ gulp.task('wiredep', function () {
     .pipe(gulp.dest('app'));
 });
 
-gulp.task('build', ['jshint', 'javascript', 'stylesheet', 'html', 'images', 'fonts', 'extras'], function () {
-  return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
+gulp.task('build', ['javascript', 'stylesheet', 'html', 'images', 'fonts', 'extras'], function () {
+  return gulp.src('../public/**/*').pipe($.size({title: 'build', gzip: true}));
 });
 
 gulp.task('default', ['clean'], function () {
