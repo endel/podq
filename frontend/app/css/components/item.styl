@@ -1,19 +1,37 @@
+SIZE = 160px
+
 .item
-  width 100px
-  height 100px
-  margin-bottom 10px
+  width SIZE
+  height SIZE
+  margin-bottom DEFAULT_MARGIN
+  margin-right DEFAULT_MARGIN
+  float left
+
+  .cover
+    width SIZE
+    height SIZE
 
   .icon
     position absolute
-    width 50px
-    height 50px
+    width SIZE
+    height SIZE
     z-index 1
 
     .icon-img
       position absolute
       top 50%
       left 50%
-      opacity 0.75
+      width auto
+      height 100%
+      transform translate(-50%, -50%)
 
       path
         fill #FFFFFF
+
+.item.entry
+  .icon
+    display block
+
+.item.feed
+  .icon
+    display none

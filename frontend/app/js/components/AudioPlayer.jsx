@@ -10,7 +10,6 @@ export default class AudioPlayer  extends React.Component {
       position: 0
     };
 
-
     Notifier.get('main').on('play', this.onAudioSelect.bind(this));
   }
 

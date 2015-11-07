@@ -13,10 +13,12 @@ export default class Item extends React.Component {
   }
 
   render() {
+    var type = this.props.data.audio ? 'entry' : 'feed';
+    var className = type ? `item ${type}` : 'item';
     return (
-      <div className="item" onClick={this.handleClick.bind(this)}>
+      <div className={className} onClick={this.handleClick.bind(this)}>
         <div className="icon">
-          <img className="icon-img" src="svg/icon-play.svg" width="50px" height="50px"/>
+          <img className="icon-img" src="svg/play.svg"/>
         </div>
         <Cover src={this.props.data.image} />
       </div>
