@@ -1,0 +1,77 @@
+.profile-widget
+  position relative
+
+  .profile-widget-button
+    border none
+    background none
+    cursor pointer
+    text-align center
+    padding 0 20px
+    height 100%
+    &:hover
+      background $primary_color1
+
+      .profile-name
+        color $font_color3
+
+
+  .profile-avatar
+    width 27px
+    height 27px
+    border-radius 50%
+    vertical-align middle
+    margin-right 10px
+
+  .profile-name, .profile-login, .profile-logging
+    font-size 1.4em
+    color $font_color2
+
+  &-opened
+
+    .profile-auth-phase
+      display block
+
+    .profile-widget-button
+      &::after
+        content ""
+        width 100%
+        height 1px
+        background $primary_color2
+        position absolute
+        left 0
+        bottom -1px
+        z-index 1
+
+      &:hover::after
+        background-color $primary_color1
+
+.profile-auth-phase
+  display none
+  position absolute
+  right 0
+  top 100%
+  background $primary_color2
+  border 1px solid $layout_border_color
+  width 500px
+  height 300px
+  text-align center
+
+  .profile-signin-button
+    border none
+    width 150px
+    height 50px
+    line-height 50px
+    font-size 2em
+    color #FFF
+    margin 10px
+    cursor pointer
+
+  .profile-facebook-signin
+    background-color #395697
+    &:hover
+      background-color darken(#395697, 5)
+
+  .profile-twitter-signin
+    background-color #55acee
+    &:hover
+      background-color darken(#55acee, 5)
