@@ -6,6 +6,7 @@ gem 'rails_12factor', group: :production
 gem 'sass-rails', '~> 5.0.3'
 gem 'uglifier', '>= 1.3.0'
 
+gem 'addressable', '~> 2.3.8'
 gem 'databound', '3.1.3'
 gem 'cld', '~> 0.7.0'
 gem 'sidekiq-unique-jobs', '~> 4.0.8'
@@ -31,6 +32,9 @@ gem 'dotenv-rails', :groups => [:development, :test]
 gem 'spring',        group: :development
 
 gem 'puma'
+
+# we should get rid of these:
+gem 'coffee-script', '~> 2.4.1'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

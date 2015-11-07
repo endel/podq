@@ -1,3 +1,5 @@
+require 'addressable/uri'
+
 class Feed
   include Mongoid::Document
   include Mongoid::Timestamps::Created
@@ -21,9 +23,8 @@ class Feed
   index({ permalink: 1 }, { unique: true, background: true })
   index({ keywords: "text" })
 
-  def before_save
-    # convert https to http
-    self.permalink = self.permalink.gsub('https://', 'http://')
+  def self.normalize_url(url)
+    Addressable::URI.parse(url.gsub('https://', 'http://')).normalize
   end
 
 end
