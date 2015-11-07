@@ -8,14 +8,15 @@ class FeedWorker
     xml = Faraday.get(feed_url).body
     xml_feed = Feedjira::Feed.parse(xml)
 
-    num_audio_matches = xml.match(/\.#{AUDIO_FORMATS}/).length
+    num_audio_matches = xml.scan(/\.#{AUDIO_FORMATS}/).length
     if num_audio_matches < xml_feed.entries.length
+      logger.info("STATS: #{num_audio_matches} / #{xml_feed.entries.length}")
       raise 'invalid RSS file'
     end
 
     keywords = xml_feed.try(:categories) || xml_feed.try(:itunes_categories)
 
-    feed = Feed.find_or_create_by(permalink: xml_feed.url)
+    feed = Feed.find_or_create_by(permalink: Feed.normalize_url(xml_feed.url))
     feed.url = xml_feed.try(:itunes_new_feed_url) || feed_url
     feed.title = xml_feed.title if xml_feed.try(:title)
     feed.description = xml_feed.description if xml_feed.try(:description)
@@ -42,7 +43,7 @@ class FeedWorker
       entry.image = xml_entry.try(:itunes_image) || xml_entry.try(:image)
 
       # entry image
-      if !entry.audio_url && entry.image.match(/#{AUDIO_FORMATS}$/)
+      if !entry.audio_url && entry.image && entry.image.match(/#{AUDIO_FORMATS}$/)
         entry.audio_url = entry.image
         entry.image = nil
       end

@@ -36,6 +36,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    addressable (2.3.8)
     arel (6.0.3)
     bson (3.2.6)
     bson_ext (1.5.1)
@@ -215,6 +216,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  addressable (~> 2.3.8)
   bson_ext
   cld (~> 0.7.0)
   databound (= 3.1.3)

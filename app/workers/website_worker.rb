@@ -3,7 +3,7 @@ class WebsiteWorker
   sidekiq_options unique: :until_and_while_executing
 
   def perform(permalink, update_feed = false)
-    feed = Feed.find_or_create_by(permalink: permalink)
+    feed = Feed.find_or_create_by(permalink: Feed.normalize_url(permalink))
     html = Faraday.get(feed.permalink).body
 
     #
@@ -26,16 +26,20 @@ class WebsiteWorker
     #
     # enqueue FeedWorker
     #
-    unless update_feed
+    if update_feed
       feed_tags = html.scan(/<link(.*)type=["|']application\/(rss|atom)\+xml["|']([^>]+)?>/)
-      feed_tags.each do |(link_tag, type, _)|
 
-        if (match_href = link_tag.match(/href=["|']([^"|']+)["|']/))
-          # try to download & index all entries from all RSS links
-          # feeds without audio files will be considered invalid
-          FeedWorker.perform_async(match_href[1])
+      feed_tags.each do |data|
+        if (href = data.select {|d| d.index('href=') != nil }[0])
+          if (feed_url = href.match(/href=["|']([^"|']+)["|']/)[1])
+            # append base url on feed url, if needed
+            feed_url = "#{permalink}#{feed_url}" unless feed_url.index(/https?:\/\//)
+
+            # try to download & index all entries from all RSS links
+            # feeds without audio files will be considered invalid
+            FeedWorker.perform_async(feed_url)
+          end
         end
-
       end
 
     end
