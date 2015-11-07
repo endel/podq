@@ -1,2 +1,3 @@
-class Widget < ActiveRecord::Base
+class Widget
+  include Mongoid::Document
 end
