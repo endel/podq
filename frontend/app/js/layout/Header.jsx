@@ -7,7 +7,7 @@ import SearchBar from '../components/SearchBar.jsx'
 export default class Header extends React.Component {
 
   render () {
-    return <header>
+    return <header class="main-header">
       Header
       <img class="logo" />
       <SearchBar />
