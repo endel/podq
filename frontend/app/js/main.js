@@ -11,6 +11,7 @@ import SearchResults from './states/SearchResults.jsx'
 import UserSubscriptions from './states/UserSubscriptions.jsx'
 
 import app from './app';
+require('whatwg-fetch')
 
 window.BACKEND_ENDPOINT = (process.env.RAILS_ENV)
   ? `http://webstdio.r15.railsrumble.com`
