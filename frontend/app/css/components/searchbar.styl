@@ -1,0 +1,89 @@
+.main-search
+
+  position relative
+  margin-top 14px
+  margin-left 10px
+
+  &::before
+    content ""
+    display block
+    sprite($search_icon)
+    position absolute
+    top 6px
+    left 8px
+
+
+  input[type=search]
+    width 250px
+    height 27px
+    vertical-align middle
+    border-radius 10px
+    border none
+    background-color $primary_color4
+    font-size 1.4em
+    color $font_color1
+    padding-left 30px
+
+    &::-webkit-input-placeholder
+      color $font_color1
+
+.main-search-results
+
+  display none
+  position absolute
+  z-index 2
+  top 100%
+  margin-top 10px
+  left 0
+  width 100%
+  background $primary_color1
+
+  &.opened
+    display block
+
+  .result-section
+    margin 10px
+
+    h3
+      margin 0
+      font-size 1.4em
+      color $font_color2
+
+  ul
+    list-style none
+    padding 0
+    margin 0
+
+  .result-item
+    height 50px
+    background $primary_color2
+
+  .result-picture
+    position relative
+    width 50px
+    height 50px
+    margin-right 10px
+    overflow hidden
+    display inline-block
+    vertical-align middle
+
+    img
+      position absolute
+      width auto
+      height 100%
+      left 50%
+      top 50%
+      transform translate(-50%, -50%)
+
+  .result-info
+    display inline-block
+    vertical-align middle
+    width calc(100% - 66px)
+    h4
+      margin 0
+    span, h4
+      display block
+      overflow hidden
+      text-overflow ellipsis
+      white-space nowrap
+
