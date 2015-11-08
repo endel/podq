@@ -51,7 +51,7 @@ export default class Feed extends React.Component {
     return (
       <section className='section'>
         <h1>
-          {this.state.feed.title} <SubscribeButton feed_id={ this.state.feed._id } />
+          {this.state.feed.title} <SubscribeButton feed={ this.state.feed } />
         </h1>
         <p>
           {this.state.feed.description} <br/ >

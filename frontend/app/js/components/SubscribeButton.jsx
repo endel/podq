@@ -6,13 +6,13 @@ import Session from '../tools/Session'
 export default class SubscribeButton extends React.Component {
 
   handleClick(e) {
-    var feed_id = this.props.feed_id
-      , following = Session.isFollowing(feed_id)
+    var feed = this.props.feed
+      , following = Session.isFollowing(feed)
 
     if (following) {
-      Session.unfollow(feed_id)
+      Session.unfollow(feed)
     } else {
-      Session.follow(feed_id)
+      Session.follow(feed)
     }
 
     this.setState({ following: !following })
@@ -21,8 +21,8 @@ export default class SubscribeButton extends React.Component {
   render() {
     var result = null
 
-    if (this.props.feed_id) {
-      var isFollowing = Session.isFollowing(this.props.feed_id)
+    if (this.props.feed._id) {
+      var isFollowing = Session.isFollowing(this.props.feed)
 
       result = <button onClick={this.handleClick.bind(this)}
                        className={classNames({

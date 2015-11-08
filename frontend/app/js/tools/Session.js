@@ -1,10 +1,16 @@
 class Session {
 
   constructor () {
+    this.onChangeCallback = null
+
     this.data = JSON.parse(localStorage.getItem('session')) || {
       name: null,
       following: []
     };
+  }
+
+  onChange (fn) {
+    this.onChangeCallback = fn
   }
 
   isLogged () {
@@ -16,17 +22,24 @@ class Session {
     localStorage.setItem('session', this.data)
   }
 
-  isFollowing (feed_id) {
-    return (this.data && this.data.following && this.data.following.indexOf(feed_id) >= 0)
+  isFollowing (feed_to_check) {
+    return this.data.following.filter((feed) => {
+      return feed._id == feed_to_check._id
+    }).length > 0
   }
 
-  follow (feed_id) {
-    this.data.following.push(feed_id)
+  follow (feed_to_follow) {
+    this.data.following.push({
+      _id: feed_to_follow._id,
+      title: feed_to_follow.title
+    })
     this.sync()
   }
 
-  unfollow (feed_id) {
-    this.data.following.splice(this.data.following.indexOf(feed_id), 1)
+  unfollow (feed_to_unfollow) {
+    this.data.following = this.data.following.filter((feed) => {
+      return feed._id !== feed_to_unfollow._id
+    })
     this.sync()
   }
 
@@ -37,6 +50,10 @@ class Session {
 
   syncLocal () {
     localStorage.setItem('session', JSON.stringify(this.data))
+
+    if (this.onChangeCallback) {
+      this.onChangeCallback(this.data)
+    }
   }
 
   destroy () {

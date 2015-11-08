@@ -1,6 +1,19 @@
 import Browse from './Browse.jsx'
+import Session from '../tools/Session'
 
 export default class UserSubscriptions extends Browse {
+
+  load(service) {
+    this.clean();
+
+    var feed_ids = Session.data.following.map((feed) => {
+      return `_ids[]=${ feed._id }`
+    })
+
+    fetch(`${ BACKEND_ENDPOINT }/feeds?${ feed_ids.join('&') }`).then( (data) => {
+      this.setState({ list: data });
+    })
+  }
 
   get defaultState() {
     return {

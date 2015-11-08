@@ -13,15 +13,25 @@ import UserSubscriptions from './states/UserSubscriptions.jsx'
 import app from './app';
 
 window.BACKEND_ENDPOINT = (process.env.RAILS_ENV)
-  ? `${ location.protocol }//${ location.hostname }`
+  ? `http://webstdio.r15.railsrumble.com`
   : 'http://192.168.0.2:5000'
 
 app.container = document.getElementsByTagName('body')[0]
 app.history = createHistory()
 
-// app.history.listen(function (location) {
-//     console.log('[nav]', location.pathname);
-// });
+//
+// analytics / page view tracker
+//
+import ga from 'react-ga'
+ga.initialize(((process.env.RAILS_ENV) ? 'UA-67917511-3' : 'UA-XXXXXXXX-X'))
+
+var lastPathName = ""
+app.history.listen(location => {
+  if (lastPathName !== location.pathname) {
+    ga.pageview(location.pathname)
+  }
+  lastPathName = location.pathname
+})
 
 React.render((
   <Router history={app.history}>
