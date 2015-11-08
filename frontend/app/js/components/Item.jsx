@@ -1,6 +1,7 @@
 import React from 'react';
 import Cover from './Cover.jsx';
 import Notifier from '../tools/Notifier';
+import * as tools from '../tools/tools';
 
 export default class Item extends React.Component {
   constructor() {
@@ -12,7 +13,15 @@ export default class Item extends React.Component {
   }
 
   handleClick() {
-    Notifier.get('main').emit('item-selected', this.props.data);
+    if (this.isFeed()) {
+      Notifier.get('main').emit('item-selected', this.props.data);
+    } else {
+      Notifier.get('playback').emit('play', this.props.data);
+    }
+  }
+
+  isFeed() {
+    return tools.getDataType(this.props.data) === 'feed';
   }
 
   componentDidMount() {
@@ -66,8 +75,8 @@ export default class Item extends React.Component {
     return (
       <div className={className} onClick={this.handleClick.bind(this)}>
         <div ref='icon' className="icon">
-          <img ref='play' id='play' className='icon-img' src='svg/play.svg'/>
-          <img ref='pause' id='pause' className='icon-img' src='svg/pause.svg'/>
+          <img ref='play' id='play' className='icon-img' src='/svg/play.svg'/>
+          <img ref='pause' id='pause' className='icon-img' src='/svg/pause.svg'/>
         </div>
         <Cover src={this.props.data.image} />
       </div>

@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router'
+
 import Notifier from '../tools/Notifier';
+import Session from '../tools/Session';
 
 export default class AudioPlayer  extends React.Component {
   constructor() {
@@ -48,6 +50,10 @@ export default class AudioPlayer  extends React.Component {
     Notifier.get('playback').emit('change', {data:this.data, state:'stop'});
   }
 
+  changePlaybackRate(rate, e) {
+    this.audio.playbackRate = rate
+  }
+
   componentDidMount() {
     this.audio = React.findDOMNode(this.refs.audio);
     this.audio.addEventListener('play', this.onPlaybackStart.bind(this));
@@ -61,7 +67,17 @@ export default class AudioPlayer  extends React.Component {
         <audio ref='audio' controls autoPlay>
           <source src={this.state.url} />
         </audio>
+
+        <ul>
+          <li>Speed: </li>
+          <li><button onClick={this.changePlaybackRate.bind(this, 1)}>1x</button></li>
+          <li><button onClick={this.changePlaybackRate.bind(this, 1.25)}>1.25x</button></li>
+          <li><button onClick={this.changePlaybackRate.bind(this, 1.50)}>1.50x</button></li>
+          <li><button onClick={this.changePlaybackRate.bind(this, 1.50)}>1.50x</button></li>
+        </ul>
+
       </div>
     );
   }
+
 }

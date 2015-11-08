@@ -1,24 +1,26 @@
 import React from 'react'
 import { IndexRoute, Router, Route, Link, Redirect } from 'react-router'
+import { createHistory } from 'history'
 
-// Route components
 import Application from './layout/Application.jsx'
 import Index from './states/Index.jsx'
 import Browse from './states/Browse.jsx'
-
-import { createHistory } from 'history'
+import Feed from './states/Feed.jsx'
+import SearchResults from './states/SearchResults.jsx'
+import app from './app';
 
 window.BACKEND_ENDPOINT = (process.env.RAILS_ENV)
   ? `${ location.protocol }//${ location.hostname }`
   : 'http://192.168.0.2:9000'
 
-var container = document.getElementsByTagName('body')[0]
-  , appHistory = createHistory()
+app.container = document.getElementsByTagName('body')[0]
+app.history = createHistory()
 
 React.render((
-  <Router history={appHistory}>
+  <Router history={app.history}>
     <Route path="/" component={Application}>
       <IndexRoute component={Browse} />
+      <Route path="feed/:id" component={Feed} />
 
       {/*<Route path="lobby" component={Lobby} />*/}
       {/*<Route path="watch" component={Watch} />*/}
@@ -31,4 +33,4 @@ React.render((
       {/*<Route path="terms" component={Terms} />*/}
     </Route>
   </Router>
-), container)
+), app.container)
