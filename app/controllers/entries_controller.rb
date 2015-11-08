@@ -1,10 +1,12 @@
 class EntriesController < ApplicationController
 
   def index
+    data = {}
     query = nil
 
     if params[:feed_id]
-      query = Feed.find(params[:feed_id]).entries.criteria
+      data[:feed] = Feed.find(params[:feed_id])
+      query = data[:feed].entries.criteria
     else
       query = Entry.criteria
     end
@@ -12,7 +14,9 @@ class EntriesController < ApplicationController
     query = query.where(:$text => { :$search => params[:search] }) if params[:search]
     query = query.limit(params[:limit]) if params[:limit]
 
-    render json: query
+    data[:entries] = query
+
+    render json: data
   end
 
 end
