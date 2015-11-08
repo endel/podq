@@ -17,6 +17,11 @@ export default class ItemList extends React.Component {
     var items = [];
     var info = this.props.info || this.state.info;
     var list = this.props.list || this.state.list;
+
+    if (!list || !list.length) {
+      return <div></div>;
+    }
+
     list.forEach(data => {
       var type = tools.getDataType(data);
       if (type === 'entry') {
