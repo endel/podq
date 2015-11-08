@@ -32,14 +32,20 @@ export default class ItemEntry extends React.Component {
   }
 
   render() {
+    var date = tools.simpleDate(this.props.data.published);
     return (
       <div className='item entry'>
-        <div className='title'>{this.props.info.title}</div>
-        <div className='btn'>
-          <PlaybackBtn ref='btn' data={this.props.data}/>
+        <div className='top text'>{this.props.info.title} - {date}</div>
+
+        <div className='mid'>
+          <div className='btn'>
+            <PlaybackBtn ref='btn' data={this.props.data}/>
+          </div>
+          <div className='hitArea' onClick={this.handleClick.bind(this)}></div>
+          <Cover ref='cover' src={this.props.data.image}/>
         </div>
-        <div className='hitArea' onClick={this.handleClick.bind(this)}></div>
-        <Cover ref='cover' src={this.props.data.image}/>
+
+        <div className='bot text'>{this.props.data.title}</div>
       </div>
     );
   }
