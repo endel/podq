@@ -1,7 +1,12 @@
 import React from 'react';
+import main from '../main';
 import ItemList from '../components/ItemList.jsx';
+import SubscribeButton from '../components/SubscribeButton.jsx'
 import Notifier from '../tools/Notifier';
 import Client from '../tools/Client';
+import app from '../app';
+
+import classNames from 'classnames'
 
 export default class SearchResults extends React.Component {
   constructor() {
@@ -11,50 +16,57 @@ export default class SearchResults extends React.Component {
   }
 
   get initialState() {
-    return {title:'Search Results', list:[]};
+    return {feed:{}, entries:[], loading:true};
   }
 
   componentDidMount() {
     this.list = React.findDOMNode(this.refs.list);
-    Notifier.get('main').on('item-selected', this.onItemSelect.bind(this));
-    Notifier.get('main').on('search-results', this.onItemSelect.bind(this));
   }
 
   componentWillUnmount() {
-    Notifier.get('main').off('item-selected', this.onItemSelect.bind(this));
-    Notifier.get('main').off('search-results', this.onItemSelect.bind(this));
+    this.list = null;
   }
 
-  onItemSelect(data) {
-    if (!this.data.audio_url) {
-      this.load(`feeds/${data._id}/entries`);
-      this.setState({title:data.title});
-    } else {
-      Notifier.get('playback').emit('play', data);
-    }
+  componentWillReceiveProps(props) {
+    this.setState(this.initialState);
+    console.log(this.props.params.q);
+    this.load(`search?${this.props.params.q}`);
   }
 
   load(service) {
     this.clean();
     this.client.fetch(service)
-      .then((json) => {
-        this.setState({list:json});
-      });
+      .then(json => {
+        json.loading = false
+        this.setState(json);
+      })
   }
 
   clean() {
-    this.setState({list:[]});
+    this.setState(this.initialState);
   }
 
   render() {
-    var title = this.state.title;
-    var list = this.state.list;
-    return (
+    var permalink = (this.state.feed.permalink)
+      ? <a href={this.state.feed.permalink} target="_blank">{this.state.feed.permalink}</a>
+      : null
+
+    return (this.state.loading) ? (
+      <section className="section loading"></section>
+
+    ) : (
       <section className='section'>
-        <div className='title'>{title}</div>
+        <h1>
+          {this.state.feed.title} <SubscribeButton feed={ this.state.feed } />
+        </h1>
+        <p>
+          {this.state.feed.description} <br/ >
+          { permalink }
+        </p>
         <ItemList
           ref='list'
-          data={list}
+          info={this.state.feed}
+          list={this.state.entries}
         />
       </section>
     );

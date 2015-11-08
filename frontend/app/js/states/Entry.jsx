@@ -53,11 +53,7 @@ export default class Entry extends React.Component {
         <div className='content'>
           <h1><Link to={`/feed/${ this.state.feed._id }`}>{ this.state.feed.title }</Link>: {this.state.title}</h1>
           <div dangerouslySetInnerHTML={{ __html: this.state.description }} />
-          {
-            if (this.state.image) {
-              <img src={this.state.image} alt={this.state.title}/>
-            }
-          }
+          <img src={this.state.image} alt={this.state.title}/>
         </div>
       </section>
     );
