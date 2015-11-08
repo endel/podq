@@ -15,40 +15,21 @@ export default class ItemFeed extends React.Component {
   }
 
   handleClick() {
-    if (this.isFeed()) {
-      app.title = this.props.data.title;
-      app.history.pushState(null, '/feed/' + this.props.data._id);
-    } else {
-      app.title = this.props.data.title;
-      app.entry = this.props.data;
-      app.history.pushState(null, '/entry/' + this.props.data._id);
-    }
-  }
-
-  isFeed() {
-    return tools.getDataType(this.props.data) === 'feed';
+    app.title = this.props.data.title;
+    app.history.pushState(null, '/feed/' + this.props.data._id);
   }
 
   componentDidMount() {
-    this.btn = React.findDOMNode(this.refs.btn);
     this.cover = React.findDOMNode(this.refs.cover);
   }
 
   componentWillUnmount() {
-
+    this.cover = null;
   }
 
   render() {
-    var type = this.props.data.audio_url ? 'entry' : 'feed';
-    var className = type ? `item ${type}` : 'item';
-
     return (
-      <div className={className}>
-        {type === 'entry' ?
-          <div className='btn'>
-            <PlaybackBtn ref='btn' data={this.props.data}/>
-          </div>
-        : ''}
+      <div className='item feed'>
         <div className='hitArea' onClick={this.handleClick.bind(this)}></div>
         <Cover ref='cover' src={this.props.data.image}/>
       </div>
