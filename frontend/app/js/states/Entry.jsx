@@ -9,12 +9,15 @@ import app from '../app';
 export default class Entry extends React.Component {
   constructor() {
     super();
-    this.state = {feed:{}}
+    this.state = this.initialState;
     this.client = new Client();
   }
 
+  get initialState() {
+    return {feed:{}, entry:{}};
+  }
+
   load(service) {
-    console.log('load');
     this.client.fetch(service)
       .then((data) => {
         this.setState(data);
@@ -25,7 +28,7 @@ export default class Entry extends React.Component {
     if (!app.entry) {
       this.load(`entries/${this.props.params.id}`);
     } else {
-      this.setState(app.entry);
+      this.setState({feed:app.feed, entry:app.entry});
     }
   }
 

@@ -3,7 +3,7 @@ export default class Client {
     this.url = 'http://webstdio.r15.railsrumble.com/';
     this.mockurl = '/mockdata/';
     this.mockdata = false;
-    this.debug = true;
+    this.debug = false;
   }
 
   fetch(service) {

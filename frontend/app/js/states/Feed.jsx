@@ -14,17 +14,16 @@ export default class Feed extends React.Component {
   }
 
   get initialState() {
-    return {title:'', description:'', entries:[]};
+    return {feed:{}, entries:[]};
   }
 
   componentDidMount() {
     this.list = React.findDOMNode(this.refs.list);
     this.load(`feeds/${this.props.params.id}/entries`);
-    this.setState({title:app.title});
   }
 
   componentWillUnmount() {
-
+    this.list = null;
   }
 
   componentWillReceiveProps(props) {
@@ -35,10 +34,8 @@ export default class Feed extends React.Component {
   load(service) {
     this.clean();
     this.client.fetch(service)
-      .then((json) => {
-        json.feed.entries = json.entries
-        delete json.entries
-        this.setState(json.feed);
+      .then(json => {
+        this.setState(json);
       })
   }
 
@@ -47,22 +44,23 @@ export default class Feed extends React.Component {
   }
 
   render() {
-    var permalink = (this.state.permalink)
-      ? <a href={this.state.permalink} target="_blank">{this.state.permalink}</a>
+    var permalink = (this.state.feed.permalink)
+      ? <a href={this.state.feed.permalink} target="_blank">{this.state.feed.permalink}</a>
       : null
 
     return (
       <section className='section'>
         <h1>
-          {this.state.title} <SubscribeButton feed_id={ this.state._id } />
+          {this.state.feed.title} <SubscribeButton feed_id={ this.state.feed._id } />
         </h1>
         <p>
-          {this.state.description} <br/ >
+          {this.state.feed.description} <br/ >
           { permalink }
         </p>
         <ItemList
           ref='list'
-          data={this.state.entries}
+          info={this.state.feed}
+          list={this.state.entries}
         />
       </section>
     );
