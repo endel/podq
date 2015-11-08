@@ -6,18 +6,33 @@ export default class Browse extends React.Component {
   constructor() {
     super();
     this.state = {list:[]};
+    this.type = 'feed';
+    this.load('/mockdata/feed-list.json');
+    Notifier.get('main').on('item-selected', this.onItemSelect.bind(this));
+  }
 
-    fetch('/mockdata/feed-list.json')
+  load(url) {
+    this.clean();
+    fetch(url)
       .then((response) => {
         return response.text();
       }).then((json) => {
         var data = JSON.parse(json);
         this.setState(data);
       });
+  }
 
-    Notifier.get('main').on('item-selected', (data) => {
-      console.log(data.name);
-    });
+  clean() {
+    this.setState({list:[]});
+  }
+
+  onItemSelect(data) {
+    if (this.type === 'feed') {
+      this.type = 'entry';
+      this.load('/mockdata/entry-list.json');
+    } else if (this.type === 'entry') {
+      Notifier.get('main').emit('play', data.audio);
+    }
   }
 
   render() {

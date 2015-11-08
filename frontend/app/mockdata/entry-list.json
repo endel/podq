@@ -3,21 +3,25 @@
     {
       "id": "1",
       "name": "Entry A",
+      "image": "http://www.vgmuseum.com/end/genesis/a/sonic2-2.gif",
       "audio": "http://c0953132.cdn.cloudfiles.rackspacecloud.com/elementary-podcasts-s01-e01.mp3"
     },
     {
       "id": "2",
       "name": "Entry B",
+      "image": "http://www.vgmuseum.com/end/genesis/a/sonic2-2.gif",
       "audio": "http://c0953132.cdn.cloudfiles.rackspacecloud.com/elementary-podcasts-s01-e01.mp3"
     },
     {
       "id": "3",
       "name": "Entry C",
+      "image": "http://www.vgmuseum.com/end/genesis/a/sonic2-2.gif",
       "audio": "http://c0953132.cdn.cloudfiles.rackspacecloud.com/elementary-podcasts-s01-e01.mp3"
     },
     {
       "id": "4",
       "name": "Entry D",
+      "image": "http://www.vgmuseum.com/end/genesis/a/sonic2-2.gif",
       "audio": "http://c0953132.cdn.cloudfiles.rackspacecloud.com/elementary-podcasts-s01-e01.mp3"
     }
   ]
