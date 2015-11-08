@@ -8,6 +8,7 @@ class FeedsController < ApplicationController
   def index
     query = Feed.criteria
 
+    query = query.where(:_id => { :$in => params[:_ids] }) if params[:_ids]
     query = query.where(:$text => { :$search => params[:search] }) if params[:search]
     query = query.limit(params[:limit]) if params[:limit]
 

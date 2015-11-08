@@ -13,7 +13,7 @@ import UserSubscriptions from './states/UserSubscriptions.jsx'
 import app from './app';
 
 window.BACKEND_ENDPOINT = (process.env.RAILS_ENV)
-  ? `${ location.protocol }//${ location.hostname }`
+  ? `http://webstdio.r15.railsrumble.com`
   : 'http://192.168.0.2:5000'
 
 app.container = document.getElementsByTagName('body')[0]
