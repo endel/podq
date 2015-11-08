@@ -16,7 +16,7 @@ export default class Item extends React.Component {
   }
 
   componentDidMount() {
-    Notifier.get('main').on('playback-change', this.onPlaybackChange.bind(this));
+    Notifier.get('playback').on('change', this.onPlaybackChange.bind(this));
     this.iconPlay = React.findDOMNode(this.refs.play);
     this.iconPause = React.findDOMNode(this.refs.pause);
     this.icon = React.findDOMNode(this.refs.icon);
@@ -27,7 +27,7 @@ export default class Item extends React.Component {
   }
 
   componentWillUnmount() {
-    Notifier.get('main').off('playback-change', this.onPlaybackChange.bind(this));
+    Notifier.get('playback').off('change', this.onPlaybackChange.bind(this));
     this.icon.removeEventListener('mouseover', this.onMouseOver.bind(this));
     this.icon.removeEventListener('mouseout', this.onMouseOut.bind(this));
   }

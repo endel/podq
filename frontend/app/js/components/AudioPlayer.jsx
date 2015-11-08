@@ -10,8 +10,8 @@ export default class AudioPlayer  extends React.Component {
       position: 0
     };
 
-    Notifier.get('main').on('play', this.play.bind(this));
-    Notifier.get('main').on('stop', this.stop.bind(this));
+    Notifier.get('playback').on('play', this.play.bind(this));
+    Notifier.get('playback').on('stop', this.stop.bind(this));
     this.data = null;
     this.playing = false;
   }
@@ -40,12 +40,12 @@ export default class AudioPlayer  extends React.Component {
 
   onPlaybackStart(e) {
     this.playing = true;
-    Notifier.get('main').emit('playback-change', {data:this.data, state:'play'});
+    Notifier.get('playback').emit('change', {data:this.data, state:'play'});
   }
 
   onPlaybackStop(e) {
     this.playing = false;
-    Notifier.get('main').emit('playback-change', {data:this.data, state:'stop'});
+    Notifier.get('playback').emit('change', {data:this.data, state:'stop'});
   }
 
   componentDidMount() {
