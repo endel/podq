@@ -36,7 +36,7 @@ export default class Browse extends React.Component {
       this.load('/mockdata/entry-list.json');
       this.setState({title:data.name});
     } else if (this.type === 'entry') {
-      Notifier.get('main').emit('play', data.audio);
+      Notifier.get('main').emit('play', data);
     }
   }
 

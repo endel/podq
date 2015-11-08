@@ -10,28 +10,49 @@ export default class AudioPlayer  extends React.Component {
       position: 0
     };
 
-    Notifier.get('main').on('play', this.onAudioSelect.bind(this));
+    Notifier.get('main').on('play', this.play.bind(this));
+    Notifier.get('main').on('stop', this.stop.bind(this));
+    this.data = null;
+    this.playing = false;
   }
 
-  onAudioSelect(url) {
-    this.audio.src = url;
-    this.audio.autoPlay = true;
+  play(data) {
+    if (data === this.data) {
+      if (this.playing) {
+        this.audio.pause();
+      } else {
+        this.audio.play();
+        this.playing = true;
+      }
+    } else if (data) {
+      this.stop();
+      this.data = data;
+      this.audio.src = data.audio;
+      this.audio.autoPlay = true;
+      this.playing = true;
+    }
   }
 
-  handleSongLoading () {
-
+  stop() {
+    this.audio.pause();
+    this.playing = false;
   }
 
-  handleSongPlaying () {
-
+  onPlaybackStart(e) {
+    this.playing = true;
+    Notifier.get('main').emit('playback-change', {data:this.data, state:'play'});
   }
 
-  handleSongFinishedPlaying () {
-
+  onPlaybackStop(e) {
+    this.playing = false;
+    Notifier.get('main').emit('playback-change', {data:this.data, state:'stop'});
   }
 
   componentDidMount() {
     this.audio = React.findDOMNode(this.refs.audio);
+    this.audio.addEventListener('play', this.onPlaybackStart.bind(this));
+    this.audio.addEventListener('pause', this.onPlaybackStop.bind(this));
+    this.audio.addEventListener('ended', this.onPlaybackStop.bind(this));
   }
 
   render () {
