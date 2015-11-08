@@ -45,7 +45,7 @@ export default class Browse extends React.Component {
 
   render() {
     return (
-      <section className='browse'>
+      <section className='section'>
         <ItemList
           ref='list'
           title={this.state.title}
