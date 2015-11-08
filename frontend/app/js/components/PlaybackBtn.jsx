@@ -14,9 +14,7 @@ export default class PlaybackBtn extends React.Component {
 
   componentDidMount() {
     Notifier.get('playback').on('change', this.onPlaybackChange, this);
-    if (app.player.data && app.player.data._id == this.props.data._id) {
-      this.setState({status:'play'});
-    }
+    this.updateIcon();
   }
 
   componentWillUnmount() {
@@ -25,11 +23,20 @@ export default class PlaybackBtn extends React.Component {
 
   onClick(e) {
     Notifier.get('playback').emit('toggle', this.props.data);
+    this.updateIcon();
   }
 
   onPlaybackChange(e) {
     if (e.data._id === this.props.data._id) {
       this.setState({status:e.state});
+    } else {
+      this.setState({status:'stop'});
+    }
+  }
+
+  updateIcon() {
+    if (app.player.data && app.player.data._id == this.props.data._id) {
+      this.setState({status:'play'});
     } else {
       this.setState({status:'stop'});
     }

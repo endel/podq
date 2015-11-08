@@ -50,7 +50,8 @@ export default class Item extends React.Component {
             <PlaybackBtn ref='btn' data={this.props.data}/>
           </div>
         : ''}
-        <Cover ref='cover' src={this.props.data.image} onClick={this.handleClick.bind(this)}/>
+        <div className='hitArea' onClick={this.handleClick.bind(this)}></div>
+        <Cover ref='cover' src={this.props.data.image}/>
       </div>
     );
   }
