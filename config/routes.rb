@@ -11,11 +11,11 @@ Rails.application.routes.draw do
   get '/logout' => 'sessions#destroy', as: :logout
   match '/auth/:provider/callback' => 'sessions#create', via: [:get, :post]
 
-  resources :feeds, :only => [:create, :index] do
+  resources :feeds, :only => [:create, :index, :show] do
     resources :entries, :only => [:index]
   end
 
-  resources :entries, :only => [:index]
+  resources :entries, :only => [:index, :show]
 
   mount Sidekiq::Web => '/sidekiq'
 

@@ -1,4 +1,8 @@
 .audio-player
+  z-index 100
+  position fixed
+  width 100%
+  bottom 0
   background-color #111111
   height 55px
   border-top 1px solid $layout_border_color
@@ -15,7 +19,9 @@
     li
       display inline-block
       button
-        // background
+        border 0
+        color $font_color1
+        background $primary_color4
         width 50px
         height 50px
         display inline-block

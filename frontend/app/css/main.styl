@@ -1,37 +1,49 @@
 @import 'constants'
 
-.clearfix
-  &::before, &::after
-    content ""
-    display table
-    clear both
+#rumbleCloseButton
+  display none
+
+*
+  margin 0
+  padding 0
+  box-sizing border-box
 
 body, input, button, select, textarea
   font-family 'Open Sans', sans-serif
-  font-size 10px
-
-html
-  height 100%
+  font-size 14px
 
 body
-  margin 0
-  height 100%
   background-color $primary_color1
   color $font_color3
 
-.headline-1
-  font-size 4.2em
+// headings
+h1
+  font-size 2em
+
+h2
+  font-size 1.2em
+
+h3
+  text-transform uppercase
+  font-size 0.8em
+
+p
+  margin 0.5em 0 1em 0
 
 .app-container
-  height 100%
+  display block
+  height 100vh
 
 .state-container
-  float left
-  width calc(100% - 251px)
-
-.headline-1
-  font-size 4.2em
-
+  position fixed
+  left 20vw
+  top 0
+  display inline-block
+  padding 10px 32px 10px 32px
+  margin-top 88px
+  width 80vw
+  height calc(100vh - 143px)
+  overflow auto
 
 @import "header.styl"
 @import "sidebar.styl"

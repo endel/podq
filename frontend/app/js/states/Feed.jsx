@@ -13,7 +13,7 @@ export default class Feed extends React.Component {
   }
 
   get initialState() {
-    return {title:'', list:null};
+    return {title:'', list:[]};
   }
 
   componentDidMount() {
@@ -30,23 +30,29 @@ export default class Feed extends React.Component {
     this.clean();
     this.client.fetch(service)
       .then((json) => {
-        this.setState({title:json.feed.title, list:json.entries});
-      });
+        json.feed.entries = json.entries
+        delete json.entries
+        this.setState(json.feed);
+      })
   }
 
   clean() {
-    this.setState({list:[]});
+    this.setState(this.initialState);
+  }
+
+  subscribe () {
   }
 
   render() {
-    var title = this.state.title;
-    var list = this.state.list ? this.state.list : [];
     return (
       <section className='section'>
-        <div className='title'>{title}</div>
+        <h1>
+          {this.state.title} <button onClick={this.subscribe.bind(this)}>Subscribe</button>
+        </h1>
+        <p>{this.state.description}</p>
         <ItemList
           ref='list'
-          data={list}
+          data={this.state.entries}
         />
       </section>
     );

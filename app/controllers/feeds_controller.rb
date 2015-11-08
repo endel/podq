@@ -14,4 +14,9 @@ class FeedsController < ApplicationController
     render json: query
   end
 
+  def show
+    feed = Feed.find(params[:id])
+    render json: feed
+  end
+
 end
