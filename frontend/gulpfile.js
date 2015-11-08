@@ -14,9 +14,11 @@ var browserify = require('browserify');
 
 var historyApiFallback = require('connect-history-api-fallback')
 
+var isDevelopment = (process.env.RAILS_ENV !== "production")
+
 gulp.task('stylesheet', ['sprites'], function () {
   return gulp.src('app/css/main.styl')
-    .pipe($.sourcemaps.init())
+    .pipe($.if(!isDevelopment, $.sourcemaps.init()))
     .pipe($.stylus({
       import: ['sprites/*'], // auto-import sprite files
       errors: true
@@ -28,7 +30,7 @@ gulp.task('stylesheet', ['sprites'], function () {
     .pipe($.postcss([
       require('autoprefixer-core')({browsers: ['last 1 version']})
     ]))
-    .pipe($.sourcemaps.write())
+    .pipe($.if(!isDevelopment, $.sourcemaps.write()))
     .pipe(gulp.dest('.tmp/css'))
     .pipe(reload({stream: true}));
 });
@@ -64,7 +66,7 @@ gulp.task('javascript', function () {
     .pipe(through2.obj(function (file, enc, next){ // workaround for https://github.com/babel/babelify/issues/46
       browserify({
         entries: file.path,
-        debug: process.env.RAILS_ENV !== "production"
+        debug: isDevelopment
       }).bundle(function(err, res){
         if (err) { return next(err); }
 
@@ -77,9 +79,9 @@ gulp.task('javascript', function () {
       this.emit('end');
     })
     .pipe(gulp.dest('../public/js'))
-    .pipe($.sourcemaps.init({loadMaps: true}))
-    // .pipe($.uglify())
-    .pipe($.sourcemaps.write('.'))
+    .pipe($.if(!isDevelopment, $.sourcemaps.init({loadMaps: true})))
+    .pipe($.if(!isDevelopment, $.uglify()))
+    .pipe($.if(!isDevelopment, $.sourcemaps.write('.')))
     .pipe(gulp.dest('.tmp/js'));
 });
 
