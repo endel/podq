@@ -6,6 +6,7 @@ import classNames from 'classnames'
 import Notifier from '../tools/Notifier';
 import Session from '../tools/Session';
 import app from '../app';
+import Cover from './Cover.jsx';
 
 export default class AudioPlayer  extends React.Component {
   constructor() {
@@ -77,7 +78,6 @@ export default class AudioPlayer  extends React.Component {
         <audio ref='audio' controls autoPlay>
           <source src={this.state.url} />
         </audio>
-
         <ul>
           <li>Speed: </li>
           <li><button className={classNames({ active: (this.state.playbackRate == 1) })} onClick={this.changePlaybackRate.bind(this, 1)}>1x</button></li>
