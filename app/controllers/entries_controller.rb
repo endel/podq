@@ -19,5 +19,10 @@ class EntriesController < ApplicationController
     render json: data
   end
 
+  def show
+    entry = Entry.find(params[:id])
+    render json: entry.to_json(include: :feed)
+  end
+
 end
 
