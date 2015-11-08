@@ -28,6 +28,15 @@ export default class SearchBar extends React.Component {
 
   }
 
+  closeResults () {
+
+    this.setState({
+      lastSearchedTerm: '',
+      phase: 'IDLE'
+    });
+
+  }
+
   search () {
 
     var self = this,
@@ -35,10 +44,7 @@ export default class SearchBar extends React.Component {
 
     if (!self.state.term) {
 
-      self.setState({
-        phase: 'IDLE',
-        lastSearchedTerm: ''
-      });
+      self.closeResults();
 
       return;
 
@@ -103,14 +109,15 @@ export default class SearchBar extends React.Component {
 
   render () {
 
-    var resultsClass = classNames({
-      'main-search-results': true,
-      'opened': this.state.phase !== 'IDLE'
-    });
+    var handleChange= this.handleChange.bind(this),
+        resultsClass = classNames({
+          'main-search-results': true,
+          'opened': this.state.phase !== 'IDLE'
+        });
 
     return <form onSubmit={this.handleSubmit.bind(this)} className="main-search">
 
-      <input type="search" placeholder="Search" onChange={this.handleChange.bind(this)} value={this.state.term} />
+      <input type="search" placeholder="Search" onFocus={handleChange} onChange={handleChange} value={this.state.term} />
 
       <div className={resultsClass}>
 
@@ -124,7 +131,7 @@ export default class SearchBar extends React.Component {
           <ul>
             {this.state.entriesResult && this.state.entriesResult.map(entry => {
 
-                return <SearchBarResult data={entry} />;
+                return <SearchBarResult onClick={this.closeResults.bind(this)} type="entry" data={entry} />;
 
               })
             }
@@ -142,7 +149,7 @@ export default class SearchBar extends React.Component {
           <ul>
             {this.state.feedsResult && this.state.feedsResult.map(entry => {
 
-                return <SearchBarResult data={entry} />;
+                return <SearchBarResult onClick={this.closeResults.bind(this)} type="feed" data={entry} />;
 
               })
             }
