@@ -2,10 +2,15 @@ WIDTH = 180px
 HEIGHT = 180px
 
 .item
+  cursor pointer
   margin-bottom $default_margin*2
   margin-right $default_margin*2
   display inline-block
   vertical-align top
+  opacity 0.8
+  transition opacity 0.2s
+  &:hover
+    opacity 1
 
   .top
     font-size $font_ss
@@ -32,8 +37,7 @@ HEIGHT = 180px
     height HEIGHT
     // background-color #000000;
     z-index 2
-    opacity 1
-    box-shadow: inset 0 0 80px #000000;
+    box-shadow inset 0 0 80px #000000
 
   .cover
     width WIDTH
