@@ -1,10 +1,17 @@
+require 'faraday_middleware'
+
 class WebsiteWorker
   include Sidekiq::Worker
   sidekiq_options unique: :until_and_while_executing
 
   def perform(permalink, update_feed = false)
     permalink = Feed.normalize_url(permalink)
-    html = Faraday.get(permalink).body
+
+    http = Faraday.new {|c|
+      c.use FaradayMiddleware::FollowRedirects
+      c.adapter :net_http
+    }
+    html = http.get(permalink).body
 
     # A XML url was given, skip and enqueue it to FeedWorker
     return FeedWorker.perform_async(permalink) if html.strip.index('<?xml') == 0
@@ -32,13 +39,13 @@ class WebsiteWorker
     # enqueue FeedWorker
     #
     if update_feed
-      feed_tags = html.scan(/<link(.*)type=["|']application\/(rss|atom)\+xml["|']([^>]+)?>/)
+      feed_tags = html.scan(/<link(.*)type=["|']application\/(rss|atom)\+xml["|']([^>]+)?>/i)
       logger.info feed_tags.inspect
 
       feed_tags.each do |data|
         logger.info data.inspect
 
-        if (href = data.select {|d| d.index('href=') != nil }[0])
+        if (href = data.select {|d| (d||"").index('href=') != nil }[0])
           logger.info href.inspect
 
           if (feed_url = href.match(/href=["|']([^"|']+)["|']/)[1])

@@ -22,6 +22,7 @@ gem 'bson_ext'
 gem 'sinatra', :require => nil
 gem 'sidekiq', '~> 3.5.3'
 gem 'feedjira', '~> 2.0.0'
+gem 'faraday_middleware', '~> 0.10.0'
 
 gem 'jbuilder', '~> 2.0' # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'sdoc', '~> 0.4.0',          group: :doc # bundle exec rake doc:rails generates the API under doc/api.

@@ -1,3 +1,5 @@
+require 'faraday_middleware'
+
 class FeedWorker
   include Sidekiq::Worker
   sidekiq_options unique: :until_and_while_executing
@@ -5,7 +7,11 @@ class FeedWorker
   AUDIO_FORMATS = '(mp3|ogg|acc|flac|m4a)'
 
   def perform(feed_url)
-    xml = Faraday.get(feed_url).body
+    http = Faraday.new {|c|
+      c.use FaradayMiddleware::FollowRedirects
+      c.adapter :net_http
+    }
+    xml = http.get(feed_url).body
     xml_feed = Feedjira::Feed.parse(xml)
 
     num_audio_matches = xml.scan(/\.#{AUDIO_FORMATS}/).length
