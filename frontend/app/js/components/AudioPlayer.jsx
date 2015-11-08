@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router'
 
+import classNames from 'classnames'
+
 import Notifier from '../tools/Notifier';
 import Session from '../tools/Session';
 import app from '../app';
@@ -59,6 +61,7 @@ export default class AudioPlayer  extends React.Component {
 
   changePlaybackRate(rate, e) {
     this.audio.playbackRate = rate
+    this.setState({ playbackRate: rate })
   }
 
   componentDidMount() {
@@ -77,10 +80,10 @@ export default class AudioPlayer  extends React.Component {
 
         <ul>
           <li>Speed: </li>
-          <li><button onClick={this.changePlaybackRate.bind(this, 1)}>1x</button></li>
-          <li><button onClick={this.changePlaybackRate.bind(this, 1.25)}>1.25x</button></li>
-          <li><button onClick={this.changePlaybackRate.bind(this, 1.50)}>1.50x</button></li>
-          <li><button onClick={this.changePlaybackRate.bind(this, 1.75)}>1.75x</button></li>
+          <li><button className={classNames({ active: (this.state.playbackRate == 1) })} onClick={this.changePlaybackRate.bind(this, 1)}>1x</button></li>
+          <li><button className={classNames({ active: (this.state.playbackRate == 1.25) })} onClick={this.changePlaybackRate.bind(this, 1.25)}>1.25x</button></li>
+          <li><button className={classNames({ active: (this.state.playbackRate == 1.50) })} onClick={this.changePlaybackRate.bind(this, 1.50)}>1.50x</button></li>
+          <li><button className={classNames({ active: (this.state.playbackRate == 1.75) })} onClick={this.changePlaybackRate.bind(this, 1.75)}>1.75x</button></li>
         </ul>
 
       </div>
