@@ -15,12 +15,13 @@ export default class Entry extends React.Component {
   }
 
   get initialState() {
-    return {feed:{}, entry:{}};
+    return {feed:{}, entry:{}, loading: true};
   }
 
   load(service) {
     this.client.fetch(service)
       .then((data) => {
+        data.loading = false
         this.setState(data);
       });
   }
@@ -29,7 +30,7 @@ export default class Entry extends React.Component {
     if (!app.entry) {
       this.load(`entries/${this.props.params.id}`);
     } else {
-      this.setState({feed:app.feed, entry:app.entry});
+      this.setState({feed:app.feed, entry:app.entry, loading: false});
     }
   }
 
@@ -44,7 +45,9 @@ export default class Entry extends React.Component {
                         <PlaybackBtn data={this.state}/>
                      </div>;
 
-    return (
+    return (this.state.loading) ? (
+      <section className='section loading'></section>
+    ) : (
       <section className='section'>
         {hasAudio ? playButton : null}
         <div className='content'>

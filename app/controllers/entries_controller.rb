@@ -14,6 +14,9 @@ class EntriesController < ApplicationController
     query = query.where(:$text => { :$search => params[:search] }) if params[:search]
     query = query.limit(params[:limit]) if params[:limit]
 
+    # always order by published date desc
+    query = query.order_by(:published => 'desc')
+
     data[:entries] = query
 
     render json: data

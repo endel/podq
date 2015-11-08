@@ -17,7 +17,10 @@ export default class Browse extends React.Component {
     this.clean();
     this.client.fetch(service)
       .then(json => {
-        this.setState({list:json});
+        this.setState({
+          list: json,
+          loading: false
+        });
       });
   }
 
@@ -29,7 +32,8 @@ export default class Browse extends React.Component {
     return {
       title: 'Browse',
       list: [],
-      description: "Discover free podcasts around the world."
+      description: "Discover free podcasts around the world.",
+      loading: true
     };
   }
 
@@ -43,7 +47,9 @@ export default class Browse extends React.Component {
   }
 
   render() {
-    return (
+    return (this.state.loading) ? (
+      <section className='section loading'></section>
+    ) : (
       <section className='section'>
         <h1>{this.state.title}</h1>
         <p>{this.state.description}</p>
