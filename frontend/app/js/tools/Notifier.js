@@ -24,6 +24,11 @@ export default class Notifier extends EventEmitter {
     remove(id);
     notifiers[id] = this;
   }
+
+  on(event, fn, context) {
+    this.off(event, fn, context);
+    super.on(event, fn, context);
+  }
 }
 
 Notifier.get = get;
