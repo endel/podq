@@ -5,7 +5,7 @@ import Notifier from '../tools/Notifier';
 import * as tools from '../tools/tools';
 import app from '../app';
 
-export default class Item extends React.Component {
+export default class ItemFeed extends React.Component {
   constructor() {
     super();
     this.onSelect = null;
@@ -15,7 +15,6 @@ export default class Item extends React.Component {
   }
 
   handleClick() {
-    console.log('cover click');
     if (this.isFeed()) {
       app.title = this.props.data.title;
       app.history.pushState(null, '/feed/' + this.props.data._id);
