@@ -4,11 +4,11 @@ import Item from './Item.jsx';
 export default class ItemList extends React.Component {
   constructor() {
     super();
-    this.state = this.getInitialState();
+    this.state = this.initialState;
   }
 
-  getInitialState() {
-    return {title:null, data:[]};
+  get initialState() {
+    return {data:[]};
   }
 
   render() {
@@ -20,7 +20,6 @@ export default class ItemList extends React.Component {
     });
     return (
       <div className='item-list'>
-        <div className='title'>{title}</div>
         <div>{items}</div>
       </div>
     );

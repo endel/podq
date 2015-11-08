@@ -2,12 +2,12 @@ import React from 'react';
 import ItemList from '../components/ItemList.jsx';
 import Notifier from '../tools/Notifier';
 import Client from '../tools/Client';
+import app from '../app';
 
 export default class Browse extends React.Component {
   constructor() {
     super();
     this.state = this.defaultState;
-    this.type = 'feed';
     this.client = new Client();
   }
 
@@ -28,12 +28,12 @@ export default class Browse extends React.Component {
   }
 
   onItemSelect(data) {
-    if (this.type === 'feed') {
-      this.type = 'entry';
-      this.load(`feeds/${data._id}/entries`);
-      this.setState({title:data.title});
-    } else if (this.type === 'entry') {
-      Notifier.get('playback').emit('play', data);
+    if (data.audio_url == undefined) {
+      app.title = data.title;
+      app.history.pushState(null, '/feed/' + data._id);
+    } else {
+      app.title = data.title;
+      app.history.pushState(null, '/entry/' + data._id);
     }
   }
 
@@ -44,11 +44,12 @@ export default class Browse extends React.Component {
   }
 
   render() {
+    var title = this.state.title;
     return (
       <section className='section'>
+        <div className='title'>{title}</div>
         <ItemList
           ref='list'
-          title={this.state.title}
           data={this.state.list}
         />
       </section>
