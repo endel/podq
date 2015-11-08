@@ -1,5 +1,5 @@
 export function getDataType(data) {
-  var type = 'none';
+  var type = null;
   if (data.audio_url !== undefined) {
     type = 'entry';
   } else if (data.url !== undefined) {

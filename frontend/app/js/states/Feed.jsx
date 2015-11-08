@@ -18,26 +18,18 @@ export default class Feed extends React.Component {
 
   componentDidMount() {
     this.list = React.findDOMNode(this.refs.list);
-    Notifier.get('main').on('item-selected', this.onItemSelect.bind(this));
-    Notifier.get('main').on('search-results', this.onItemSelect.bind(this));
     this.load(`feeds/${this.props.params.id}/entries`);
     this.setState({title:app.title});
   }
 
   componentWillUnmount() {
-    Notifier.get('main').off('item-selected', this.onItemSelect.bind(this));
-    Notifier.get('main').off('search-results', this.onItemSelect.bind(this));
-  }
 
-  onItemSelect(data) {
-    Notifier.get('playback').emit('play', data);
   }
 
   load(service) {
     this.clean();
     this.client.fetch(service)
       .then((json) => {
-        // console.log(json);
         this.setState({title:json.feed.title, list:json.entries});
       });
   }

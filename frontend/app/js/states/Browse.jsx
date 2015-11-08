@@ -3,6 +3,7 @@ import ItemList from '../components/ItemList.jsx';
 import Notifier from '../tools/Notifier';
 import Client from '../tools/Client';
 import app from '../app';
+import * as tools from '../tools/tools';
 
 export default class Browse extends React.Component {
   constructor() {
@@ -27,20 +28,13 @@ export default class Browse extends React.Component {
     return {title:'Browse', list:[]};
   }
 
-  onItemSelect(data) {
-    if (data.audio_url == undefined) {
-      app.title = data.title;
-      app.history.pushState(null, '/feed/' + data._id);
-    } else {
-      app.title = data.title;
-      app.history.pushState(null, '/entry/' + data._id);
-    }
-  }
-
   componentDidMount() {
     this.list = React.findDOMNode(this.refs.list);
     this.load('feeds');
-    Notifier.get('main').on('item-selected', this.onItemSelect.bind(this));
+  }
+
+  componentWillUnmount() {
+    this.list = null;
   }
 
   render() {

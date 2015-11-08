@@ -2,6 +2,7 @@ import React from 'react';
 import Cover from './Cover.jsx';
 import Notifier from '../tools/Notifier';
 import * as tools from '../tools/tools';
+import app from '../app';
 
 export default class Item extends React.Component {
   constructor() {
@@ -14,7 +15,8 @@ export default class Item extends React.Component {
 
   handleClick() {
     if (this.isFeed()) {
-      Notifier.get('main').emit('item-selected', this.props.data);
+      app.title = this.props.data.title;
+      app.history.pushState(null, '/feed/' + this.props.data._id);
     } else {
       Notifier.get('playback').emit('play', this.props.data);
     }
