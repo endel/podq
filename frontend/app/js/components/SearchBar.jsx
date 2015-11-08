@@ -67,7 +67,7 @@ export default class SearchBar extends React.Component {
 
         self.setState({
           phase: 'READY',
-          entriesResult: res
+          entriesResult: res.entries
         });
 
       });
