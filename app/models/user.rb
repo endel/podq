@@ -7,6 +7,7 @@ class User
   field :name, type: String
   field :email, type: String
   field :image, type: String
+  field :following, type: Array
 
   validates_presence_of :name
 

@@ -10,11 +10,9 @@ export default class ProfileWidget extends React.Component {
   constructor () {
     super();
 
-    var userData = Session.getData()
-
     this.state = {
-      phase: (userData) ? 'LOGGED' : 'NOT_LOGGED',
-      user: userData,
+      phase: (Session.isLogged()) ? 'LOGGED' : 'NOT_LOGGED',
+      user: Session.data,
       opened: false
     };
 
@@ -32,23 +30,22 @@ export default class ProfileWidget extends React.Component {
   handleWindowMessage (evt) {
     this.popup.close()
 
-    var data = JSON.parse(evt.data)
-    Session.setData(data)
+    Session.login(evt.data)
 
     this.setState({
       phase: 'LOGGED',
-      user: data
+      user: Session.data
     })
   }
 
   handleMouseEnter () {
-    if (!this.state.user) {
+    if (!this.state.user.name) {
       this.setState({ opened: !this.state.opened });
     }
   }
 
   handleMouseLeave () {
-    if (!this.state.user) {
+    if (!this.state.user.name) {
       this.setState({ opened: false });
     }
   }

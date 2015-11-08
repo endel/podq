@@ -6,11 +6,11 @@ import app from '../app';
 import * as tools from '../tools/tools';
 
 export default class Browse extends React.Component {
+
   constructor() {
     super();
     this.state = this.defaultState;
     this.client = new Client();
-    debugger
   }
 
   load(service) {
@@ -26,7 +26,11 @@ export default class Browse extends React.Component {
   }
 
   get defaultState() {
-    return {title:'Browse', list:[]};
+    return {
+      title: 'Browse',
+      list: [],
+      description: "Discover free podcasts around the world."
+    };
   }
 
   componentDidMount() {
@@ -39,11 +43,10 @@ export default class Browse extends React.Component {
   }
 
   render() {
-    var title = this.state.title;
     return (
       <section className='section'>
-        <h1>{title}</h1>
-        <p>Discover free podcasts around the world.</p>
+        <h1>{this.state.title}</h1>
+        <p>{this.state.description}</p>
         <ItemList
           ref='list'
           data={this.state.list}

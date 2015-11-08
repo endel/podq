@@ -6,3 +6,39 @@
     margin 0px
     margin-bottom $default_margin
     font-size $font_l
+
+  button.follow-btn
+    position relative
+    background none
+    border none
+    display inline-block
+    vertical-align middle
+    outline none
+    top -14px
+
+    &::before
+      position absolute
+      top 0
+      left 0
+      cursor pointer
+      display inline-block
+      border-radius 14px
+      padding 4px 12px
+      margin-left $default_margin
+      background $primary_color4
+      color $font_color1
+      content 'Follow'
+
+    &:hover
+      &::before
+        background #fffce0
+        color #3e4147
+
+    &.is-following
+      &::before
+        background #fffce0
+        color #3e4147
+        content 'Following'
+      // &:hover
+      //   &::before
+
