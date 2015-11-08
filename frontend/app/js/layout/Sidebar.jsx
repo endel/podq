@@ -23,9 +23,8 @@ export default class Sidebar extends React.Component {
       <ul>
         <li><Link to="/subscriptions" activeClassName="active">All</Link></li>
         <li><Link to="/feed/563e6f0f9754e30003000000" activeClassName="active">Lostcast</Link></li>
-        {/*<span className="unread">8</span>*/}
-        <li><Link to="/feed/563e6f239754e30003000094" activeClassName="active">Grok Podcast</li>
-        <li><Link to="/feed/563e6fe9f2f3880003000094" activeClassName="active">The Changelog</li>
+        <li><Link to="/feed/563e6f239754e30003000094" activeClassName="active">Grok Podcast</Link></li>
+        <li><Link to="/feed/563e6fe9f2f3880003000094" activeClassName="active">The Changelog</Link></li>
       </ul>
 
     </aside>
