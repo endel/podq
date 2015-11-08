@@ -44,8 +44,8 @@ export default class PlaybackBtn extends React.Component {
 
   render() {
     var status = this.state.status || this.props.status;
-    var iconPlay = <img ref='play' id='play' className='icon-img' src='/svg/play.svg'/>;
-    var iconPause = <img ref='pause' id='pause' className='icon-img' src='/svg/pause.svg'/>;
+    var iconPlay = <img ref='play' id='play' className='icon-img' src='/images/play.svg'/>;
+    var iconPause = <img ref='pause' id='pause' className='icon-img' src='/images/pause.svg'/>;
     var icon = status === 'stop' ? iconPlay : iconPause;
     return (
       <div className="playback-btn" onClick={this.onClick.bind(this)}>
