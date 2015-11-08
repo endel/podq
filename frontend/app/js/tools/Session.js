@@ -18,7 +18,10 @@ class Session {
   }
 
   login (jsonString) {
-    this.data = JSON.parse(jsonString)
+    var userData = JSON.parse(jsonString)
+    for (var attr in userData) {
+      this.data[ attr ] = userData[attr]
+    }
     localStorage.setItem('session', this.data)
   }
 

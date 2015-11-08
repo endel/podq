@@ -1,4 +1,3 @@
 <script type="text/javascript">
-  window.opener.postMessage('<%= raw @user.to_json %>', 'http://<%= request.host %>:9000')
   window.opener.postMessage('<%= raw @user.to_json %>', 'http://<%= request.host %>')
 </script>
