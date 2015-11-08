@@ -17,11 +17,15 @@ body
   color $font_color3
 
 a
+  outline none
   color #fffce0
   text-decoration none
   opacity 0.8
   &.active
     opacity 1
+
+button
+  outline none
 
 // headings
 h1
@@ -55,6 +59,7 @@ p
 @import "header.styl"
 @import "sidebar.styl"
 @import 'section'
+@import 'components/add-content.styl'
 @import 'components/audio-player.styl'
 @import 'components/searchbar.styl'
 @import 'components/profile-widget.styl'

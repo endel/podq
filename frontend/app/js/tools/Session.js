@@ -22,14 +22,20 @@ class Session {
 
   follow (feed_id) {
     this.data.following.push(feed_id)
+    this.sync()
   }
 
   unfollow (feed_id) {
     this.data.following.splice(this.data.following.indexOf(feed_id), 1)
+    this.sync()
   }
 
   sync () {
     // persist data on backend
+    this.syncLocal()
+  }
+
+  syncLocal () {
     localStorage.setItem('session', JSON.stringify(this.data))
   }
 

@@ -14,7 +14,7 @@ import app from './app';
 
 window.BACKEND_ENDPOINT = (process.env.RAILS_ENV)
   ? `${ location.protocol }//${ location.hostname }`
-  : 'http://192.168.0.2:9000'
+  : 'http://192.168.0.2:5000'
 
 app.container = document.getElementsByTagName('body')[0]
 app.history = createHistory()
