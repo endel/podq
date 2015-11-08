@@ -10,7 +10,7 @@ export default class UserSubscriptions extends Browse {
       return `_ids[]=${ feed._id }`
     })
 
-    fetch(`${ BACKEND_ENDPOINT }/feeds?${ feed_ids.join('&') }`).then( (data) => {
+    this.client.fetch(`feeds?${ feed_ids.join('&') }`).then( (data) => {
       this.setState({ list: data });
     })
   }
@@ -24,4 +24,3 @@ export default class UserSubscriptions extends Browse {
   }
 
 }
-
