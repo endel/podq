@@ -16,28 +16,24 @@ export default class SearchResults extends React.Component {
   }
 
   get initialState() {
-    return {feed:{}, entries:[], loading:true};
+    return {feed:{}, entries:[], loading:true, title:''};
   }
 
   componentDidMount() {
     this.list = React.findDOMNode(this.refs.list);
+    this.load(`entries?limit=100&search=${this.props.location.query.q}`);
   }
 
   componentWillUnmount() {
     this.list = null;
   }
 
-  componentWillReceiveProps(props) {
-    this.setState(this.initialState);
-    console.log(this.props.params.q);
-    this.load(`search?${this.props.params.q}`);
-  }
-
   load(service) {
     this.clean();
     this.client.fetch(service)
       .then(json => {
-        json.loading = false
+        json.loading = false;
+        json.title = `Search Results: ${this.props.location.query.q}`;
         this.setState(json);
       })
   }
@@ -47,25 +43,14 @@ export default class SearchResults extends React.Component {
   }
 
   render() {
-    var permalink = (this.state.feed.permalink)
-      ? <a href={this.state.feed.permalink} target="_blank">{this.state.feed.permalink}</a>
-      : null
-
     return (this.state.loading) ? (
-      <section className="section loading"></section>
-
+      <section className='section loading'></section>
     ) : (
       <section className='section'>
-        <h1>
-          {this.state.feed.title} <SubscribeButton feed={ this.state.feed } />
-        </h1>
-        <p>
-          {this.state.feed.description} <br/ >
-          { permalink }
-        </p>
+        <h1>{this.state.title}</h1>
+        <p>{this.state.description}</p>
         <ItemList
           ref='list'
-          info={this.state.feed}
           list={this.state.entries}
         />
       </section>

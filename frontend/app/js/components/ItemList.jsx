@@ -25,7 +25,6 @@ export default class ItemList extends React.Component {
         items.push(<ItemFeed info={info} data={data} key={data._id} />);
       }
     });
-    // items.reverse();
     return (
       <div className='item-list'>
         <div>{items}</div>
