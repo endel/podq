@@ -3,60 +3,64 @@ import { Link } from 'react-router'
 import classNames from 'classnames'
 import CenteredPopup from '../helpers/CenteredPopup.js'
 
+import Session from '../tools/Session'
+
 export default class ProfileWidget extends React.Component {
 
   constructor () {
     super();
+
+    var userData = Session.getData()
+
     this.state = {
-      phase: 'NOT_LOGGED',
-      user: null,
+      phase: (userData) ? 'LOGGED' : 'NOT_LOGGED',
+      user: userData,
       opened: false
     };
+
+    this.windowMessageHandler = this.handleWindowMessage.bind(this)
   }
 
   componentDidMount () {
+    window.addEventListener('message', this.windowMessageHandler, true);
+  }
 
-    window.addEventListener('message', this.handleWindowMessage, false);
-
+  componentWillUnmount () {
+    window.removeEventListener('message', this.windowMessageHandler);
   }
 
   handleWindowMessage (evt) {
-    debugger;
-  }
+    this.popup.close()
 
-  handleClick () {
+    var data = JSON.parse(evt.data)
+    Session.setData(data)
 
     this.setState({
-      opened: !this.state.opened
-    });
+      phase: 'LOGGED',
+      user: data
+    })
+  }
 
+  handleMouseEnter () {
+    if (!this.state.user) {
+      this.setState({ opened: !this.state.opened });
+    }
   }
 
   handleMouseLeave () {
-
-    this.setState({
-      opened: false
-    });
-
+    if (!this.state.user) {
+      this.setState({ opened: false });
+    }
   }
 
   handleFacebookClick () {
-
-    var fbPopup = CenteredPopup.open('https://www.facebook.com/dialog/oauth?client_id={app-id}&redirect_uri={redirect-uri}','fbPopup', 550, 500);
-
+    this.popup = CenteredPopup.open(`${BACKEND_ENDPOINT}/auth/facebook`,'authPopup', 550, 500);
+    this.setState({ phase: 'LOGGING_IN', opened: false });
   }
 
   handleTwitterClick () {
-
-    this.setState({
-      phase: 'LOGGING_IN',
-      opened: false
-    });
-
-    setTimeout(() => this.setState({
-      phase: 'LOGGED'
-    }), 2000);
-
+    this.popup = CenteredPopup.open(`${BACKEND_ENDPOINT}/auth/twitter`,'authPopup', 550, 500);
+    this.setState({ phase: 'LOGGING_IN', opened: false });
   }
 
   render () {
@@ -66,28 +70,28 @@ export default class ProfileWidget extends React.Component {
       'profile-widget-opened': this.state.opened
     });
 
-    return <div className={widgetClass} onMouseLeave={this.handleMouseLeave.bind(this)}>
+    return <div className={widgetClass} onMouseEnter={this.handleMouseEnter.bind(this)} onMouseLeave={this.handleMouseLeave.bind(this)}>
 
-      <button className="profile-widget-button" onClick={this.handleClick.bind(this)}>
+      <button className="profile-widget-button">
 
         {() => {
 
           switch (this.state.phase) {
 
-            case "NOT_LOGGED": return <div className="profile-login">
-                                        Login / Signin
-                                      </div>
+            case "NOT_LOGGED": return <span className="profile-login">
+                                        Login / Register
+                                      </span>
             ;
 
-            case "LOGGING_IN": return <div className="profile-logging">
+            case "LOGGING_IN": return <span className="profile-logging">
                                         Logging in...
-                                      </div>
+                                      </span>
             ;
 
-            case "LOGGED": return <div className="profile-userdata">
-                                    <img className="profile-avatar" src="https://avatars1.githubusercontent.com/u/5850824?v=3&s=460" />
-                                    <span className="profile-name">João Mosmann</span>
-                                  </div>
+            case "LOGGED": return <span className="profile-userdata">
+                                    <img className="profile-avatar" src={ this.state.user.image } />
+                                    <span className="profile-name">{ this.state.user.name }</span>
+                                  </span>
             ;
 
 
@@ -100,7 +104,7 @@ export default class ProfileWidget extends React.Component {
 
       <div className="profile-auth-phase">
 
-        <h1>Sign or Login</h1>
+        <h1>Login or Register with</h1>
 
         <button className="profile-signin-button profile-facebook-signin" onClick={this.handleFacebookClick.bind(this)}>
           Facebook

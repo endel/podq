@@ -8,6 +8,10 @@ import Browse from './states/Browse.jsx'
 
 import { createHistory } from 'history'
 
+window.BACKEND_ENDPOINT = (process.env.RAILS_ENV)
+  ? `${ location.protocol }//${ location.hostname }`
+  : 'http://192.168.0.2:9000'
+
 var container = document.getElementsByTagName('body')[0]
   , appHistory = createHistory()
 

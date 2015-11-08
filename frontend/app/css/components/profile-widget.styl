@@ -2,12 +2,14 @@
   position relative
 
   .profile-widget-button
+    display block
     border none
-    background none
+    background $primary_color2
     cursor pointer
     text-align center
     padding 0 20px
     height 100%
+    transition background 0.2s ease-out
     &:hover
       background $primary_color1
 
@@ -53,7 +55,7 @@
   background $primary_color2
   border 1px solid $layout_border_color
   width 500px
-  height 300px
+  height 180px
   text-align center
 
   .profile-signin-button
