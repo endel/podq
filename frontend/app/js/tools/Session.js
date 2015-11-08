@@ -22,7 +22,7 @@ class Session {
     for (var attr in userData) {
       this.data[ attr ] = userData[attr]
     }
-    localStorage.setItem('session', this.data)
+    localStorage.setItem('session', JSON.stringify(this.data))
   }
 
   isFollowing (feed_to_check) {
