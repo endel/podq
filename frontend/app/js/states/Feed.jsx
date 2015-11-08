@@ -13,7 +13,7 @@ export default class Feed extends React.Component {
   }
 
   get initialState() {
-    return {title:'', list:[]};
+    return {title:'', description:'', entries:[]};
   }
 
   componentDidMount() {
@@ -24,6 +24,11 @@ export default class Feed extends React.Component {
 
   componentWillUnmount() {
 
+  }
+
+  componentWillReceiveProps(props) {
+    this.setState(this.initialState);
+    this.load(`feeds/${props.params.id}/entries`);
   }
 
   load(service) {
@@ -44,10 +49,11 @@ export default class Feed extends React.Component {
   }
 
   render() {
+    var subscribe = this.state.title.length > 1 ? <button onClick={this.subscribe.bind(this)}>Subscribe</button> : '';
     return (
       <section className='section'>
         <h1>
-          {this.state.title} <button onClick={this.subscribe.bind(this)}>Subscribe</button>
+          {this.state.title} {subscribe}
         </h1>
         <p>{this.state.description}</p>
         <ItemList
