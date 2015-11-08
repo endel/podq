@@ -41,7 +41,8 @@ export default class Browse extends React.Component {
     var title = this.state.title;
     return (
       <section className='section'>
-        <div className='title'>{title}</div>
+        <h1>{title}</h1>
+        <p>Discover free podcasts around the world.</p>
         <ItemList
           ref='list'
           data={this.state.list}
