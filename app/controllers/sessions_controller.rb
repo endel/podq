@@ -6,7 +6,8 @@ class SessionsController < ApplicationController
 
   def create
     auth = request.env["omniauth.auth"]
-    user = User.where({
+
+    @user = User.where({
       provider: auth['provider'],
       uid: auth['uid'].to_s
     }).first || User.create_with_omniauth(auth)
@@ -15,9 +16,7 @@ class SessionsController < ApplicationController
     # 2.8 Session Fixation – Countermeasures:
     # http://guides.rubyonrails.org/security.html#session-fixation-countermeasures
     reset_session
-    session[:user_id] = user.id
-
-    redirect_to root_url, :notice => 'Signed in!'
+    session[:user_id] = @user._id.to_s
   end
 
   def destroy

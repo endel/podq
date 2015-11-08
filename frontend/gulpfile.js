@@ -132,12 +132,11 @@ gulp.task('serve', ['stylesheet', 'javascript', 'fonts'], function () {
   browserSync({
     notify: false,
     port: 9000,
-    server: {
-      baseDir: ['.tmp', 'app'],
-      routes: {
-        '/bower_components': 'bower_components'
-      }
-    }
+    proxy: "192.168.0.2:5000",
+    serveStatic: ['.tmp', 'app']
+    // server: {
+    //   baseDir: ['.tmp', 'app']
+    // }
   });
 
   // watch for changes
