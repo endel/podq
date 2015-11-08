@@ -17,9 +17,9 @@ window.BACKEND_ENDPOINT = (process.env.RAILS_ENV)
 app.container = document.getElementsByTagName('body')[0]
 app.history = createHistory()
 
-app.history.listen(function (location) {
-    console.log('[nav]', location.pathname);
-});
+// app.history.listen(function (location) {
+//     console.log('[nav]', location.pathname);
+// });
 
 React.render((
   <Router history={app.history}>

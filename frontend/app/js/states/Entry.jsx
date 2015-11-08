@@ -21,7 +21,6 @@ export default class Entry extends React.Component {
     this.client.fetch(service)
       .then((json) => {
         this.setState({data:json});
-        console.log(json);
       });
   }
 
