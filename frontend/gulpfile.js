@@ -12,6 +12,8 @@ var reload = browserSync.reload;
 var through2 = require('through2');
 var browserify = require('browserify');
 
+var historyApiFallback = require('connect-history-api-fallback')
+
 gulp.task('stylesheet', ['sprites'], function () {
   return gulp.src('app/css/main.styl')
     .pipe($.sourcemaps.init())
@@ -132,11 +134,10 @@ gulp.task('serve', ['stylesheet', 'javascript', 'fonts'], function () {
   browserSync({
     notify: false,
     port: 9000,
-    proxy: "192.168.0.2:5000",
-    serveStatic: ['.tmp', 'app']
-    // server: {
-    //   baseDir: ['.tmp', 'app']
-    // }
+    server: {
+      baseDir: ['.tmp', 'app'],
+      middleware: [ historyApiFallback() ]
+    }
   });
 
   // watch for changes
