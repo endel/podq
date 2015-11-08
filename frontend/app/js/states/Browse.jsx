@@ -16,7 +16,7 @@ export default class Browse extends React.Component {
   load(service) {
     this.clean();
     this.client.fetch(service)
-      .then((json) => {
+      .then(json => {
         this.setState({list:json});
       });
   }
@@ -49,7 +49,7 @@ export default class Browse extends React.Component {
         <p>{this.state.description}</p>
         <ItemList
           ref='list'
-          data={this.state.list}
+          list={this.state.list}
         />
       </section>
     );
