@@ -7,3 +7,11 @@ export function getDataType(data) {
   }
   return type;
 }
+
+export function simpleDate(str) {
+  var date = new Date(str);
+  var d = date.getDay();
+  var m = date.getMonth() + 1;
+  var y = date.getFullYear();
+  return `${m}/${d}/${y}`;
+}

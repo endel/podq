@@ -1,29 +1,53 @@
-SIZE = 160px
+WIDTH = 180px
+HEIGHT = 180px
 
 .item
-  position relative
-  width SIZE
-  height SIZE
-  margin-bottom $default_margin
-  margin-right $default_margin
+  margin-bottom $default_margin*2
+  margin-right $default_margin*2
   display inline-block
+  vertical-align top
+
+  .top
+    font-size $font_ss
+    color $font_color2
+    background-color rgba(255,255,255,0.1)
+
+  .mid
+    position relative
+    width WIDTH
+    height HEIGHT
+
+  .bot
+    font-size $font_s
+    background-color rgba(0,0,0,0.25)
+
+  .text
+    width WIDTH
+    z-index 1
+    padding 2px
 
   .hitArea
     position absolute
-    width SIZE
-    height SIZE
-    background-color #FFF;
-    z-index 1
-    opacity 0
+    width WIDTH
+    height HEIGHT
+    // background-color #000000;
+    z-index 2
+    opacity 1
+    box-shadow: inset 0 0 80px #000000;
 
   .cover
-    position absolute
-    width SIZE
-    height SIZE
+    width WIDTH
+    height WIDTH
     z-index 0
 
   .btn
     position absolute
     width 80px
     height 80px
-    z-index 2
+    z-index 3
+    background-color rgba(255,255,255,0.75)
+    border-radius 100%
+    left 50%
+    top 50%
+    transform translate(-50%, -50%)
+    opacity 0.3
