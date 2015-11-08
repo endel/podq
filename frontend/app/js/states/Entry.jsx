@@ -32,6 +32,11 @@ export default class Entry extends React.Component {
     }
   }
 
+  componentWillReceiveProps(props) {
+    this.setState(this.initialState);
+    this.load(`entries/${props.params.id}`);
+  }
+
   render() {
     return (
       <section className='section'>
