@@ -1,0 +1,45 @@
+@keyframes loading
+  0%
+    transform-origin 100% 100%
+    transform rotate(0deg)
+
+  100%
+    transform-origin 100% 100%
+    transform rotate(360deg)
+
+.loading
+  position relative
+  display block
+  z-index 13
+  margin 32vh auto
+  width 100px
+  height 100px
+  border 5px solid transparent
+  border-radius 50%
+  background-color transparent
+
+  &:before
+    position absolute
+    display block
+    content ''
+    z-index 12
+    top 4px
+    left 4px
+    width 82px
+    height 82px
+    border-radius 50%
+    background-color $primary_color1
+
+  &:after
+    position absolute
+    display block
+    top 0
+    content ''
+    z-index 11
+    top 0px
+    left 0px
+    width 45px
+    height 45px
+    border-radius 200px 0 0 0
+    background linear-gradient(45deg, rgba(0,0,0,0) 0%,rgba(255,252,224,1) 50%,rgba(218,184,111,1) 100%)
+    animation loading .9s linear infinite

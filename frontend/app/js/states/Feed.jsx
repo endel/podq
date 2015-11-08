@@ -6,6 +6,8 @@ import Notifier from '../tools/Notifier';
 import Client from '../tools/Client';
 import app from '../app';
 
+import classNames from 'classnames'
+
 export default class Feed extends React.Component {
   constructor() {
     super();
@@ -14,7 +16,7 @@ export default class Feed extends React.Component {
   }
 
   get initialState() {
-    return {feed:{}, entries:[]};
+    return {feed:{}, entries:[], loading:true};
   }
 
   componentDidMount() {
@@ -35,6 +37,7 @@ export default class Feed extends React.Component {
     this.clean();
     this.client.fetch(service)
       .then(json => {
+        json.loading = false
         this.setState(json);
       })
   }
@@ -48,7 +51,10 @@ export default class Feed extends React.Component {
       ? <a href={this.state.feed.permalink} target="_blank">{this.state.feed.permalink}</a>
       : null
 
-    return (
+    return (this.state.loading) ? (
+      <section className="section loading"></section>
+
+    ) : (
       <section className='section'>
         <h1>
           {this.state.feed.title} <SubscribeButton feed={ this.state.feed } />
