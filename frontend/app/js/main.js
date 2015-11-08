@@ -6,6 +6,7 @@ import Application from './layout/Application.jsx'
 import Index from './states/Index.jsx'
 import Browse from './states/Browse.jsx'
 import Feed from './states/Feed.jsx'
+import Entry from './states/Entry.jsx'
 import SearchResults from './states/SearchResults.jsx'
 import app from './app';
 
@@ -25,6 +26,7 @@ React.render((
     <Route path="/" component={Application}>
       <IndexRoute component={Browse} />
       <Route path="feed/:id" component={Feed} />
+      <Route path="entry/:id" component={Entry} />
 
       {/*<Route path="lobby" component={Lobby} />*/}
       {/*<Route path="watch" component={Watch} />*/}

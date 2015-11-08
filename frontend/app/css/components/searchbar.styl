@@ -70,6 +70,25 @@
       .result-info
         width calc(100% - 20px)
 
+  .result-see-all
+    height 40px
+    line-height 40px
+    font-size 1.2em
+    padding 0 10px
+    position relative
+
+    &::after
+      content ""
+      display block
+      width 10px
+      height 10px
+      border 2px solid $font_color3
+      border-left none
+      border-bottom none
+      position absolute
+      right 20px
+      top 50%
+      transform rotate(45deg) translateY(-60%)
 
   .result-picture
     position relative

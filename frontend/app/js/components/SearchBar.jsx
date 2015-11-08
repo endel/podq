@@ -121,6 +121,12 @@ export default class SearchBar extends React.Component {
 
       <div className={resultsClass}>
 
+        {this.state.phase === 'READY' && ((this.state.entriesResult && this.state.entriesResult.length) || (this.state.feedsResult && this.state.feedsResult.length)) ?
+          <div className="result-section result-item result-see-all">
+            Show All Results...
+          </div>
+        : null}
+
         <div className="result-section feed-results clearfix">
 
           <h3>ENTRIES RESULTS</h3>

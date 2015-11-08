@@ -1,5 +1,7 @@
 var app = {
-  title:''
+  title: '',
+  entry: null,
+  player: null
 }
 
 export default app;

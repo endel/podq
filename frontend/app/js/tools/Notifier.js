@@ -17,17 +17,63 @@ function remove(id) {
   }
 }
 
-export default class Notifier extends EventEmitter {
+export default class Notifier {
   constructor(id) {
-    super();
     this.id = id;
+    this.listeners = [];
     remove(id);
     notifiers[id] = this;
   }
 
-  on(event, fn, context) {
-    this.off(event, fn, context);
-    super.on(event, fn, context);
+  on(msg, fn, context, once = false) {
+    var listener = {};
+    listener.msg = msg;
+    listener.fn = fn;
+    listener.once = once;
+    listener.context = context;
+    this.listeners.push(listener);
+  }
+
+  once(msg, fn, context) {
+    this.on(msg, fn, context, true);
+  }
+
+  off(msg, fn, context) {
+    var i = this.listeners.length;
+    while (i--) {
+      var listener = this.listeners[i];
+      if (listener.msg === msg && listener.fn === fn && listener.context === context) {
+        this.listeners.splice(i, 1);
+      }
+    }
+  }
+
+  clean(context) {
+    var i = this.listeners.length;
+    while (i--) {
+      var listener = this.listeners[i];
+      if (listener.context === context) {
+        this.listeners.splice(i, 1);
+      }
+    }
+  }
+
+  emit(msg, args) {
+    var i = this.listeners.length;
+    while (i--) {
+      var listener = this.listeners[i];
+      if (listener.msg === msg) {
+        if (listener.context) {
+          listener.fn.apply(listener.context, [args]);
+        } else {
+          listener.fn(args);
+        }
+
+        if (listener.once) {
+          this.listeners.splice(i, 1);
+        }
+      }
+    }
   }
 }
 
