@@ -137,7 +137,7 @@ export default class SearchBar extends React.Component {
           <ul>
             {this.state.entriesResult && this.state.entriesResult.map(entry => {
 
-                return <SearchBarResult onClick={this.closeResults.bind(this)} type="entry" data={entry} />;
+                return <SearchBarResult onClick={this.closeResults.bind(this)} type="entry" data={entry} key={entry._id} />;
 
               })
             }
@@ -155,7 +155,7 @@ export default class SearchBar extends React.Component {
           <ul>
             {this.state.feedsResult && this.state.feedsResult.map(entry => {
 
-                return <SearchBarResult onClick={this.closeResults.bind(this)} type="feed" data={entry} />;
+                return <SearchBarResult onClick={this.closeResults.bind(this)} type="feed" data={entry} key={entry._id}/>;
 
               })
             }
@@ -169,6 +169,3 @@ export default class SearchBar extends React.Component {
   }
 
 }
-
-
-

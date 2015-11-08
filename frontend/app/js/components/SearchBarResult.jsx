@@ -41,7 +41,3 @@ export default class SearchBarResult extends React.Component {
   }
 
 }
-
-
-
-

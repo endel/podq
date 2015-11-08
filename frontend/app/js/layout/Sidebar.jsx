@@ -28,7 +28,7 @@ export default class Sidebar extends React.Component {
       <ul>
         <li><Link to="/subscriptions" activeClassName="active">All</Link></li>
         {this.state.following.map((feed) => {
-          return <li><Link to={`/feed/${ feed._id }`} activeClassName="active">{ feed.title }</Link></li>
+          return <li key={feed._id}><Link to={`/feed/${ feed._id }`} activeClassName="active">{ feed.title }</Link></li>
         })}
       </ul>
 
@@ -36,4 +36,3 @@ export default class Sidebar extends React.Component {
   }
 
 }
-
