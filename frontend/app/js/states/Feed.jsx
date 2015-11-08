@@ -14,7 +14,7 @@ export default class Feed extends React.Component {
   }
 
   get initialState() {
-    return {title:'', list:[]};
+    return {title:'', description:'', entries:[]};
   }
 
   componentDidMount() {
@@ -25,6 +25,11 @@ export default class Feed extends React.Component {
 
   componentWillUnmount() {
 
+  }
+
+  componentWillReceiveProps(props) {
+    this.setState(this.initialState);
+    this.load(`feeds/${props.params.id}/entries`);
   }
 
   load(service) {
