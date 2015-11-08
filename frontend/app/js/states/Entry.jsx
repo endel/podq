@@ -9,12 +9,15 @@ import app from '../app';
 export default class Entry extends React.Component {
   constructor() {
     super();
-    this.state = {feed:{}, entry:{}}
+    this.state = this.initialState;
     this.client = new Client();
   }
 
+  get initialState() {
+    return {feed:{}, entry:{}};
+  }
+
   load(service) {
-    console.log('load');
     this.client.fetch(service)
       .then((data) => {
         this.setState(data);
