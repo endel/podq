@@ -62,7 +62,10 @@ gulp.task('sprites', function() {
 gulp.task('javascript', function () {
   return gulp.src('app/js/main.js')
     .pipe(through2.obj(function (file, enc, next){ // workaround for https://github.com/babel/babelify/issues/46
-      browserify(file.path).bundle(function(err, res){
+      browserify({
+        entries: file.path,
+        debug: process.env.RAILS_ENV !== "production"
+      }).bundle(function(err, res){
         if (err) { return next(err); }
 
         file.contents = res;
@@ -74,7 +77,7 @@ gulp.task('javascript', function () {
       this.emit('end');
     })
     .pipe(gulp.dest('../public/js'))
-    .pipe($.sourcemaps.init())
+    .pipe($.sourcemaps.init({loadMaps: true}))
     // .pipe($.uglify())
     .pipe($.sourcemaps.write('.'))
     .pipe(gulp.dest('.tmp/js'));

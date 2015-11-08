@@ -10,6 +10,7 @@ export default class Browse extends React.Component {
     super();
     this.state = this.defaultState;
     this.client = new Client();
+    debugger
   }
 
   load(service) {

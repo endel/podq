@@ -22,7 +22,7 @@
     "eventemitter3": "^1.1.1",
     "history": "^1.12.5",
     "react": "^0.13.3",
-    "react-router": "^1.0.0-rc3",
+    "react-router": "^1.0.0-rc4",
     "whatwg-fetch": "^0.10.1"
   },
   "devDependencies": {

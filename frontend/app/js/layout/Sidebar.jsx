@@ -16,14 +16,15 @@ export default class Sidebar extends React.Component {
     return <aside className="main-sidebar">
       <h3>Main</h3>
       <ul>
-        <li><Link>Browse</Link></li>
+        <li><Link to="/browse">Browse</Link></li>
       </ul>
 
       <h3>Your subscriptions</h3>
       <ul>
-        <li><Link>Lostcast</Link></li>
-        <li><Link>Grok Podcast</Link></li>
-        <li><Link>Jogabilidade</Link></li>
+        <li><Link to="/feed/563e6f0f9754e30003000000" activeClassName="active">All</Link></li>
+        <li><Link to="/feed/563e6f0f9754e30003000000" activeClassName="active">Lostcast <span className="unread">8</span></Link></li>
+        <li><Link to="/feed/563e6f239754e30003000094" activeClassName="active">Grok Podcast <span className="unread">4</span></Link></li>
+        <li><Link to="/feed/563e6fe9f2f3880003000094" activeClassName="active">The Changelog <span className="unread">3</span></Link></li>
       </ul>
 
     </aside>
