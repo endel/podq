@@ -7,9 +7,14 @@ export default class Sidebar extends React.Component {
 
   constructor () {
     super()
-    this.state = {
-      subscriptions: []
-    }
+    window.Session = Session
+    this.state = { following: Session.data.following }
+  }
+
+  componentDidMount() {
+    Session.onChange((data) => {
+      this.setState({ following: data.following })
+    })
   }
 
   render () {
@@ -22,9 +27,9 @@ export default class Sidebar extends React.Component {
       <h3>Your subscriptions</h3>
       <ul>
         <li><Link to="/subscriptions" activeClassName="active">All</Link></li>
-        <li><Link to="/feed/563e6f0f9754e30003000000" activeClassName="active">Lostcast</Link></li>
-        <li><Link to="/feed/563e6f239754e30003000094" activeClassName="active">Grok Podcast</Link></li>
-        <li><Link to="/feed/563e6fe9f2f3880003000094" activeClassName="active">The Changelog</Link></li>
+        {this.state.following.map((feed) => {
+          return <li><Link to={`/feed/${ feed._id }`} activeClassName="active">{ feed.title }</Link></li>
+        })}
       </ul>
 
     </aside>
