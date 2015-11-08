@@ -23,7 +23,6 @@ export default class PlaybackBtn extends React.Component {
 
   onClick(e) {
     Notifier.get('playback').emit('toggle', this.props.data);
-    console.log(this.props.data);
     this.updateIcon();
   }
 
