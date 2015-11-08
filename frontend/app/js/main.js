@@ -8,6 +8,8 @@ import Browse from './states/Browse.jsx'
 import Feed from './states/Feed.jsx'
 import Entry from './states/Entry.jsx'
 import SearchResults from './states/SearchResults.jsx'
+import UserSubscriptions from './states/UserSubscriptions.jsx'
+
 import app from './app';
 
 window.BACKEND_ENDPOINT = (process.env.RAILS_ENV)
@@ -25,8 +27,13 @@ React.render((
   <Router history={app.history}>
     <Route path="/" component={Application}>
       <IndexRoute component={Browse} />
+      <Route path="browse" component={Browse} />
+      <Route path="subscriptions" component={UserSubscriptions} />
+
       <Route path="feed/:id" component={Feed} />
       <Route path="entry/:id" component={Entry} />
+
+      <Route path="search" component={SearchResults} />
 
       {/*<Route path="lobby" component={Lobby} />*/}
       {/*<Route path="watch" component={Watch} />*/}

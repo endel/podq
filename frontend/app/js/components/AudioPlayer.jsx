@@ -80,7 +80,7 @@ export default class AudioPlayer  extends React.Component {
           <li><button onClick={this.changePlaybackRate.bind(this, 1)}>1x</button></li>
           <li><button onClick={this.changePlaybackRate.bind(this, 1.25)}>1.25x</button></li>
           <li><button onClick={this.changePlaybackRate.bind(this, 1.50)}>1.50x</button></li>
-          <li><button onClick={this.changePlaybackRate.bind(this, 1.50)}>1.50x</button></li>
+          <li><button onClick={this.changePlaybackRate.bind(this, 1.75)}>1.75x</button></li>
         </ul>
 
       </div>

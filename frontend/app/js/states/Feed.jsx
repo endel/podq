@@ -1,6 +1,7 @@
 import React from 'react';
 import main from '../main';
 import ItemList from '../components/ItemList.jsx';
+import SubscribeButton from '../components/SubscribeButton.jsx'
 import Notifier from '../tools/Notifier';
 import Client from '../tools/Client';
 import app from '../app';
@@ -45,17 +46,20 @@ export default class Feed extends React.Component {
     this.setState(this.initialState);
   }
 
-  subscribe () {
-  }
-
   render() {
-    var subscribe = this.state.title.length > 1 ? <button onClick={this.subscribe.bind(this)}>Subscribe</button> : '';
+    var permalink = (this.state.permalink)
+      ? <a href={this.state.permalink} target="_blank">{this.state.permalink}</a>
+      : null
+
     return (
       <section className='section'>
         <h1>
-          {this.state.title} {subscribe}
+          {this.state.title} <SubscribeButton feed_id={ this.state._id } />
         </h1>
-        <p>{this.state.description}</p>
+        <p>
+          {this.state.description} <br/ >
+          { permalink }
+        </p>
         <ItemList
           ref='list'
           data={this.state.entries}
