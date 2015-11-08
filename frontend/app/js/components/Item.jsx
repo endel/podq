@@ -60,7 +60,7 @@ export default class Item extends React.Component {
   }
 
   render() {
-    var type = this.props.data.audio ? 'entry' : 'feed';
+    var type = this.props.data.audio_url ? 'entry' : 'feed';
     var className = type ? `item ${type}` : 'item';
 
     return (

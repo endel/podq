@@ -7,7 +7,7 @@ export default class Browse extends React.Component {
     super();
     this.state = this.defaultState;
     this.type = 'feed';
-    this.load('/mockdata/feed-list.json');
+    this.load('http://webstdio.r15.railsrumble.com/feeds');
     Notifier.get('main').on('item-selected', this.onItemSelect.bind(this));
   }
 
@@ -18,7 +18,7 @@ export default class Browse extends React.Component {
         return response.text();
       }).then((json) => {
         var data = JSON.parse(json);
-        this.setState({list:data.list});
+        this.setState({list:data});
       });
   }
 
@@ -33,7 +33,8 @@ export default class Browse extends React.Component {
   onItemSelect(data) {
     if (this.type === 'feed') {
       this.type = 'entry';
-      this.load('/mockdata/entry-list.json');
+      var url = `http://webstdio.r15.railsrumble.com/feeds/${data._id}/entries`
+      this.load(url);
       this.setState({title:data.name});
     } else if (this.type === 'entry') {
       Notifier.get('main').emit('play', data);

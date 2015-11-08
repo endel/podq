@@ -1,28 +1,44 @@
-{
-  "list": [
-    {
-      "id": "1",
-      "name": "Entry A",
-      "image": "http://www.vgmuseum.com/end/genesis/a/sonic2-2.gif",
-      "audio": "http://c0953132.cdn.cloudfiles.rackspacecloud.com/elementary-podcasts-s01-e01.mp3"
-    },
-    {
-      "id": "2",
-      "name": "Entry B",
-      "image": "http://www.vgmuseum.com/end/genesis/a/sonic2-2.gif",
-      "audio": "http://c0953132.cdn.cloudfiles.rackspacecloud.com/elementary-podcasts-s01-e01.mp3"
-    },
-    {
-      "id": "3",
-      "name": "Entry C",
-      "image": "http://www.vgmuseum.com/end/genesis/a/sonic2-2.gif",
-      "audio": "http://c0953132.cdn.cloudfiles.rackspacecloud.com/elementary-podcasts-s01-e01.mp3"
-    },
-    {
-      "id": "4",
-      "name": "Entry D",
-      "image": "http://www.vgmuseum.com/end/genesis/a/sonic2-2.gif",
-      "audio": "http://c0953132.cdn.cloudfiles.rackspacecloud.com/elementary-podcasts-s01-e01.mp3"
-    }
-  ]
-}
+[
+   {
+      "_id":"563e710ef2f38800030000f2",
+      "audio_url":"http://media.blubrry.com/bilid/content.blubrry.com/bilid/vertice_ep43.mp3",
+      "created_at":"2015-11-07T21:45:50.710Z",
+      "description":"\u003cp\u003eAndré, Rick, Sushi e Márcio se juntam, mais uma vez, para falar de Bayonetta 2, Mario Kart 8, Tales from the Borderlands, Game of Thrones, The Game Awards, a nova premiação do mundo dos joguetes, Playstation Experience, o vazamento do próximo Assassin's Creed e muito mais notícias e anúncios.\u003c/p\u003e\n\u003cp\u003eThe post \u003ca rel=\"nofollow\" href=\"http://jogabilida.de/2014/12/vertice-43/\"\u003eVértice #43: Nintendocast\u003c/a\u003e appeared first on \u003ca rel=\"nofollow\" href=\"http://jogabilida.de\"\u003eJogabilidade!\u003c/a\u003e.\u003c/p\u003e\n",
+      "duration":null,
+      "feed_id":"563e7103f2f38800030000c7",
+      "image":null,
+      "keywords":null,
+      "permalink":"http://jogabilida.de/2014/12/vertice-43/",
+      "published":"2014-12-11T01:59:54.000+00:00",
+      "title":"Vértice #43: Nintendocast",
+      "updated_at":"2015-11-07T21:45:50.715Z"
+   },
+   {
+      "_id":"563e710ef2f38800030000fb",
+      "audio_url":"http://media.blubrry.com/bilid/content.blubrry.com/bilid/vertice_ep36.mp3",
+      "created_at":"2015-11-07T21:45:50.930Z",
+      "description":"\u003cp\u003eAndré, Rick, Sushi e Márcio jogaram Virtue's Last Reward, World of Warcraft, The Walking Dead Season 2 e Super Mario 3D World. Eles também discutem o New 3DS, Pokkén, os novos trailers de Persona 5 e Firewatch e o polêmico #gamergate.\u003c/p\u003e\n\u003cp\u003eThe post \u003ca rel=\"nofollow\" href=\"http://jogabilida.de/2014/09/vertice-36/\"\u003eVértice #36: A Guilda da Justiça Social\u003c/a\u003e appeared first on \u003ca rel=\"nofollow\" href=\"http://jogabilida.de\"\u003eJogabilidade!\u003c/a\u003e.\u003c/p\u003e\n",
+      "duration":null,
+      "feed_id":"563e7103f2f38800030000c7",
+      "image":null,
+      "keywords":null,
+      "permalink":"http://jogabilida.de/2014/09/vertice-36/",
+      "published":"2014-09-05T17:00:28.000+00:00",
+      "title":"Vértice #36: A Guilda da Justiça Social",
+      "updated_at":"2015-11-07T21:45:50.936Z"
+   },
+   {
+      "_id":"563e710ff2f3880003000110",
+      "audio_url":"http://media.blubrry.com/bilid/content.blubrry.com/bilid/vertice_ep25.mp3",
+      "created_at":"2015-11-07T21:45:51.335Z",
+      "description":"\u003cp\u003eAndré, Rick, Sushi e o convidado Caio Corraini falam de Broken Age, Mario e Luigi, The Banner Saga, Rain, a Nintendo perdendo mais dinheiro, a Microsoft dando dinheiro, a primeira publisher brasileira, King.com querendo dominar o dicionário e muito mais.\u003c/p\u003e\n\u003cp\u003eThe post \u003ca rel=\"nofollow\" href=\"http://jogabilida.de/2014/01/vertice-25/\"\u003eVértice #25: Candy™ Podcast™ Saga™\u003c/a\u003e appeared first on \u003ca rel=\"nofollow\" href=\"http://jogabilida.de\"\u003eJogabilidade!\u003c/a\u003e.\u003c/p\u003e\n",
+      "duration":null,
+      "feed_id":"563e7103f2f38800030000c7",
+      "image":null,
+      "keywords":null,
+      "permalink":"http://jogabilida.de/2014/01/vertice-25/",
+      "published":"2014-01-29T16:55:53.000+00:00",
+      "title":"Vértice #25: Candy™ Podcast™ Saga™",
+      "updated_at":"2015-11-07T21:45:51.339Z"
+   }
+]

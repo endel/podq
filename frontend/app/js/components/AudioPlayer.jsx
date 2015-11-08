@@ -27,7 +27,7 @@ export default class AudioPlayer  extends React.Component {
     } else if (data) {
       this.stop();
       this.data = data;
-      this.audio.src = data.audio;
+      this.audio.src = data.audio_url;
       this.audio.autoPlay = true;
       this.playing = true;
     }

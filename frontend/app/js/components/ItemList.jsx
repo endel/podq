@@ -9,7 +9,7 @@ export default class ItemList extends React.Component {
   render() {
     var items = [];
     this.props.data.forEach((item) => {
-        items.push(<Item data={item} key={item.name} />);
+        items.push(<Item data={item} key={item._id} />);
     });
     return (
       <div>{items}</div>

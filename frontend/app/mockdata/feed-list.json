@@ -1,34 +1,20 @@
-{
-  "list": [
-    {
-      "id": "1",
-      "name": "Podcast A",
-      "feed": "dummy.xml",
-      "image": "http://romhustler.net/img/screenshots/mame_new/ingame/sf2cejb.png"
-    },
-    {
-      "id": "2",
-      "name": "Podcast B",
-      "feed": "dummy.xml",
-      "image": "http://romhustler.net/img/screenshots/mame_new/ingame/sf2cejb.png"
-    },
-    {
-      "id": "3",
-      "name": "Podcast C",
-      "feed": "dummy.xml",
-      "image": "http://romhustler.net/img/screenshots/mame_new/ingame/sf2cejb.png"
-    },
-    {
-      "id": "4",
-      "name": "Podcast D",
-      "feed": "dummy.xml",
-      "image": "http://romhustler.net/img/screenshots/mame_new/ingame/sf2cejb.png"
-    },
-    {
-      "id": "5",
-      "name": "Podcast E",
-      "feed": "dummy.xml",
-      "image": "http://romhustler.net/img/screenshots/mame_new/ingame/sf2cejb.png"
-    }
-  ]
-}
+[
+   {
+      "_id":"563e6f239754e30003000094",
+      "author":null,
+      "created_at":"2015-11-07T21:37:39.996Z",
+      "description":"Um podcast feito para programadores e empreendedores.",
+      "image":"http://www.grokpodcast.com/images/logo_itunes_grande.png",
+      "keywords":[
+         "Technology",
+         "Podcasting",
+         "Business",
+         "Careers"
+      ],
+      "language":"pt-BR",
+      "permalink":"http://www.grokpodcast.com/",
+      "title":"Grok Podcast",
+      "updated_at":"2015-11-07T21:40:08.324Z",
+      "url":"http://www.grokpodcast.com/atom.xml"
+   }
+]
