@@ -24,11 +24,25 @@ export default class ItemEntry extends React.Component {
   componentDidMount() {
     this.btn = React.findDOMNode(this.refs.btn);
     this.cover = React.findDOMNode(this.refs.cover);
+    this.hitArea = React.findDOMNode(this.refs.hitArea);
+    this.btn.onmouseover = this.onOver.bind(this);
+    this.btn.onmouseout = this.onOut.bind(this);
   }
 
   componentWillUnmount() {
+    this.btn.onmouseover = null;
+    this.btn.onmouseout = null;
     this.btn = null;
     this.cover = null;
+    this.hitArea = null;
+  }
+
+  onOver() {
+    this.btn.style.opacity = 1;
+  }
+
+  onOut() {
+    this.btn.style.opacity = 0.3;
   }
 
   render() {
@@ -38,10 +52,10 @@ export default class ItemEntry extends React.Component {
         <div className='top text'>{this.props.info.title} - {date}</div>
 
         <div className='mid'>
-          <div className='btn'>
-            <PlaybackBtn ref='btn' data={this.props.data}/>
+          <div ref='btn' className='btn'>
+            <PlaybackBtn data={this.props.data}/>
           </div>
-          <div className='hitArea' onClick={this.handleClick.bind(this)}></div>
+          <div ref='hitArea' className='hitArea' onClick={this.handleClick.bind(this)}></div>
           <Cover ref='cover' src={this.props.data.image}/>
         </div>
 
