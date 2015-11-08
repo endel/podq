@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router'
 import main from '../main';
 import ItemList from '../components/ItemList.jsx';
 import Notifier from '../tools/Notifier';
@@ -8,19 +9,15 @@ import app from '../app';
 export default class Entry extends React.Component {
   constructor() {
     super();
-    this.state = this.initialState;
+    this.state = {feed:{}, entry:{}}
     this.client = new Client();
-  }
-
-  get initialState() {
-    return {data:null};
   }
 
   load(service) {
     console.log('load');
     this.client.fetch(service)
-      .then((json) => {
-        this.setState({data:json});
+      .then((data) => {
+        this.setState(data);
       });
   }
 
@@ -28,15 +25,15 @@ export default class Entry extends React.Component {
     if (!app.entry) {
       this.load(`entries/${this.props.params.id}`);
     } else {
-      this.setState({data:app.entry});
+      this.setState({feed:app.feed, entry:app.entry});
     }
   }
 
   render() {
-    var title = this.state.data ? this.state.data.title : '';
     return (
       <section className='section'>
-        <div className='title'>{title}</div>
+        <h1><Link to={`/feed/${ this.state.feed._id }`}>{ this.state.feed.title }</Link>: {this.state.title}</h1>
+        <div dangerouslySetInnerHTML={{ __html: this.state.description }} />
       </section>
     );
   }

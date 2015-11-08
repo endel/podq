@@ -15,7 +15,8 @@ export default class ItemFeed extends React.Component {
   }
 
   handleClick() {
-    app.title = this.props.data.title;
+    app.feed = this.props.feed;
+    app.entry = this.props.data;
     app.history.pushState(null, '/feed/' + this.props.data._id);
   }
 

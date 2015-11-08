@@ -10,19 +10,19 @@ export default class ItemList extends React.Component {
   }
 
   get initialState() {
-    return {data:[]};
+    return {info:{}, list:[]};
   }
 
   render() {
     var items = [];
-    var title = this.props.title || this.state.title;
-    var array = this.props.data || this.state.data;
-    array.forEach(data => {
+    var info = this.props.info || this.state.info;
+    var list = this.props.list || this.state.list;
+    list.forEach(data => {
       var type = tools.getDataType(data);
-      if (data.type === 'entry') {
-        items.push(<ItemEntry data={data} key={data._id} />);
+      if (type === 'entry') {
+        items.push(<ItemEntry info={info} data={data} key={data._id} />);
       } else {
-        items.push(<ItemFeed data={data} key={data._id} />);
+        items.push(<ItemFeed info={info} data={data} key={data._id} />);
       }
     });
     return (

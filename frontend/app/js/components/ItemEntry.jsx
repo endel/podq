@@ -5,18 +5,19 @@ import Notifier from '../tools/Notifier';
 import * as tools from '../tools/tools';
 import app from '../app';
 
-export default class Item extends React.Component {
+export default class ItemEntry extends React.Component {
   constructor() {
     super();
-    this.onSelect = null;
-    this.iconPlay = null;
-    this.iconPause = null;
-    this.icon = null;
+    this.state = this.initialState;
+  }
+
+  get initialState() {
+    return {feed:{}, entry:{}};
   }
 
   handleClick() {
-    app.title = this.props.data.title;
-    app.entry = this.props.data;
+    app.entry = this.props.data.data;
+    app.feed = this.props.data.info;
     app.history.pushState(null, '/entry/' + this.props.data._id);
   }
 
@@ -33,6 +34,7 @@ export default class Item extends React.Component {
   render() {
     return (
       <div className='item entry'>
+        <div className='title'>{this.props.info.title}</div>
         <div className='btn'>
           <PlaybackBtn ref='btn' data={this.props.data}/>
         </div>
