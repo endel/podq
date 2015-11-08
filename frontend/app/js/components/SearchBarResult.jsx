@@ -12,43 +12,32 @@ export default class SearchBarResult extends React.Component {
 
   }
 
-  handleClick () {
-    if (this.props.type === 'feed'){
-      app.title = this.props.data.title;
-      app.history.pushState(null, '/feed/' + this.props.data._id);
-    } else {
-      Notifier.get('playback').emit('play', this.props.data);
-    }
-
-    this.props.onClick && this.props.onClick();
-
-  }
-
   render () {
 
-    var entry = this.props.data,
+    var data = this.props.data,
         resultClass = classNames({
           'result-item': true,
-          'no-image': !entry.image
-        });
+          'no-image': !data.image
+        }),
+        destination = (this.props.type === 'feed' ? '/feed/' : '/entry/') + data._id;
 
     // Ugly but functional HTML tags removal :)
     var tempDom = document.createElement('div');
-    tempDom.innerHTML = entry.description;
-    entry.description = tempDom.textContent;
+    tempDom.innerHTML = data.description;
+    data.description = tempDom.textContent;
 
-    return <li className={resultClass} onClick={this.handleClick.bind(this)}>
+    return <Link to={destination} className={resultClass} onClick={this.props.onClick}>
 
             <div className="result-picture">
-              <img src={entry.image} />
+              <img src={data.image} />
             </div>
 
             <div className="result-info">
-              <h4>{entry.title}</h4>
-              <span>{entry.description}</span>
+              <h4>{data.title}</h4>
+              <span>{data.description}</span>
             </div>
 
-          </li>
+          </Link>
   }
 
 }
