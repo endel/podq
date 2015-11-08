@@ -1,6 +1,7 @@
 SIZE = 160px
 
 .item
+  position relative
   width SIZE
   height SIZE
   margin-bottom $default_margin
@@ -8,26 +9,15 @@ SIZE = 160px
   float left
 
   .cover
-    width SIZE
-    height SIZE
-
-  .icon
     position absolute
     width SIZE
     height SIZE
+
+  .btn
+    position absolute
+    width 80px
+    height 80px
     z-index 1
-
-    .icon-img
-      position absolute
-      top 50%
-      left 50%
-      width auto
-      height 100%
-      transform translate(-50%, -50%)
-      background-color #FFFFFF
-
-      path
-        fill #FFFFFF
 
 .item.entry
   .icon

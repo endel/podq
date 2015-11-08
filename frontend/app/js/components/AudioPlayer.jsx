@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 
 import Notifier from '../tools/Notifier';
 import Session from '../tools/Session';
+import app from '../app';
 
 export default class AudioPlayer  extends React.Component {
   constructor() {
@@ -14,12 +15,15 @@ export default class AudioPlayer  extends React.Component {
 
     Notifier.get('playback').on('play', this.play.bind(this));
     Notifier.get('playback').on('stop', this.stop.bind(this));
+    Notifier.get('playback').on('toggle', this.toggle.bind(this));
+
     this.data = null;
     this.playing = false;
+    app.player = this;
   }
 
-  play(data) {
-    if (data === this.data) {
+  toggle(data) {
+    if (data && this.data && data._id === this.data._id) {
       if (this.playing) {
         this.audio.pause();
       } else {
@@ -27,12 +31,15 @@ export default class AudioPlayer  extends React.Component {
         this.playing = true;
       }
     } else if (data) {
-      this.stop();
-      this.data = data;
-      this.audio.src = data.audio_url;
-      this.audio.autoPlay = true;
-      this.playing = true;
+      this.play(data);
     }
+  }
+
+  play(data) {
+    this.data = data;
+    this.audio.src = data.audio_url;
+    this.audio.autoPlay = true;
+    this.playing = true;
   }
 
   stop() {

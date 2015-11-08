@@ -1,5 +1,6 @@
 import React from 'react';
 import Cover from './Cover.jsx';
+import PlaybackBtn from './PlaybackBtn.jsx';
 import Notifier from '../tools/Notifier';
 import * as tools from '../tools/tools';
 import app from '../app';
@@ -14,11 +15,14 @@ export default class Item extends React.Component {
   }
 
   handleClick() {
+    console.log('cover click');
     if (this.isFeed()) {
       app.title = this.props.data.title;
       app.history.pushState(null, '/feed/' + this.props.data._id);
     } else {
-      Notifier.get('playback').emit('play', this.props.data);
+      app.title = this.props.data.title;
+      app.entry = this.props.data;
+      app.history.pushState(null, '/entry/' + this.props.data._id);
     }
   }
 
@@ -27,47 +31,12 @@ export default class Item extends React.Component {
   }
 
   componentDidMount() {
-    Notifier.get('playback').on('change', this.onPlaybackChange.bind(this));
-    this.iconPlay = React.findDOMNode(this.refs.play);
-    this.iconPause = React.findDOMNode(this.refs.pause);
-    this.icon = React.findDOMNode(this.refs.icon);
-    this.stop();
-    this.icon.style.opacity = 0;
-    this.icon.addEventListener('mouseover', this.onMouseOver.bind(this));
-    this.icon.addEventListener('mouseout', this.onMouseOut.bind(this));
+    this.btn = React.findDOMNode(this.refs.btn);
+    this.cover = React.findDOMNode(this.refs.cover);
   }
 
   componentWillUnmount() {
-    Notifier.get('playback').off('change', this.onPlaybackChange.bind(this));
-    this.icon.removeEventListener('mouseover', this.onMouseOver.bind(this));
-    this.icon.removeEventListener('mouseout', this.onMouseOut.bind(this));
-  }
 
-  onMouseOver(e) {
-    this.icon.style.opacity = 0.3;
-  }
-
-  onMouseOut(e) {
-    this.icon.style.opacity = 0;
-  }
-
-  onPlaybackChange(e) {
-    var playing = e.state === 'play';
-    if (playing && e.data === this.props.data) {
-      this.play();
-    } else {
-      this.stop();
-    }
-  }
-
-  play() {
-    this.iconPlay.style.opacity = 0;
-    this.iconPause.style.opacity = 1;
-  }
-
-  stop() {
-    this.iconPlay.style.opacity = 1;
-    this.iconPause.style.opacity = 0;
   }
 
   render() {
@@ -75,12 +44,13 @@ export default class Item extends React.Component {
     var className = type ? `item ${type}` : 'item';
 
     return (
-      <div className={className} onClick={this.handleClick.bind(this)}>
-        <div ref='icon' className="icon">
-          <img ref='play' id='play' className='icon-img' src='/svg/play.svg'/>
-          <img ref='pause' id='pause' className='icon-img' src='/svg/pause.svg'/>
-        </div>
-        <Cover src={this.props.data.image} />
+      <div className={className}>
+        {type === 'entry' ?
+          <div className='btn'>
+            <PlaybackBtn ref='btn' data={this.props.data}/>
+          </div>
+        : ''}
+        <Cover ref='cover' src={this.props.data.image} onClick={this.handleClick.bind(this)}/>
       </div>
     );
   }
