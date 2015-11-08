@@ -15,10 +15,16 @@ export default class ItemEntry extends React.Component {
     return {feed:{}, entry:{}};
   }
 
-  handleClick() {
+  onClickDetails(e) {
     app.entry = this.props.data.data;
     app.feed = this.props.data.info;
     app.history.pushState(null, '/entry/' + this.props.data._id);
+  }
+
+  onClickFeed(e) {
+    app.entry = this.props.data.data;
+    app.feed = this.props.data.info;
+    app.history.pushState(null, '/feed/' + this.props.info._id);
   }
 
   componentDidMount() {
@@ -50,17 +56,17 @@ export default class ItemEntry extends React.Component {
     var img = this.props.data.image || this.props.info.image;
     return (
       <div className='item entry'>
-        <div className='top text'>{this.props.info.title} - {date}</div>
+        <div className='top text' onClick={this.onClickFeed.bind(this)}>{this.props.info.title} - {date}</div>
 
         <div className='mid'>
           <div ref='btn' className='btn'>
             <PlaybackBtn data={this.props.data}/>
           </div>
-          <div ref='hitArea' className='hitArea' onClick={this.handleClick.bind(this)}></div>
+          <div ref='hitArea' className='hitArea' onClick={this.onClickDetails.bind(this)}></div>
           <Cover ref='cover' src={img}/>
         </div>
 
-        <div className='bot text'>{this.props.data.title}</div>
+        <div className='bot text' onClick={this.onClickDetails.bind(this)}>{this.props.data.title}</div>
       </div>
     );
   }
