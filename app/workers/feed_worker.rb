@@ -4,7 +4,8 @@ class FeedWorker
   include Sidekiq::Worker
   sidekiq_options unique: :until_and_while_executing
 
-  AUDIO_FORMATS = '(mp3|ogg|acc|flac|m4a)'
+  AUDIO_FORMATS = '\.mp3|\.ogg|\.acc|\.flac|\.m4a|api\.soundcloud\.com\/tracks\/[0-9]+'
+  AUDIO_FORMATS_DESCRIPTION = '(https?:\/\/.*(\.mp3|\.ogg|\.acc|\.flac|\.m4a|api\.soundcloud\.com\/tracks\/[0-9]+))'
 
   def perform(feed_url)
     http = Faraday.new {|c|
@@ -14,7 +15,7 @@ class FeedWorker
     xml = http.get(feed_url).body
     xml_feed = Feedjira::Feed.parse(xml)
 
-    num_audio_matches = xml.scan(/\.#{AUDIO_FORMATS}/).length
+    num_audio_matches = xml.scan(/#{AUDIO_FORMATS}/).length
     if num_audio_matches < (xml_feed.entries.length / 2) # a high amount of mp3 shall be found
       logger.info("STATS: #{num_audio_matches} / #{xml_feed.entries.length}")
       raise 'invalid RSS file'
@@ -22,8 +23,18 @@ class FeedWorker
 
     keywords = xml_feed.try(:categories) || xml_feed.try(:itunes_categories)
 
-    feed = Feed.find_or_create_by(permalink: Feed.normalize_url(xml_feed.url))
-    feed.url = xml_feed.try(:itunes_new_feed_url) || feed_url
+    feed = nil
+    feed_permalink = Feed.normalize_url(xml_feed.url)
+    feed_url = xml_feed.try(:itunes_new_feed_url) || feed_url
+
+    if xml_feed.url
+      feed = Feed.find_or_create_by(permalink: feed_permalink)
+    else
+      feed = Feed.find_or_create_by(url: feed_url)
+    end
+
+    feed.permalink = feed_permalink
+    feed.url = feed_url
     feed.title = xml_feed.title.strip if xml_feed.try(:title)
     feed.description = xml_feed.description.strip if xml_feed.try(:description)
     feed.language = xml_feed.language if xml_feed.try(:language)
@@ -55,6 +66,10 @@ class FeedWorker
       end
 
       # skip if can't find audio_url
+      if !entry.audio_url && entry.description && entry.description.match(/#{AUDIO_FORMATS}/)
+        entry.audio_url = extract_audio_from_description(entry.description)
+      end
+
       next unless entry.audio_url
 
       entry.save
@@ -66,6 +81,21 @@ class FeedWorker
   def sanitize_keywords(keywords)
     keywords = keywords.split(/,/) unless keywords.kind_of?(Array)
     keywords.collect {|k| k.strip }.uniq.select {|k| k.present? }
+  end
+
+  def extract_audio_from_description(description)
+    audio_url = nil
+
+    matches = description.scan(/#{AUDIO_FORMATS_DESCRIPTION}/)
+    matches.each do |(match, extension)|
+      if match.index('soundcloud') && (track_id = match.match(/([0-9]+)/))
+        audio_url = "https://api.soundcloud.com/tracks/#{ track_id }/stream?client_id=#{ ENV['SOUNDCLOUD_CLIENT_ID'] }"
+      else
+        audio_url = match.match(/([^'"]+)/)[1]
+      end
+    end
+
+    audio_url
   end
 
 end

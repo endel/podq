@@ -25,7 +25,7 @@ class Feed
   field :keywords, type: Array
 
   def self.normalize_url(url)
-    Addressable::URI.parse(url.gsub('https://', 'http://')).normalize
+    Addressable::URI.parse(url.gsub('https://', 'http://')).normalize if url
   end
 
 end
