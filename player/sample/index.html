@@ -21,7 +21,6 @@
       .graphics {
         margin: 10px;
         display: inline-block;
-        background-color: #333333;
       }
 
       #playButton {
@@ -44,6 +43,22 @@
     <div id="player"></div>
   </body>
   <script type="text/javascript">
+    var data = {
+      "_id":"563e710ef2f38800030000f2",
+      "audio_url":"http://media.blubrry.com/bilid/content.blubrry.com/bilid/vertice_ep43.mp3",
+      "created_at":"2015-11-07T21:45:50.710Z",
+      "description":"\u003cp\u003eAndré, Rick, Sushi e Márcio se juntam, mais uma vez, para falar de Bayonetta 2, Mario Kart 8, Tales from the Borderlands, Game of Thrones, The Game Awards, a nova premiação do mundo dos joguetes, Playstation Experience, o vazamento do próximo Assassin's Creed e muito mais notícias e anúncios.\u003c/p\u003e\n\u003cp\u003eThe post \u003ca rel=\"nofollow\" href=\"http://jogabilida.de/2014/12/vertice-43/\"\u003eVértice #43: Nintendocast\u003c/a\u003e appeared first on \u003ca rel=\"nofollow\" href=\"http://jogabilida.de\"\u003eJogabilidade!\u003c/a\u003e.\u003c/p\u003e\n",
+      "duration":null,
+      "feed_id":"563e7103f2f38800030000c7",
+      "image":null,
+      "keywords":null,
+      "permalink":"http://jogabilida.de/2014/12/vertice-43/",
+      "published":"2014-12-11T01:59:54.000+00:00",
+      "title":"Vértice #43: Nintendocast",
+      "updated_at":"2015-11-07T21:45:50.715Z"
+   }
+
     var player = new Player(document.getElementById('player'));
+    player.play(data);
   </script>
 </html>

@@ -19,5 +19,6 @@
     "trailing": true,
     "smarttabs": true,
     "white": true,
+    "sub": true,
     "predef": [""]
 }

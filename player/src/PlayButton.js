@@ -2,7 +2,7 @@ import Graphics from './Graphics';
 
 var html = `
   <svg width="100%" viewbox="0 0 100 100">
-    <polygon id="play" points="10,0 10,100, 100,50" fill="red"></polygon>
+    <polygon id="play" points="10,0 10,100, 100,50" fill="white"></polygon>
     <path id="pause" d="M20,0H40V100H20V0 M60,0H80V100H60V0" fill="white"></path>
     <path id="spinner" fill="white"
       d="M73,50c0-12.7-10.3-23-23-23S27,37.3,27,50 M30.9,50c0-10.5,8.5-19.1,19.1-19.1S69.1,39.5,69.1,50"
@@ -22,7 +22,39 @@ var html = `
 export default class PlayButton extends Graphics {
   constructor() {
     super('playButton', html);
-    this.setNodeAttr('pause', 'opacity', 0.0);
-    this.setNodeAttr('spinner', 'opacity', 0.0);
+    this.state = PlayButton.IDLE;
+    this.element.addEventListener('click', this.onClick.bind(this));
+    this.onClick = null;
+  }
+
+  get state() {
+    return this._state;
+  }
+
+  set state(value) {
+    this._state = value;
+    this.updateState();
+  }
+
+  updateState() {
+    this.setNodeAttr('spinner', 'opacity', this._state === PlayButton.LOADING ? 1 : 0);
+    this.setNodeAttr('pause', 'opacity', this._state === PlayButton.PLAYING ? 1 : 0);
+    this.setNodeAttr('play', 'opacity', this._state === PlayButton.PAUSED ? 1 : 0);
+    this.element.style.cursor = this.interactive ? 'pointer' : 'auto';
+  }
+
+  get interactive() {
+    return this._state === PlayButton.PLAYING || this._state === PlayButton.PAUSED;
+  }
+
+  onClick() {
+    if (this.onClick && this.interactive) {
+      this.onClick();
+    }
   }
 }
+
+PlayButton.IDLE = 0;
+PlayButton.LOADING = 1;
+PlayButton.PLAYING = 2;
+PlayButton.PAUSED = 3;
