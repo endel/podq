@@ -3,7 +3,7 @@ class Entry
   include Mongoid::Timestamps::Created
   include Mongoid::Timestamps::Updated
 
-  belongs_to :feed, dependent: :destroy
+  belongs_to :feed # , dependent: :destroy
 
   # run 'rake db:mongoid:create_indexes' to create indexes
   index({ permalink: 1 }, { unique: true, background: true })

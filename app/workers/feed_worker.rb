@@ -8,13 +8,13 @@ class FeedWorker
   AUDIO_FORMATS_DESCRIPTION = '(https?:\/\/.*(\.mp3|\.ogg|\.acc|\.flac|\.m4a|api\.soundcloud\.com\/tracks\/[0-9]+))'
 
   def perform(feed_url, feed_id = nil)
-    feed = Feed.find(feed_id) if feed_id
+    feed = if feed_id then Feed.find(feed_id) else nil end
 
     http = Faraday.new {|c|
       c.use FaradayMiddleware::FollowRedirects
       c.adapter :net_http
     }
-    xml = http.get(feed.try(:url) || feed_url).body
+    xml = http.get(feed_url).body
     xml_feed = Feedjira::Feed.parse(xml)
 
     num_audio_matches = xml.scan(/#{AUDIO_FORMATS}/).length
@@ -40,15 +40,15 @@ class FeedWorker
     feed.permalink = feed_permalink
     feed.url = feed_url
 
-    unless feed.has_og_tags?
-      feed.title = xml_feed.title.strip if xml_feed.try(:title)
-      feed.description = xml_feed.description.strip if xml_feed.try(:description)
-      feed.image = xml_feed.itunes_image if xml_feed.try(:itunes_image)
-    end
+    new_info = HashWithIndifferentAccess.new()
+    new_info[:title] = xml_feed.title.strip if xml_feed.try(:title)
+    new_info[:description] = xml_feed.description.strip if xml_feed.try(:description)
+    new_info[:image] = xml_feed.itunes_image if xml_feed.try(:itunes_image)
+    new_info[:language] = xml_feed.language if xml_feed.try(:language)
+    new_info[:keywords] = Feed.sanitize_keywords(keywords) if keywords
 
-    feed.language = xml_feed.language if xml_feed.try(:language)
-    feed.keywords = sanitize_keywords(keywords) if keywords
-    feed.save
+    # TODO: Website or RSS has more descriptive data?
+    feed.update_info(new_info)
 
     # enqueue to index website to retrieve missing info
     unless feed.image || feed.description || feed.title || feed.keywords
@@ -63,7 +63,7 @@ class FeedWorker
       entry.published = xml_entry.published
       entry.title = xml_entry.title
       entry.description = sanitize_description( xml_entry.try(:content) || xml_entry.try(:summary) )
-      entry.keywords = (keywords and sanitize_keywords(keywords))
+      entry.keywords = Feed.sanitize_keywords(keywords) if keywords
       entry.audio_url = xml_entry.try(:enclosure_url)
       entry.image = xml_entry.try(:itunes_image) || xml_entry.try(:image)
 
@@ -83,12 +83,11 @@ class FeedWorker
       entry.save
     end
 
-    true
-  end
+    # all entries retrieved, let's publish the feed
+    feed.published = true
+    feed.save
 
-  def sanitize_keywords(keywords)
-    keywords = keywords.split(/,/) unless keywords.kind_of?(Array)
-    keywords.collect {|k| k.strip }.uniq.select {|k| k.present? }
+    true
   end
 
   def extract_audio_from_description(description)
