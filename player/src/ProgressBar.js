@@ -1,4 +1,5 @@
 import Graphics from './Graphics';
+import * as utils from './utils';
 
 var html = `
   <svg width="100%" height="100%" viewbox="0 0 100 100" preserveaspectratio="none">
@@ -20,7 +21,7 @@ export default class ProgressBar extends Graphics {
   }
 
   set timeRatio(value) {
-    this._timeRatio = this.clamp(value);
+    this._timeRatio = utils.clamp(value);
     this.setNodeAttr('time', 'width', 100*this._timeRatio);
   }
 
@@ -29,17 +30,9 @@ export default class ProgressBar extends Graphics {
   }
 
   set loadRatio(value) {
-    this._loadRatio = this.clamp(value);
+    this._loadRatio = utils.clamp(value);
     this.setNodeAttr('load', 'width', 100*this._loadRatio);
   }
 
-  clamp(v, min = 0, max = 1) {
-    if (v < min) {
-      return min;
-    } else if (v > max) {
-      return max;
-    } else {
-      return v;
-    }
-  }
+
 }

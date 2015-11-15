@@ -5,17 +5,6 @@ import VolumeControl from './VolumeControl';
 export default class Player {
   constructor(element) {
     this.element = element;
-
-    this.playButton = new PlayButton();
-    this.element.appendChild(this.playButton.element);
-    this.playButton.onClick = this.onPlayClick.bind(this);
-
-    this.progressBar = new ProgressBar();
-    this.element.appendChild(this.progressBar.element);
-
-    this.volumeControl = new VolumeControl();
-    this.element.appendChild(this.volumeControl.element);
-
     this.data = null;
     this.audio = new Audio();
     this.audio.addEventListener('play', this.onPlay.bind(this));
@@ -26,6 +15,17 @@ export default class Player {
     this.audio.addEventListener('loadedmetadata', this.onLoadProgress.bind(this));
     this.audio.addEventListener('error', this.onError.bind(this));
     this.audio.addEventListener('timeupdate', this.onTimeUpdate.bind(this));
+
+    this.playButton = new PlayButton();
+    this.element.appendChild(this.playButton.element);
+    this.playButton.onClick = this.onPlayClick.bind(this);
+
+    this.progressBar = new ProgressBar();
+    this.element.appendChild(this.progressBar.element);
+
+    this.volumeControl = new VolumeControl();
+    this.element.appendChild(this.volumeControl.element);
+    this.volumeControl.onUpdate = this.onVolumeUpdate.bind(this);
   }
 
   play(data) {
@@ -36,20 +36,17 @@ export default class Player {
     this.audio.src = data['audio_url'];
   }
 
-  get volume() {
-    return this.audio.volume;
-  }
-
-  set volume(value) {
-    this.audio.volume = value;
-  }
-
   onPlayClick() {
     if (!this.audio.paused) {
       this.audio.pause();
     } else {
       this.audio.play();
     }
+  }
+
+  onVolumeUpdate() {
+    console.log(this.volumeControl.ratio);
+    this.audio.volume = this.volumeControl.ratio;
   }
 
   onCanPlay() {
