@@ -73,6 +73,7 @@ export default class Player {
 
   play(data, save=true) {
     this.playing = true;
+    this.state = Player.PAUSED;
     if (data) {
       if (data !== this.data) {
         this.data = data;

@@ -36,7 +36,7 @@ export default class PlaybackBtn extends React.Component {
   }
 
   onPlaybackChange(e) {
-    if (e.data._id === this.props.data._id) {
+    if (e.data && e.data._id === this.props.data._id) {
       this.setState({status:e.state});
     } else {
       this.setState({status:'pause'});
@@ -63,7 +63,7 @@ export default class PlaybackBtn extends React.Component {
     var status = this.getStatus();
     if (status === 'load') {
       return (
-        <div className="playback-btn">
+        <div className="playback-btn" onClick={this.onClick.bind(this)}>
           <svg width="100%" viewBox="0 0 100 100">
             <circle id="circle" cx="50" cy="50" r="40" stroke="black" strokeWidth="8"/>
             <defs>
