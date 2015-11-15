@@ -40,12 +40,15 @@ export default class AudioPlayer  extends React.Component {
   }
 
   onKeyDown (e) {
-    e.preventDefault()
-    if (e.keyCode == Keycode.SPACE) {
-      if (this.podcastPlayer.playing) {
-        this.pause()
-      } else {
-        this.play()
+    // only toggle play if user isn't focused on Input element
+    if (!(e.path[0] instanceof HTMLInputElement)) {
+      if (e.keyCode == Keycode.SPACE) {
+        e.preventDefault()
+          if (this.podcastPlayer.playing) {
+            this.pause()
+          } else {
+            this.play()
+          }
       }
     }
   }
