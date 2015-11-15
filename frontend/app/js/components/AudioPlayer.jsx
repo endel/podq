@@ -19,13 +19,11 @@ export default class AudioPlayer  extends React.Component {
     Notifier.get('playback').on('play', this.play.bind(this));
     Notifier.get('playback').on('pause', this.pause.bind(this));
 
-    this.data = null;
     this.playing = false;
     app.player = this;
   }
 
   play(data) {
-    this.data = data;
     Notifier.get('playback').emit('change', {data:this.data, state:'load'});
     this.podcastPlayer.play(data);
     this.playing = true;
@@ -54,6 +52,10 @@ export default class AudioPlayer  extends React.Component {
         Notifier.get('playback').emit('change', {data:this.data, state:'pause'});
       break;
     }
+  }
+
+  get data() {
+    return this.podcastPlayer.data;
   }
 
   render() {

@@ -8,9 +8,11 @@ export default class Settings {
     };
   }
 
-  set(field, value) {
+  set(field, value, save = false) {
     this.data[field] = value;
-    this.save();
+    if (save) {
+      this.save();
+    }
   }
 
   get(field) {

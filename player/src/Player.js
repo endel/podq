@@ -62,20 +62,25 @@ export default class Player {
 
     var lastEntry = this.settings.get('entry');
     if (lastEntry && autoSave) {
-      this.play(lastEntry);
+      this.play(lastEntry, false);
       this.audio.currentTime = this.settings.get('time');
     }
   }
 
-  play(data) {
+  play(data, save=true) {
     this.playing = true;
     if (data) {
       if (data !== this.data) {
         this.data = data;
-        this.settings.set('entry', data);
+        if (save) {
+          this.settings.set('entry', data);
+          this.settings.set('time', 0);
+          this.settings.save();
+        }
         this.audio.autoPlay = true;
         this.progressBar.loadRatio = 0;
         this.progressBar.timeRatio = 0;
+        this.audio.currentTime = 0;
         this.audio.src = data['audio_url'];
         this.labelTitle.text = data.title;
         this.state = Player.LOADING;
@@ -103,12 +108,12 @@ export default class Player {
   onSpeedChange() {
     this.audio.playbackRate = this.speedButton.speed;
     this.audio.defaultPlaybackRate = this.speedButton.speed;
-    this.settings.set('speed', this.speedButton.speed);
+    this.settings.set('speed', this.speedButton.speed, true);
   }
 
   onVolumeUpdate() {
     this.audio.volume = this.volumeControl.ratio;
-    this.settings.set('volume', this.volumeControl.ratio);
+    this.settings.set('volume', this.volumeControl.ratio, true);
   }
 
   onSeekUpdate() {
@@ -153,10 +158,9 @@ export default class Player {
 
   onTimeUpdate() {
     this.progressBar.timeRatio = this.audio.currentTime/this.audio.duration;
-    this.settings.set('time', this.audio.currentTime);
     var delta = Math.abs(this.settings.get('time') - this.audio.currentTime);
     if (delta > 5) {
-      this.settings.set('time', this.audio.currentTime);
+      this.settings.set('time', this.audio.currentTime, true);
     }
   }
 

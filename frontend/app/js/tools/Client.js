@@ -20,7 +20,7 @@ export default class Client {
               .then((response) => {
                 this.log('fetch', 'complete');
                 return response.json();
-              }).catch(function(ex) {
+              }).catch((ex) => {
                 this.log('FETCH FAILED!', ex);
               });
   }
