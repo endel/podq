@@ -40,6 +40,7 @@ export default class AudioPlayer  extends React.Component {
   }
 
   onKeyDown (e) {
+    e.preventDefault()
     if (e.keyCode == Keycode.SPACE) {
       if (this.podcastPlayer.playing) {
         this.pause()
