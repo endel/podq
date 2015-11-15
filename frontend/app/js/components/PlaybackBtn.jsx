@@ -36,9 +36,7 @@ export default class PlaybackBtn extends React.Component {
   }
 
   onPlaybackChange(e) {
-    if (e.state === "load") { return; }
-
-    if (e.data._id === this.props.data._id) {
+    if (e.data && e.data._id === this.props.data._id) {
       this.setState({status:e.state});
     } else {
       this.setState({status:'pause'});
