@@ -55,6 +55,7 @@ class FeedWorker
       WebsiteWorker.perform_async(xml_feed.url)
     end
 
+    entries_saved = 0
     xml_feed.entries.each do |xml_entry|
       keywords = xml_entry.try(:categories) || xml_entry.try(:itunes_keywords)
 
@@ -80,11 +81,12 @@ class FeedWorker
 
       next unless entry.audio_url
 
+      entries_saved += 1
       entry.save
     end
 
     # all entries retrieved, let's publish the feed
-    feed.published = true
+    feed.published = true if entries_saved > 0
     feed.save
 
     true
