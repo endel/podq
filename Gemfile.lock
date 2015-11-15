@@ -86,6 +86,7 @@ GEM
       activesupport (>= 4.1.0)
     hashie (3.4.3)
     hitimes (1.2.3)
+    htmlentities (4.3.4)
     i18n (0.7.0)
     jbuilder (2.2.5)
       activesupport (>= 3.0.0, < 5)
@@ -175,6 +176,7 @@ GEM
     redis (3.2.1)
     redis-namespace (1.5.2)
       redis (~> 3.0, >= 3.0.4)
+    rufus-scheduler (3.1.9)
     sass (3.4.16)
     sass-rails (5.0.3)
       railties (>= 4.0.0, < 5.0)
@@ -192,6 +194,9 @@ GEM
       json (~> 1.0)
       redis (~> 3.2, >= 3.2.1)
       redis-namespace (~> 1.5, >= 1.5.2)
+    sidekiq-cron (0.3.1)
+      rufus-scheduler (>= 2.0.24)
+      sidekiq (>= 2.17.3)
     sidekiq-unique-jobs (4.0.8)
       sidekiq (>= 2.6)
     sinatra (1.4.6)
@@ -228,6 +233,7 @@ DEPENDENCIES
   dotenv-rails
   faraday_middleware (~> 0.10.0)
   feedjira (~> 2.0.0)
+  htmlentities (~> 4.3.4)
   jbuilder (~> 2.0)
   mongoid (~> 5.0.1)
   omniauth
@@ -239,6 +245,7 @@ DEPENDENCIES
   sass-rails (~> 5.0.3)
   sdoc (~> 0.4.0)
   sidekiq (~> 3.5.3)
+  sidekiq-cron (~> 0.3.1)
   sidekiq-unique-jobs (~> 4.0.8)
   sinatra
   spring

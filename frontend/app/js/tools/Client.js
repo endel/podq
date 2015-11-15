@@ -1,6 +1,6 @@
 export default class Client {
   constructor() {
-    this.url = 'http://webstdio.r15.railsrumble.com/';
+    this.url = `${ BACKEND_ENDPOINT }/`;
     this.mockurl = '/mockdata/';
     this.mockdata = false;
     this.debug = false;

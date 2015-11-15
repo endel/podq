@@ -13,7 +13,8 @@ export default class AudioPlayer  extends React.Component {
     this.state = {
       url: null,
       status: 'stopped',
-      position: 0
+      position: 0,
+      playbackRate: 1
     };
 
     Notifier.get('playback').on('play', this.play.bind(this));

@@ -9,7 +9,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'addressable', '~> 2.3.8'
 gem 'databound', '3.1.3'
 gem 'cld', '~> 0.7.0'
-gem 'sidekiq-unique-jobs', '~> 4.0.8'
+gem 'htmlentities', '~> 4.3.4'
 
 gem 'omniauth'
 gem 'omniauth-twitter'
@@ -21,6 +21,8 @@ gem 'bson_ext'
 # Workers
 gem 'sinatra', :require => nil
 gem 'sidekiq', '~> 3.5.3'
+gem 'sidekiq-cron', '~> 0.3.1'
+gem 'sidekiq-unique-jobs', '~> 4.0.8'
 gem 'feedjira', '~> 2.0.0'
 gem 'faraday_middleware', '~> 0.10.0'
 

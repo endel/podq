@@ -7,12 +7,14 @@ class FeedWorker
   AUDIO_FORMATS = '\.mp3|\.ogg|\.acc|\.flac|\.m4a|api\.soundcloud\.com\/tracks\/[0-9]+'
   AUDIO_FORMATS_DESCRIPTION = '(https?:\/\/.*(\.mp3|\.ogg|\.acc|\.flac|\.m4a|api\.soundcloud\.com\/tracks\/[0-9]+))'
 
-  def perform(feed_url)
+  def perform(feed_url, feed_id = nil)
+    feed = Feed.find(feed_id) if feed_id
+
     http = Faraday.new {|c|
       c.use FaradayMiddleware::FollowRedirects
       c.adapter :net_http
     }
-    xml = http.get(feed_url).body
+    xml = http.get(feed.try(:url) || feed_url).body
     xml_feed = Feedjira::Feed.parse(xml)
 
     num_audio_matches = xml.scan(/#{AUDIO_FORMATS}/).length
@@ -23,14 +25,17 @@ class FeedWorker
 
     keywords = xml_feed.try(:categories) || xml_feed.try(:itunes_categories)
 
-    feed = nil
     feed_permalink = Feed.normalize_url(xml_feed.url)
     feed_url = xml_feed.try(:itunes_new_feed_url) || feed_url
 
-    if xml_feed.url
-      feed = Feed.find_or_create_by(permalink: feed_permalink)
-    else
-      feed = Feed.find_or_create_by(url: feed_url)
+    # query for feed if _id is not provided
+    unless feed
+      if xml_feed.url
+        feed_query = {permalink: feed_permalink}
+      else
+        feed_query = {url: feed_url}
+      end
+      feed = Feed.find_or_create_by(feed_query)
     end
 
     feed.permalink = feed_permalink

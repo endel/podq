@@ -20,4 +20,6 @@ class Entry
   field :duration, type: String
 
   field :keywords, type: Array
+
+  validates_presence_of :feed_id
 end

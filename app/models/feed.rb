@@ -3,6 +3,7 @@ require 'addressable/uri'
 class Feed
   include Mongoid::Document
   include Mongoid::Timestamps::Created
+  include Mongoid::Timestamps::Updated
 
   has_many :entries
 

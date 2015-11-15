@@ -1,5 +1,8 @@
 # podcast-player
 
+## TODO
+- where is the best title/description? In the page or in the RSS?
+
 To normalize
 - http://www.lovebeingboss.com/RSSRetrieve.aspx?ID=18365&Type=RSS20
 - http://mostlyerlang.com/
