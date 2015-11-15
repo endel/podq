@@ -51,13 +51,17 @@ export default class Player {
 
   play(data) {
     if (data) {
-      this.data = data;
-      this.audio.autoPlay = true;
-      this.progressBar.loadRatio = 0;
-      this.progressBar.timeRatio = 0;
-      this.audio.src = data['audio_url'];
-      this.labelTitle.text = data.title;
-      this.state = Player.PLAYING;
+      if (data !== this.data) {
+        this.data = data;
+        this.audio.autoPlay = true;
+        this.progressBar.loadRatio = 0;
+        this.progressBar.timeRatio = 0;
+        this.audio.src = data['audio_url'];
+        this.labelTitle.text = data.title;
+        this.state = Player.LOADING;
+      } else {
+        this.audio.play();
+      }
     } else {
       this.audio.play();
     }

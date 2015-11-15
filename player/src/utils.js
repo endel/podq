@@ -14,7 +14,7 @@ export function getPosition(element, e) {
 
 export function clamp(v, min = 0, max = 1) {
   'use strict';
-  if (v < min) {
+  if (isNaN(v) || v < min) {
     return min;
   } else if (v > max) {
     return max;

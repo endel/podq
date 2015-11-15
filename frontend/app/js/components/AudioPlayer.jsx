@@ -1,8 +1,6 @@
-import React from 'react'
-import { Link } from 'react-router'
-
-import classNames from 'classnames'
-
+import React from 'react';
+import { Link } from 'react-router';
+import classNames from 'classnames';
 import Notifier from '../tools/Notifier';
 import Session from '../tools/Session';
 import app from '../app';
@@ -18,45 +16,23 @@ export default class AudioPlayer  extends React.Component {
     };
 
     Notifier.get('playback').on('play', this.play.bind(this));
-    Notifier.get('playback').on('stop', this.stop.bind(this));
-    Notifier.get('playback').on('toggle', this.toggle.bind(this));
+    Notifier.get('playback').on('pause', this.pause.bind(this));
 
     this.data = null;
     this.playing = false;
     app.player = this;
   }
 
-  toggle(data) {
-    if (data && this.data && data._id === this.data._id) {
-      if (this.playing) {
-        this.podcastPlayer.pause();
-      } else {
-        this.podcastPlayer.play();
-        this.playing = true;
-      }
-    } else if (data) {
-      this.play(data);
-    }
-  }
-
   play(data) {
-    if (data !== this.data) {
-      this.data = data;
-      this.podcastPlayer.play(data);
-    } else {
-      this.podcastPlayer.play();
-    }
+    this.data = data;
+    Notifier.get('playback').emit('change', {data:this.data, state:'load'});
+    this.podcastPlayer.play(data);
     this.playing = true;
   }
 
-  stop() {
+  pause() {
     this.podcastPlayer.pause();
     this.playing = false;
-  }
-
-  changePlaybackRate(rate, e) {
-    // this.audio.playbackRate = rate
-    // this.setState({ playbackRate: rate })
   }
 
   componentDidMount() {
@@ -74,34 +50,15 @@ export default class AudioPlayer  extends React.Component {
         Notifier.get('playback').emit('change', {data:this.data, state:'play'});
       break;
       case PodcastPlayer.PAUSED:
-        Notifier.get('playback').emit('change', {data:this.data, state:'stop'});
+        Notifier.get('playback').emit('change', {data:this.data, state:'pause'});
       break;
     }
   }
 
   render () {
     return (
-      <div ref="audio" className="audio-player">
-      </div>
+      <div ref="audio" className="audio-player"></div>
     );
   }
-
-  // render () {
-  //   return (
-  //     <div ref="audio" className="audio-player">
-  //       <audio ref='audio' controls autoPlay>
-  //         <source src={this.state.url} />
-  //       </audio>
-  //       <ul>
-  //         <li>Speed: </li>
-  //         <li><button className={classNames({ active: (this.state.playbackRate == 1) })} onClick={this.changePlaybackRate.bind(this, 1)}>1x</button></li>
-  //         <li><button className={classNames({ active: (this.state.playbackRate == 1.25) })} onClick={this.changePlaybackRate.bind(this, 1.25)}>1.25x</button></li>
-  //         <li><button className={classNames({ active: (this.state.playbackRate == 1.50) })} onClick={this.changePlaybackRate.bind(this, 1.50)}>1.50x</button></li>
-  //         <li><button className={classNames({ active: (this.state.playbackRate == 1.75) })} onClick={this.changePlaybackRate.bind(this, 1.75)}>1.75x</button></li>
-  //       </ul>
-  //
-  //     </div>
-  //   );
-  // }
 
 }
