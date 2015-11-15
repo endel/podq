@@ -14,7 +14,7 @@ class FeedWorker
       c.use FaradayMiddleware::FollowRedirects
       c.adapter :net_http
     }
-    xml = http.get(feed.try(:url) || feed_url).body
+    xml = http.get(feed_url).body
     xml_feed = Feedjira::Feed.parse(xml)
 
     num_audio_matches = xml.scan(/#{AUDIO_FORMATS}/).length
