@@ -3,6 +3,7 @@ require 'addressable/uri'
 class Feed
   include Mongoid::Document
   include Mongoid::Timestamps::Created
+  include Mongoid::Timestamps::Updated
 
   has_many :entries
 
@@ -24,8 +25,11 @@ class Feed
   field :language, type: String
   field :keywords, type: Array
 
+  # Meta
+  field :has_og_tags, type: Boolean
+
   def self.normalize_url(url)
-    Addressable::URI.parse(url.gsub('https://', 'http://')).normalize
+    Addressable::URI.parse(url.gsub('https://', 'http://')).normalize if url
   end
 
 end

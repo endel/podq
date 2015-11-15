@@ -12,6 +12,12 @@ HEIGHT = 180px
   &:hover
     opacity 1
 
+  .btn
+    transition opacity 0.2s
+    opacity 0.3
+    &:hover
+      opacity 1
+
   .top
     font-size $font_ss
     color $font_color2
@@ -31,18 +37,17 @@ HEIGHT = 180px
     z-index 1
     padding 2px
 
-  .hitArea
-    position absolute
-    width WIDTH
-    height HEIGHT
-    // background-color #000000;
-    z-index 2
-    box-shadow inset 0 0 80px #000000
-
   .cover
     width WIDTH
     height WIDTH
     z-index 0
+
+    .shadow
+      position absolute
+      width WIDTH
+      height HEIGHT
+      z-index 2
+      box-shadow inset 0 0 80px #000000
 
   .btn
     position absolute

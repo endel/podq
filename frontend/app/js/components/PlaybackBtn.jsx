@@ -30,6 +30,9 @@ export default class PlaybackBtn extends React.Component {
         Notifier.get('playback').emit('play', this.props.data);
       }
     }
+    e.preventDefault();
+    e.stopPropagation();
+    this.updateIcon();
   }
 
   onPlaybackChange(e) {
@@ -75,6 +78,5 @@ export default class PlaybackBtn extends React.Component {
         </div>
       );
     }
-
   }
 }

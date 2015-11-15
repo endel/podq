@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router'
+
 import main from '../main';
 import ItemList from '../components/ItemList.jsx';
 import SubscribeButton from '../components/SubscribeButton.jsx'
@@ -20,6 +22,7 @@ export default class Feed extends React.Component {
   }
 
   componentDidMount() {
+    app.resetScroll()
     this.list = React.findDOMNode(this.refs.list);
     this.load(`feeds/${this.props.params.id}/entries`);
   }
@@ -51,6 +54,8 @@ export default class Feed extends React.Component {
       ? <a href={this.state.feed.permalink} target="_blank">{this.state.feed.permalink}</a>
       : null
 
+    var description = (this.state.feed.description) ? <p>{ this.state.feed.description }</p> : null
+
     return (this.state.loading) ? (
       <section className="section loading"></section>
 
@@ -59,9 +64,10 @@ export default class Feed extends React.Component {
         <h1>
           {this.state.feed.title} <SubscribeButton feed={ this.state.feed } />
         </h1>
-        <p>
-          {this.state.feed.description} <br/ >
+        { description }
+        <p className="permalink">
           { permalink }
+          <Link className="rss" to={ this.state.feed.url } target="_blank"><img src="/images/rss.png" alt="RSS Feed" /></Link>
         </p>
         <ItemList
           ref='list'

@@ -28,6 +28,10 @@ export default class ProfileWidget extends React.Component {
   }
 
   handleWindowMessage (evt) {
+    if (evt.origin.indexOf(location.hostname) === -1) {
+      return false;
+    }
+
     this.popup.close()
 
     Session.login(evt.data)

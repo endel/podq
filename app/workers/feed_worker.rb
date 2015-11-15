@@ -2,33 +2,52 @@ require 'faraday_middleware'
 
 class FeedWorker
   include Sidekiq::Worker
-  sidekiq_options unique: :until_and_while_executing
+  sidekiq_options unique: :until_and_while_executing, retry: 3
 
-  AUDIO_FORMATS = '(mp3|ogg|acc|flac|m4a)'
+  AUDIO_FORMATS = '\.mp3|\.ogg|\.acc|\.flac|\.m4a|api\.soundcloud\.com\/tracks\/[0-9]+'
+  AUDIO_FORMATS_DESCRIPTION = '(https?:\/\/.*(\.mp3|\.ogg|\.acc|\.flac|\.m4a|api\.soundcloud\.com\/tracks\/[0-9]+))'
 
-  def perform(feed_url)
+  def perform(feed_url, feed_id = nil)
+    feed = Feed.find(feed_id) if feed_id
+
     http = Faraday.new {|c|
       c.use FaradayMiddleware::FollowRedirects
       c.adapter :net_http
     }
-    xml = http.get(feed_url).body
+    xml = http.get(feed.try(:url) || feed_url).body
     xml_feed = Feedjira::Feed.parse(xml)
 
-    num_audio_matches = xml.scan(/\.#{AUDIO_FORMATS}/).length
+    num_audio_matches = xml.scan(/#{AUDIO_FORMATS}/).length
     if num_audio_matches < (xml_feed.entries.length / 2) # a high amount of mp3 shall be found
       logger.info("STATS: #{num_audio_matches} / #{xml_feed.entries.length}")
       raise 'invalid RSS file'
     end
 
+    feed_permalink = Feed.normalize_url(xml_feed.url)
+    feed_url = xml_feed.try(:itunes_new_feed_url) || feed_url
     keywords = xml_feed.try(:categories) || xml_feed.try(:itunes_categories)
 
-    feed = Feed.find_or_create_by(permalink: Feed.normalize_url(xml_feed.url))
-    feed.url = xml_feed.try(:itunes_new_feed_url) || feed_url
-    feed.title = xml_feed.title.strip if xml_feed.try(:title)
-    feed.description = xml_feed.description.strip if xml_feed.try(:description)
+    # query for feed if _id is not provided
+    unless feed
+      if xml_feed.url
+        feed_query = {permalink: feed_permalink}
+      else
+        feed_query = {url: feed_url}
+      end
+      feed = Feed.find_or_create_by(feed_query)
+    end
+
+    feed.permalink = feed_permalink
+    feed.url = feed_url
+
+    unless feed.has_og_tags?
+      feed.title = xml_feed.title.strip if xml_feed.try(:title)
+      feed.description = xml_feed.description.strip if xml_feed.try(:description)
+      feed.image = xml_feed.itunes_image if xml_feed.try(:itunes_image)
+    end
+
     feed.language = xml_feed.language if xml_feed.try(:language)
-    feed.keywords = (keywords and sanitize_keywords(keywords))
-    feed.image = xml_feed.itunes_image if xml_feed.try(:itunes_image)
+    feed.keywords = sanitize_keywords(keywords) if keywords
     feed.save
 
     # enqueue to index website to retrieve missing info
@@ -43,7 +62,7 @@ class FeedWorker
       entry.feed_id = feed._id
       entry.published = xml_entry.published
       entry.title = xml_entry.title
-      entry.description = xml_entry.try(:content) || xml_entry.try(:summary)
+      entry.description = sanitize_description( xml_entry.try(:content) || xml_entry.try(:summary) )
       entry.keywords = (keywords and sanitize_keywords(keywords))
       entry.audio_url = xml_entry.try(:enclosure_url)
       entry.image = xml_entry.try(:itunes_image) || xml_entry.try(:image)
@@ -55,6 +74,10 @@ class FeedWorker
       end
 
       # skip if can't find audio_url
+      if !entry.audio_url && entry.description && entry.description.match(/#{AUDIO_FORMATS}/)
+        entry.audio_url = extract_audio_from_description(entry.description)
+      end
+
       next unless entry.audio_url
 
       entry.save
@@ -66,6 +89,29 @@ class FeedWorker
   def sanitize_keywords(keywords)
     keywords = keywords.split(/,/) unless keywords.kind_of?(Array)
     keywords.collect {|k| k.strip }.uniq.select {|k| k.present? }
+  end
+
+  def extract_audio_from_description(description)
+    audio_url = nil
+
+    matches = description.scan(/#{AUDIO_FORMATS_DESCRIPTION}/)
+    matches.each do |(match, extension)|
+      puts match.inspect
+      if match.index('soundcloud') && (track_id = match.match(/tracks\/([0-9]+)/))
+        audio_url = "https://api.soundcloud.com/tracks/#{ track_id[1] }/stream?client_id=#{ ENV['SOUNDCLOUD_CLIENT_ID'] }"
+      else
+        audio_url = match.match(/([^'"]+)/)[1]
+      end
+    end
+
+    audio_url
+  end
+
+  def sanitize_description(description)
+    if description
+      description.
+        gsub(/style=["']([^'"]+)["']/, "")
+    end
   end
 
 end

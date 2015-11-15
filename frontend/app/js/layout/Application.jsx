@@ -3,7 +3,17 @@ import Header from './Header.jsx'
 import Sidebar from './Sidebar.jsx'
 import AudioPlayer from '../components/AudioPlayer.jsx'
 
+import app from '../app';
+
 export default class Application extends React.Component {
+
+  componentDidMount () {
+    app.stateElement = React.findDOMNode(this.refs.stateElement)
+  }
+
+  componentWillUnmount () {
+    app.stateElement = null
+  }
 
   render () {
     return (
@@ -12,7 +22,7 @@ export default class Application extends React.Component {
         <AudioPlayer />
         <div className="app-container">
           <Sidebar />
-          <main className="state-container">
+          <main ref="stateElement" className="state-container">
             <div className="vertical-scroll">
               {this.props.children}
             </div>

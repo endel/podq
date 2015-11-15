@@ -3,7 +3,7 @@ class Entry
   include Mongoid::Timestamps::Created
   include Mongoid::Timestamps::Updated
 
-  belongs_to :feed
+  belongs_to :feed, dependent: :destroy
 
   # run 'rake db:mongoid:create_indexes' to create indexes
   index({ permalink: 1 }, { unique: true, background: true })
@@ -20,4 +20,6 @@ class Entry
   field :duration, type: String
 
   field :keywords, type: Array
+
+  validates_presence_of :feed_id
 end

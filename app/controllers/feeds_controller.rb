@@ -1,7 +1,7 @@
 class FeedsController < ApplicationController
 
   def create
-    WebsiteWorker.perform_async(params[:url], true)
+    WebsiteWorker.perform_async(params[:url], nil, true)
     render json: { success: true }
   end
 

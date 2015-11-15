@@ -38,6 +38,7 @@ export default class Browse extends React.Component {
   }
 
   componentDidMount() {
+    app.resetScroll()
     this.list = React.findDOMNode(this.refs.list);
     this.load('feeds');
   }
