@@ -1,15 +1,17 @@
-SIZE = 80px
-
 .playback-btn
   cursor pointer
-  background-color #FFF
   display inline-block
 
-  .icon
-    position absolute
-    width SIZE
-    height SIZE
-    z-index 1
+  @keyframes frames {
+    0% {
+      transform-origin center center
+      transform rotate(0deg)
+    }
+    100% {
+      transform-origin center center
+      transform rotate(360deg)
+    }
+  }
 
-    .icon-img
-      position absolute
+  #spinner
+    animation frames 500ms infinite linear

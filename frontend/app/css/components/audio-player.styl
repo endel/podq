@@ -40,7 +40,7 @@
     height 26px
     margin-left 64px
     margin-top 15px
-    border-radius: 6px;
+    border-radius: 4px;
     overflow: hidden;
 
   #volumeControl
@@ -61,13 +61,15 @@
     position absolute
     line-height 55px
     width 100%
-    text-align center
+    text-align left
+    left 74px
     color black
     pointer-events none
     user-select none
     z-index 1
     font-weight bold
     font-size $font_s
+    top 1px;
 
   #playbackTime
     font-size $font_ss
@@ -80,26 +82,18 @@
     z-index 1
     right 130px
     font-weight bold
+    top 1px;
 
-  @keyframes spinner-frames {
+  @keyframes frames {
     0% {
-      transform-origin:center center;
-      -moz-transform: rotate(0deg);
-      -ms-transform: rotate(0deg);
-      -webkit-transform: rotate(0deg);
-      transform: rotate(0deg);
+      transform-origin center center
+      transform rotate(0deg)
     }
     100% {
-      transform-origin:center center;
-      -moz-transform: rotate(360deg);
-      -ms-transform: rotate(360deg);
-      -webkit-transform: rotate(360deg);
-      transform: rotate(360deg);
+      transform-origin center center
+      transform rotate(360deg)
     }
   }
 
-  #spinner {
-    -moz-animation: spinner-frames 500ms infinite linear;
-    -webkit-animation: spinner-frames 500ms infinite linear;
-    animation: spinner-frames 500ms infinite linear;
-  }
+  #spinner
+    animation frames 500ms infinite linear

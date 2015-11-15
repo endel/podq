@@ -45,7 +45,7 @@ export default class PlaybackBtn extends React.Component {
 
   updateIcon() {
     if (app.player.data && app.player.data._id === this.props.data._id) {
-      this.setState({status:'play'});
+      this.setState({status:app.player.playbackState});
     } else {
       this.setState({status:'pause'});
     }
@@ -63,20 +63,19 @@ export default class PlaybackBtn extends React.Component {
     var status = this.getStatus();
     if (status === 'load') {
       return (
-        <svg width="100%" viewBox="0 0 100 100">
-          <path id="pause" d="M40,32V68 M60,32V68" fill="black"
-            stroke="black" strokeWidth="8" strokeLinecap="butt"></path>
-
+        <div className="playback-btn">
+          <svg width="100%" viewBox="0 0 100 100">
+            <circle id="circle" cx="50" cy="50" r="40" stroke="black" strokeWidth="8"/>
             <defs>
               <clipPath id="cut-off-bottom">
-                <rect x="0" y="0" width="65" height="65" />
+                <rect x="0" y="0" width="50" height="100" />
               </clipPath>
             </defs>
-
             <circle id="spinner" cx="50" cy="50" r="25"
-            stroke="black" strokeWidth="4" strokeLinecap="butt"
-            clip-path="url(#cut-off-bottom)"></circle>
-        </svg>
+            stroke="white" strokeWidth="4" strokeLinecap="butt"
+            clipPath="url(#cut-off-bottom)"></circle>
+          </svg>
+        </div>
       );
     } else if (status === 'play') {
       return (

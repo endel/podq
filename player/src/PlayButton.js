@@ -13,7 +13,7 @@ var html = `
 
     <defs>
       <clipPath id="cut-off-bottom">
-        <rect x="0" y="0" width="65" height="65" />
+        <rect x="0" y="0" width="50" height="100" />
       </clipPath>
     </defs>
 
