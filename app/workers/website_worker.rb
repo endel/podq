@@ -2,7 +2,7 @@ require 'faraday_middleware'
 
 class WebsiteWorker
   include Sidekiq::Worker
-  sidekiq_options unique: :until_and_while_executing
+  sidekiq_options unique: :until_and_while_executing, retry: 3
 
   def perform(permalink, feed_id = nil, update_feed = false)
     permalink = Feed.normalize_url(permalink)
@@ -30,9 +30,13 @@ class WebsiteWorker
     #
     if (data = html.scan(/property=["|']og:(.*)["|'].*content=["|'](.*)["|']/))
       og = OpenStruct.new(Hash[ data ])
-      feed.title = og.title.strip if !feed.title && og.title
-      feed.description = og.description.strip if !feed.description && og.description
-      feed.image = og.image if !feed.image && og.image
+
+      if og.title && og.description && og.image
+        feed.title = og.title.strip
+        feed.description = og.description.strip
+        feed.image = og.image
+        feed.has_og_tags = true
+      end
 
       if !feed.language && feed.description
         cld = CLD.detect_language(ActionView::Base.full_sanitizer.sanitize(feed.description))

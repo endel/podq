@@ -2,7 +2,7 @@ require 'faraday_middleware'
 
 class FeedWorker
   include Sidekiq::Worker
-  sidekiq_options unique: :until_and_while_executing
+  sidekiq_options unique: :until_and_while_executing, retry: 3
 
   AUDIO_FORMATS = '\.mp3|\.ogg|\.acc|\.flac|\.m4a|api\.soundcloud\.com\/tracks\/[0-9]+'
   AUDIO_FORMATS_DESCRIPTION = '(https?:\/\/.*(\.mp3|\.ogg|\.acc|\.flac|\.m4a|api\.soundcloud\.com\/tracks\/[0-9]+))'
@@ -23,10 +23,9 @@ class FeedWorker
       raise 'invalid RSS file'
     end
 
-    keywords = xml_feed.try(:categories) || xml_feed.try(:itunes_categories)
-
     feed_permalink = Feed.normalize_url(xml_feed.url)
     feed_url = xml_feed.try(:itunes_new_feed_url) || feed_url
+    keywords = xml_feed.try(:categories) || xml_feed.try(:itunes_categories)
 
     # query for feed if _id is not provided
     unless feed
@@ -40,11 +39,15 @@ class FeedWorker
 
     feed.permalink = feed_permalink
     feed.url = feed_url
-    feed.title = xml_feed.title.strip if xml_feed.try(:title)
-    feed.description = xml_feed.description.strip if xml_feed.try(:description)
+
+    unless feed.has_og_tags?
+      feed.title = xml_feed.title.strip if xml_feed.try(:title)
+      feed.description = xml_feed.description.strip if xml_feed.try(:description)
+      feed.image = xml_feed.itunes_image if xml_feed.try(:itunes_image)
+    end
+
     feed.language = xml_feed.language if xml_feed.try(:language)
-    feed.keywords = (keywords and sanitize_keywords(keywords))
-    feed.image = xml_feed.itunes_image if xml_feed.try(:itunes_image)
+    feed.keywords = sanitize_keywords(keywords) if keywords
     feed.save
 
     # enqueue to index website to retrieve missing info
@@ -59,7 +62,7 @@ class FeedWorker
       entry.feed_id = feed._id
       entry.published = xml_entry.published
       entry.title = xml_entry.title
-      entry.description = xml_entry.try(:content) || xml_entry.try(:summary)
+      entry.description = sanitize_description( xml_entry.try(:content) || xml_entry.try(:summary) )
       entry.keywords = (keywords and sanitize_keywords(keywords))
       entry.audio_url = xml_entry.try(:enclosure_url)
       entry.image = xml_entry.try(:itunes_image) || xml_entry.try(:image)
@@ -102,6 +105,13 @@ class FeedWorker
     end
 
     audio_url
+  end
+
+  def sanitize_description(description)
+    if description
+      description.
+        gsub(/style=["']([^'"]+)["']/, "")
+    end
   end
 
 end

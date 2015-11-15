@@ -1,6 +1,6 @@
 class UpdateWorker
   include Sidekiq::Worker
-  sidekiq_options unique: :until_and_while_executing
+  sidekiq_options unique: :until_and_while_executing, retry: 3
 
   def perform()
     last_update = Time.at(Redis.current.get('last_update').to_i)

@@ -2,6 +2,18 @@
   padding $default_margin
   min-height 100vh
 
+  .permalink
+    .rss
+      margin-left 4px
+      height 12px
+      opacity 0.8
+      transition opacity 0.2s
+      &:hover
+        opacity 1
+      img
+        height inherit
+        display inline-block
+
   .play-button
     width 140px
     height 140px
@@ -17,10 +29,10 @@
     margin-left 20px
     width calc(100% - 200px)
 
-  img
-    display block
-    width 100%
-    height auto
+    img
+      display block
+      width 100%
+      height auto
 
   h1
     display inline-block

@@ -25,6 +25,9 @@ class Feed
   field :language, type: String
   field :keywords, type: Array
 
+  # Meta
+  field :has_og_tags, type: Boolean
+
   def self.normalize_url(url)
     Addressable::URI.parse(url.gsub('https://', 'http://')).normalize if url
   end

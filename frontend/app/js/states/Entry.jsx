@@ -4,6 +4,7 @@ import main from '../main';
 import ItemList from '../components/ItemList.jsx';
 import Notifier from '../tools/Notifier';
 import Client from '../tools/Client';
+import * as tools from '../tools/tools';
 import app from '../app';
 import PlaybackBtn from '../components/PlaybackBtn.jsx';
 
@@ -41,9 +42,14 @@ export default class Entry extends React.Component {
 
   render() {
     var hasAudio = this.state.audio_url !== undefined;
+
     var playButton = <div className='play-button'>
                         <PlaybackBtn data={this.state}/>
                      </div>;
+
+    var entryImage = (this.state.image)
+      ? <img src={this.state.image} alt={this.state.title}/>
+      : null
 
     return (this.state.loading) ? (
       <section className='section loading'></section>
@@ -51,9 +57,10 @@ export default class Entry extends React.Component {
       <section className='section'>
         {hasAudio ? playButton : null}
         <div className='content'>
-          <h1><Link to={`/feed/${ this.state.feed._id }`}>{ this.state.feed.title }</Link>: {this.state.title}</h1>
+          <h1>{ this.state.title }</h1>
+          <p>{ tools.simpleDate(this.state.published) } - <Link to={`/feed/${ this.state.feed._id }`}>{ this.state.feed.title }</Link></p>
           <div dangerouslySetInnerHTML={{ __html: this.state.description }} />
-          <img src={this.state.image} alt={this.state.title}/>
+          { entryImage }
         </div>
       </section>
     );

@@ -31,7 +31,7 @@ export default class ItemEntry extends React.Component {
   render() {
     var date = tools.simpleDate(this.props.data.published);
     var img = this.props.data.image || this.props.info.image;
-    var top = this.props.info.title ? `${this.props.info.title} - ${date}` : date;
+    var top = this.props.info.title ? `${date} - ${this.props.info.title}` : date;
 
     return (
       <div className='item entry' onClick={this.onClickDetails.bind(this)}>
