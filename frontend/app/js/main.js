@@ -14,7 +14,7 @@ import app from './app';
 require('whatwg-fetch')
 
 window.BACKEND_ENDPOINT = (process.env.RAILS_ENV)
-  ? `http://${ location.hostname }`
+  ? `${ location.protocol }//${ location.hostname }`
   : 'http://webstdio.r15.railsrumble.com/'
 
 app.container = document.getElementsByTagName('body')[0]
