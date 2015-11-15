@@ -6,6 +6,12 @@
   background-color #111111
   height 55px
   border-top 1px solid $layout_border_color
+  -webkit-touch-callout none
+  -webkit-user-select none
+  -khtml-user-select none
+  -moz-user-select none
+  -ms-user-select none
+  user-select none
 
   #intro
     width 100%
@@ -53,18 +59,26 @@
 
   #title
     position absolute
-    margin-top 19px
+    line-height 55px
     width 100%
     text-align center
     color black
     pointer-events none
-    -webkit-touch-callout none
-    -webkit-user-select none
-    -khtml-user-select none
-    -moz-user-select none
-    -ms-user-select none
     user-select none
     z-index 1
+    font-weight bold
+    font-size $font_s
+
+  #playbackTime
+    font-size $font_ss
+    position absolute
+    line-height 55px
+    width 100%
+    text-align right
+    color black
+    pointer-events none
+    z-index 1
+    right 130px
     font-weight bold
 
   @keyframes spinner-frames {

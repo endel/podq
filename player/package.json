@@ -1,6 +1,6 @@
 {
   "name": "podcast-player",
-  "version": "0.1.13",
+  "version": "0.1.17",
   "description": "",
   "main": "player.js",
   "scripts": {

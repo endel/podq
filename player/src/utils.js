@@ -22,3 +22,24 @@ export function clamp(v, min = 0, max = 1) {
     return v;
   }
 }
+
+export function expandString(str, len = 2, char = '0', direction = -1) {
+  'use strict';
+  str = str + '';
+  while (str.length < len) {
+    if (direction > 0) {
+      str = str + char;
+    } else {
+      str = char + str;
+    }
+  }
+  return str;
+}
+
+export function getFormatedTime(seconds) {
+  'use strict';
+  var s = Math.floor(seconds%60);
+  var m = Math.floor(seconds/60)%60;
+  var h = Math.floor(seconds/(60*60));
+  return expandString(h) + ':' + expandString(m) + ':' + expandString(s);
+}

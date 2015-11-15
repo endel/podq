@@ -15,7 +15,7 @@ require('whatwg-fetch')
 
 window.BACKEND_ENDPOINT = (process.env.RAILS_ENV)
   ? `http://${ location.hostname }`
-  : 'http://192.168.0.2:5000'
+  : 'http://webstdio.r15.railsrumble.com/'
 
 app.container = document.getElementsByTagName('body')[0]
 app.history = createHistory()

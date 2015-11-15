@@ -20,15 +20,8 @@ var html = `
     <circle id="spinner" cx="50" cy="50" r="25"
     stroke="white" stroke-width="4" stroke-linecap="butt"
     clip-path="url(#cut-off-bottom)"></circle>
-  </path>
   </svg>
 `;
-
-/*
-<path id="spinner" fill="white"
-  d="M50,50 h-25 a25,25 0 1,0 25,-25 z"
-  stroke="white" stroke-width="3" stroke-linecap="butt">
-*/
 
 export default class PlayButton extends Graphics {
   constructor() {
