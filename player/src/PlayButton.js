@@ -1,4 +1,5 @@
 import Graphics from './Graphics';
+import Player from './Player';
 
 var html = `
   <svg width="100%" viewbox="0 0 100 100">
@@ -28,7 +29,7 @@ var html = `
 export default class PlayButton extends Graphics {
   constructor() {
     super('playButton', html);
-    this.state = PlayButton.IDLE;
+    this.state = Player.IDLE;
     this.element.addEventListener('click', this.onClick.bind(this));
     this.onClick = null;
   }
@@ -43,14 +44,14 @@ export default class PlayButton extends Graphics {
   }
 
   updateState() {
-    this.setNodeAttr('spinner', 'opacity', this._state === PlayButton.LOADING ? 1 : 0);
-    this.setNodeAttr('pause', 'opacity', this._state === PlayButton.PLAYING ? 1 : 0);
-    this.setNodeAttr('play', 'opacity', this._state === PlayButton.PAUSED ? 1 : 0);
+    this.setNodeAttr('spinner', 'opacity', this._state === Player.LOADING ? 1 : 0);
+    this.setNodeAttr('pause', 'opacity', this._state === Player.PLAYING ? 1 : 0);
+    this.setNodeAttr('play', 'opacity', this._state === Player.PAUSED ? 1 : 0);
     this.element.style.cursor = this.interactive ? 'pointer' : 'auto';
   }
 
   get interactive() {
-    return this._state === PlayButton.PLAYING || this._state === PlayButton.PAUSED;
+    return this._state === Player.PLAYING || this._state === Player.PAUSED;
   }
 
   onClick() {
@@ -59,8 +60,3 @@ export default class PlayButton extends Graphics {
     }
   }
 }
-
-PlayButton.IDLE = 0;
-PlayButton.LOADING = 1;
-PlayButton.PLAYING = 2;
-PlayButton.PAUSED = 3;

@@ -29,9 +29,9 @@ export default class AudioPlayer  extends React.Component {
   toggle(data) {
     if (data && this.data && data._id === this.data._id) {
       if (this.playing) {
-        // this.audio.pause();
+        this.podcastPlayer.pause();
       } else {
-        // this.audio.play();
+        this.podcastPlayer.play();
         this.playing = true;
       }
     } else if (data) {
@@ -40,40 +40,43 @@ export default class AudioPlayer  extends React.Component {
   }
 
   play(data) {
-    this.data = data;
-    // this.audio.src = data.audio_url;
-    // this.audio.autoPlay = true;
+    if (data !== this.data) {
+      this.data = data;
+      this.podcastPlayer.play(data);
+    } else {
+      this.podcastPlayer.play();
+    }
     this.playing = true;
-    this.podcastPlayer.play(data);
   }
 
   stop() {
-    // this.audio.pause();
+    this.podcastPlayer.pause();
     this.playing = false;
-  }
-
-  onPlaybackStart(e) {
-    this.playing = true;
-    Notifier.get('playback').emit('change', {data:this.data, state:'play'});
-  }
-
-  onPlaybackStop(e) {
-    this.playing = false;
-    Notifier.get('playback').emit('change', {data:this.data, state:'stop'});
   }
 
   changePlaybackRate(rate, e) {
     // this.audio.playbackRate = rate
-    this.setState({ playbackRate: rate })
+    // this.setState({ playbackRate: rate })
   }
 
   componentDidMount() {
-    // this.audio = React.findDOMNode(this.refs.audio);
-    // this.audio.addEventListener('play', this.onPlaybackStart.bind(this));
-    // this.audio.addEventListener('pause', this.onPlaybackStop.bind(this));
-    // this.audio.addEventListener('ended', this.onPlaybackStop.bind(this));
     this.audio = React.findDOMNode(this.refs.audio);
     this.podcastPlayer = new PodcastPlayer(this.audio);
+    this.podcastPlayer.onChangeState = this.onChangeState.bind(this);
+  }
+
+  onChangeState(state) {
+    switch (state) {
+      case PodcastPlayer.LOADING:
+        Notifier.get('playback').emit('change', {data:this.data, state:'load'});
+      break;
+      case PodcastPlayer.PLAYING:
+        Notifier.get('playback').emit('change', {data:this.data, state:'play'});
+      break;
+      case PodcastPlayer.PAUSED:
+        Notifier.get('playback').emit('change', {data:this.data, state:'stop'});
+      break;
+    }
   }
 
   render () {

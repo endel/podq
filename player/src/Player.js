@@ -46,6 +46,7 @@ export default class Player {
 
     this._state = -1;
     this.state = Player.IDLE;
+    this.onChangeState = null;
   }
 
   play(data) {
@@ -88,15 +89,15 @@ export default class Player {
   }
 
   onPlay() {
-    this.playButton.state = PlayButton.PLAYING;
+    this.state = Player.PLAYING;
   }
 
   onPause() {
-    this.playButton.state = PlayButton.PAUSED;
+    this.state = Player.PAUSED;
   }
 
   onLoadStart() {
-    this.playButton.state = PlayButton.LOADING;
+    this.state = Player.LOADING;
   }
 
   onLoadProgress() {
@@ -135,11 +136,17 @@ export default class Player {
 
   updateState() {
     this.intro.style.display = this._state === Player.IDLE ? 'block' : 'none';
-    this.container.style.display = this._state === Player.PLAYING ? 'block' : 'none';
+    this.container.style.display = this._state !== Player.IDLE ? 'block' : 'none';
+    this.playButton.state = this._state;
+    if (this.onChangeState) {
+      this.onChangeState(this._state);
+    }
   }
 }
 
 Player.IDLE = 0;
-Player.PLAYING = 1;
+Player.LOADING = 1;
+Player.PLAYING = 2;
+Player.PAUSED = 3;
 
 window.PodcastPlayer = Player;

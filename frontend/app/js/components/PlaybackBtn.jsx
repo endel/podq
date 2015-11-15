@@ -22,8 +22,13 @@ export default class PlaybackBtn extends React.Component {
   }
 
   onClick(e) {
-    Notifier.get('playback').emit('toggle', this.props.data);
-    this.updateIcon();
+    if (this.interactive()) {
+      if (this.getStatus() === 'play') {
+        Notifier.get('playback').emit('stop', this.props.data);
+      } else {
+        Notifier.get('playback').emit('play', this.props.data);
+      }
+    }
   }
 
   onPlaybackChange(e) {
@@ -42,15 +47,33 @@ export default class PlaybackBtn extends React.Component {
     }
   }
 
+  interactive() {
+    return this.getStatus() !== 'load';
+  }
+
+  getStatus() {
+    return this.state.status || this.props.status;
+  }
+
   render() {
-    var status = this.state.status || this.props.status;
-    var iconPlay = <img ref='play' id='play' className='icon-img' src='/images/play.svg'/>;
-    var iconPause = <img ref='pause' id='pause' className='icon-img' src='/images/pause.svg'/>;
-    var icon = status === 'stop' ? iconPlay : iconPause;
-    return (
-      <div className="playback-btn" onClick={this.onClick.bind(this)}>
-        {icon}
-      </div>
-    );
+    var status = this.getStatus();
+    if (status === 'load') {
+      return (
+        <div className="playback-btn"></div>
+      );
+    } else if (status === 'play') {
+      return (
+        <div className="playback-btn" onClick={this.onClick.bind(this)}>
+          <img ref='pause' id='pause' className='icon-img' src='/images/pause.svg'/>;
+        </div>
+      );
+    } else {
+      return (
+        <div className="playback-btn" onClick={this.onClick.bind(this)}>
+          <img ref='play' id='play' className='icon-img' src='/images/play.svg'/>
+        </div>
+      );
+    }
+
   }
 }
