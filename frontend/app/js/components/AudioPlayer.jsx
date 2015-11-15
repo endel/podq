@@ -24,7 +24,6 @@ export default class AudioPlayer  extends React.Component {
   }
 
   play(data) {
-    Notifier.get('playback').emit('change', {data:this.data, state:'load'});
     this.podcastPlayer.play(data);
     this.playing = true;
   }
