@@ -6,7 +6,7 @@ import Label from './Label';
 import Settings from './Settings';
 
 export default class Player {
-  constructor(element) {
+  constructor(element, autoSave = true) {
     this.element = element;
     this.data = null;
     this.audio = new Audio();
@@ -53,16 +53,26 @@ export default class Player {
     this.speedButton = new SpeedButton();
     this.container.appendChild(this.speedButton.element);
     this.speedButton.onChange = this.onSpeedChange.bind(this);
+    this.speedButton.speed = this.settings.get('speed');
 
     this._state = -1;
     this.state = Player.IDLE;
     this.onChangeState = null;
+    this.playing = false;
+
+    var lastEntry = this.settings.get('entry');
+    if (lastEntry && autoSave) {
+      this.play(lastEntry);
+      this.audio.currentTime = this.settings.get('time');
+    }
   }
 
   play(data) {
+    this.playing = true;
     if (data) {
       if (data !== this.data) {
         this.data = data;
+        this.settings.set('entry', data);
         this.audio.autoPlay = true;
         this.progressBar.loadRatio = 0;
         this.progressBar.timeRatio = 0;
@@ -78,6 +88,7 @@ export default class Player {
   }
 
   pause() {
+    this.playing = false;
     this.audio.pause();
   }
 
@@ -91,6 +102,7 @@ export default class Player {
 
   onSpeedChange() {
     this.audio.playbackRate = this.speedButton.speed;
+    this.audio.defaultPlaybackRate = this.speedButton.speed;
     this.settings.set('speed', this.speedButton.speed);
   }
 
@@ -141,6 +153,11 @@ export default class Player {
 
   onTimeUpdate() {
     this.progressBar.timeRatio = this.audio.currentTime/this.audio.duration;
+    this.settings.set('time', this.audio.currentTime);
+    var delta = Math.abs(this.settings.get('time') - this.audio.currentTime);
+    if (delta > 5) {
+      this.settings.set('time', this.audio.currentTime);
+    }
   }
 
   get state() {

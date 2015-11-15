@@ -2,7 +2,9 @@ export default class Settings {
   constructor() {
     this.data = {
       volume: 1,
-      speed: 1
+      speed: 1,
+      time: 0,
+      entry: null
     };
   }
 
@@ -23,7 +25,10 @@ export default class Settings {
   load() {
     var str = localStorage.getItem('podcast-player');
     if (str) {
-      this.data = JSON.parse(str);
+      var data = JSON.parse(str);
+      for (var f in data) {
+        this.data[f] = data[f];
+      }
     }
   }
 }

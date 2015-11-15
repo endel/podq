@@ -13,8 +13,10 @@ export default class Graphics {
     this.svg = this.element.children[0];
     for (var i = 0; i < this.svg.children.length; i++) {
       var nd = this.svg.children[i];
-      var id = nd.id || nd.tagName;
-      this.nodes[id] = nd;
+      if (nd.tagName !== 'defs') {
+        var id = nd.id || nd.tagName;
+        this.nodes[id] = nd;
+      }
     }
   }
 
