@@ -48,19 +48,15 @@ class WebsiteWorker
     # scan facebook open-graph data, override previous fetched data
     if (data = html.scan(/property=["|']og:(.*)["|'].*content=["|'](.*)["|']/i)) && data.length > 0
       page_properties = page_properties.merge(HashWithIndifferentAccess[ data ])
-      feed.has_og_tags = true
+      page_properties[:has_og_tags] = true
     end
-
-    # update Feed data
-    feed.title = page_properties[:title].strip if page_properties[:title]
-    feed.description = page_properties[:description].strip if page_properties[:description]
-    feed.image = page_properties[:image] if page_properties[:image]
 
     if !feed.language && feed.description
       cld = CLD.detect_language(ActionView::Base.full_sanitizer.sanitize(feed.description))
-      feed.language = cld[:code]
+      page_properties[:language] = cld[:code]
     end
 
+    feed.update_info(page_properties)
     feed.save
 
     #

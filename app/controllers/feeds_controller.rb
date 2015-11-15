@@ -6,7 +6,7 @@ class FeedsController < ApplicationController
   end
 
   def index
-    query = Feed.criteria
+    query = Feed.where(:published => true)
 
     query = query.where(:_id => { :$in => params[:_ids] }) if params[:_ids]
     query = query.where(:$text => { :$search => params[:search] }) if params[:search]
