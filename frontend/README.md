@@ -1,8 +1,8 @@
 # PODCAST PLAYER
 
 ## SECTIONS
-- [ ] Browse
-- [ ] Search Results
-- [ ] Feed
-- [ ] Entry
+- [x] Browse
+- [x] Search Results
+- [x] Feed
+- [x] Entry
 - [ ] User
