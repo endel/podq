@@ -22,6 +22,7 @@ export default class Player {
 
     this.progressBar = new ProgressBar();
     this.element.appendChild(this.progressBar.element);
+    this.progressBar.onSeekUpdate = this.onSeekUpdate.bind(this);
 
     this.volumeControl = new VolumeControl();
     this.element.appendChild(this.volumeControl.element);
@@ -45,8 +46,13 @@ export default class Player {
   }
 
   onVolumeUpdate() {
-    console.log(this.volumeControl.ratio);
     this.audio.volume = this.volumeControl.ratio;
+  }
+
+  onSeekUpdate() {
+    var time = this.audio.duration*this.progressBar.timeRatio;
+    console.log(time);
+    this.audio.currentTime = time;
   }
 
   onCanPlay() {

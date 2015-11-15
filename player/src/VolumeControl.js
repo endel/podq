@@ -46,7 +46,7 @@ export default class VolumeControl extends Graphics {
     }
   }
 
-  onMouseUp(e) {
+  onMouseUp() {
     this._draging = false;
   }
 
