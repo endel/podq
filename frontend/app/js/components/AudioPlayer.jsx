@@ -25,7 +25,6 @@ export default class AudioPlayer  extends React.Component {
   }
 
   play(data) {
-    Notifier.get('playback').emit('change', {data:this.data, state:'load'});
     this.podcastPlayer.play(data);
   }
 
@@ -35,7 +34,7 @@ export default class AudioPlayer  extends React.Component {
 
   componentDidMount() {
     this.audio = React.findDOMNode(this.refs.audio);
-    this.podcastPlayer = new PodcastPlayer(this.audio);
+    this.podcastPlayer = new PodcastPlayer(this.audio, app.settings.autoPlay);
     this.podcastPlayer.onChangeState = this.onChangeState.bind(this);
     document.addEventListener('keydown', this.onKeyDown.bind(this))
   }
@@ -68,10 +67,25 @@ export default class AudioPlayer  extends React.Component {
     return this.podcastPlayer.data;
   }
 
+  get playbackState() {
+    var s = 'pause';
+    switch (this.podcastPlayer.state) {
+      case PodcastPlayer.LOADING:
+        s = 'load';
+      break;
+      case PodcastPlayer.PLAYING:
+        s = 'play';
+      break;
+      case PodcastPlayer.PAUSED:
+        s = 'pause';
+      break;
+    }
+    return s;
+  }
+
   render() {
     return (
       <div ref="audio" className="audio-player"></div>
     );
   }
-
 }

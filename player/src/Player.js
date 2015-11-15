@@ -4,6 +4,7 @@ import VolumeControl from './VolumeControl';
 import SpeedButton from './SpeedButton';
 import Label from './Label';
 import Settings from './Settings';
+import * as utils from './utils';
 
 export default class Player {
   constructor(element, autoSave = true) {
@@ -37,6 +38,9 @@ export default class Player {
     this.labelTitle = new Label('title');
     this.container.appendChild(this.labelTitle.element);
 
+    this.labelTime = new Label('playbackTime');
+    this.container.appendChild(this.labelTime.element);
+
     this.playButton = new PlayButton();
     this.container.appendChild(this.playButton.element);
     this.playButton.onClick = this.onPlayClick.bind(this);
@@ -69,6 +73,7 @@ export default class Player {
 
   play(data, save=true) {
     this.playing = true;
+    this.state = Player.PAUSED;
     if (data) {
       if (data !== this.data) {
         this.data = data;
@@ -77,6 +82,7 @@ export default class Player {
           this.settings.set('time', 0);
           this.settings.save();
         }
+        this.printTime(0, 0);
         this.audio.autoPlay = true;
         this.progressBar.loadRatio = 0;
         this.progressBar.timeRatio = 0;
@@ -119,6 +125,7 @@ export default class Player {
   onSeekUpdate() {
     var time = this.audio.duration*this.progressBar.timeRatio;
     this.audio.currentTime = time;
+    this.printTime();
   }
 
   onCanPlay() {
@@ -158,10 +165,19 @@ export default class Player {
 
   onTimeUpdate() {
     this.progressBar.timeRatio = this.audio.currentTime/this.audio.duration;
+    this.printTime();
     var delta = Math.abs(this.settings.get('time') - this.audio.currentTime);
     if (delta > 5) {
       this.settings.set('time', this.audio.currentTime, true);
     }
+  }
+
+  printTime(current, duration) {
+    var cur = this.audio.currentTime/this.audio.playbackRate;
+    var dur = this.audio.duration/this.audio.playbackRate;
+    var c = utils.getFormatedTime(current !== undefined ? current : cur);
+    var d = utils.getFormatedTime(duration !== undefined ? duration : dur);
+    this.labelTime.text = `${c} - ${d}`;
   }
 
   get state() {
