@@ -1,6 +1,7 @@
 import PlayButton from './PlayButton';
 import ProgressBar from './ProgressBar';
 import VolumeControl from './VolumeControl';
+import SpeedButton from './SpeedButton';
 import Label from './Label';
 
 export default class Player {
@@ -44,6 +45,10 @@ export default class Player {
     this.container.appendChild(this.volumeControl.element);
     this.volumeControl.onUpdate = this.onVolumeUpdate.bind(this);
 
+    this.speedButton = new SpeedButton();
+    this.container.appendChild(this.speedButton.element);
+    this.speedButton.onChange = this.onSpeedChange.bind(this);
+
     this._state = -1;
     this.state = Player.IDLE;
     this.onChangeState = null;
@@ -77,6 +82,10 @@ export default class Player {
     } else {
       this.audio.play();
     }
+  }
+
+  onSpeedChange() {
+    this.audio.playbackRate = this.speedButton.speed;
   }
 
   onVolumeUpdate() {
