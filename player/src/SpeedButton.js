@@ -31,10 +31,8 @@ export default class SpeedButton extends Graphics {
   }
 
   set speed(value) {
-    if (value !== this._speed) {
-      this._speed = value;
-      this.updateSpeed();
-    }
+    this._speed = value;
+    this.updateSpeed();
   }
 
   updateSpeed() {

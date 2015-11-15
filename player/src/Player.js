@@ -3,6 +3,7 @@ import ProgressBar from './ProgressBar';
 import VolumeControl from './VolumeControl';
 import SpeedButton from './SpeedButton';
 import Label from './Label';
+import Settings from './Settings';
 
 export default class Player {
   constructor(element) {
@@ -17,6 +18,9 @@ export default class Player {
     this.audio.addEventListener('loadedmetadata', this.onLoadProgress.bind(this));
     this.audio.addEventListener('error', this.onError.bind(this));
     this.audio.addEventListener('timeupdate', this.onTimeUpdate.bind(this));
+
+    this.settings = new Settings();
+    this.settings.load();
 
     this.intro = document.createElement('div');
     this.intro.id = 'intro';
@@ -44,6 +48,7 @@ export default class Player {
     this.volumeControl = new VolumeControl();
     this.container.appendChild(this.volumeControl.element);
     this.volumeControl.onUpdate = this.onVolumeUpdate.bind(this);
+    this.volumeControl.ratio = this.settings.get('volume');
 
     this.speedButton = new SpeedButton();
     this.container.appendChild(this.speedButton.element);
@@ -86,10 +91,12 @@ export default class Player {
 
   onSpeedChange() {
     this.audio.playbackRate = this.speedButton.speed;
+    this.settings.set('speed', this.speedButton.speed);
   }
 
   onVolumeUpdate() {
     this.audio.volume = this.volumeControl.ratio;
+    this.settings.set('volume', this.volumeControl.ratio);
   }
 
   onSeekUpdate() {

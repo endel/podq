@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import {Link} from 'react-router';
 import classNames from 'classnames';
 import Notifier from '../tools/Notifier';
 import Session from '../tools/Session';
@@ -55,7 +55,7 @@ export default class AudioPlayer  extends React.Component {
     }
   }
 
-  render () {
+  render() {
     return (
       <div ref="audio" className="audio-player"></div>
     );

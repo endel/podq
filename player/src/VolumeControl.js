@@ -72,7 +72,7 @@ export default class VolumeControl extends Graphics {
     while (i--) {
       var s = 'slice' + i;
       var r = i/numSlices + 0.1;
-      this.setNodeAttr(s, 'opacity', r < this._ratio ? 1 : 0.5);
+      this.setNodeAttr(s, 'opacity', r < this._ratio ? 1 : 0.2);
     }
   }
 }

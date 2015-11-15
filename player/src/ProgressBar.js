@@ -3,7 +3,7 @@ import * as utils from './utils';
 
 var html = `
   <svg width="100%" height="100%" viewbox="0 0 100 100" preserveaspectratio="none">
-    <rect id="base" width="100" height="100" fill="white" opacity="0.15"/>
+    <rect id="base" width="100" height="100" fill="white" opacity="0.1"/>
     <rect id="load" width="100" height="100" fill="white" opacity="0.1"/>
     <rect id="time" width="100" height="100" fill="white"/>
   </svg>
