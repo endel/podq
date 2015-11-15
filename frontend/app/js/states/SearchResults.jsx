@@ -20,6 +20,7 @@ export default class SearchResults extends React.Component {
   }
 
   componentDidMount() {
+    app.resetScroll()
     this.list = React.findDOMNode(this.refs.list);
     this.load(`entries?limit=100&search=${this.props.location.query.q}`);
   }

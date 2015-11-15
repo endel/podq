@@ -22,6 +22,7 @@ export default class Feed extends React.Component {
   }
 
   componentDidMount() {
+    app.resetScroll()
     this.list = React.findDOMNode(this.refs.list);
     this.load(`feeds/${this.props.params.id}/entries`);
   }

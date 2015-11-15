@@ -28,6 +28,7 @@ export default class Entry extends React.Component {
   }
 
   componentDidMount() {
+    app.resetScroll()
     if (!app.entry) {
       this.load(`entries/${this.props.params.id}`);
     } else {

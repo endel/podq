@@ -8,7 +8,11 @@ import app from '../app';
 export default class Application extends React.Component {
 
   componentDidMount () {
-    app.stateContainer = React.findDOMNode(this.refs.stateContainer)
+    app.stateElement = React.findDOMNode(this.refs.stateElement)
+  }
+
+  componentWillUnmount () {
+    app.stateElement = null
   }
 
   render () {
@@ -18,7 +22,7 @@ export default class Application extends React.Component {
         <AudioPlayer />
         <div className="app-container">
           <Sidebar />
-          <main ref="stateContainer" className="state-container">
+          <main ref="stateElement" className="state-container">
             <div className="vertical-scroll">
               {this.props.children}
             </div>
