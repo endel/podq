@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "postinstall": "npm --prefix ./frontend install && gulp --cwd ./frontend build"
+    "postinstall": "npm --prefix ./player install && npm --prefix ./frontend install && gulp --cwd ./frontend build"
   },
   "engines": {
     "node": "4.1.1"
