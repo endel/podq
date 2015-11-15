@@ -2,10 +2,14 @@ import Graphics from './Graphics';
 
 var html = `
   <svg width="100%" viewbox="0 0 100 100">
-    <polygon id="play" points="35,30 35,70, 70,50" fill="white"
-    stroke="white" stroke-width="12" stroke-linecap="butt"></polygon>
-    <path id="pause" d="M35,20V80 M65,20V80" fill="white"
-    stroke="white" stroke-width="14" stroke-linecap="butt"></path>
+    <circle id="circle" cx="50" cy="50" r="40" stroke="white" stroke-width="8"/>
+
+    <polygon id="play" points="45,40 45,60, 60,50" fill="white"
+    stroke="white" stroke-width="8" stroke-linecap="butt"></polygon>
+
+    <path id="pause" d="M40,32V68 M60,32V68" fill="white"
+    stroke="white" stroke-width="8" stroke-linecap="butt"></path>
+
     <path id="spinner" fill="white"
       d="M73,50c0-12.7-10.3-23-23-23S27,37.3,27,50 M30.9,50c0-10.5,8.5-19.1,19.1-19.1S69.1,39.5,69.1,50"
       stroke="white" stroke-width="3" stroke-linecap="butt">

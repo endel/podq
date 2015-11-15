@@ -29,6 +29,9 @@ export default class Player {
     this.intro.appendChild(this.labelIdle.element);
     this.labelIdle.text = 'Podcast Player';
 
+    this.labelTitle = new Label('title');
+    this.container.appendChild(this.labelTitle.element);
+
     this.playButton = new PlayButton();
     this.container.appendChild(this.playButton.element);
     this.playButton.onClick = this.onPlayClick.bind(this);
@@ -41,20 +44,26 @@ export default class Player {
     this.container.appendChild(this.volumeControl.element);
     this.volumeControl.onUpdate = this.onVolumeUpdate.bind(this);
 
-    this.labelTitle = new Label('title');
-    this.container.appendChild(this.labelTitle.element);
     this._state = -1;
     this.state = Player.IDLE;
   }
 
   play(data) {
-    this.data = data;
-    this.audio.autoPlay = true;
-    this.progressBar.loadRatio = 0;
-    this.progressBar.timeRatio = 0;
-    this.audio.src = data['audio_url'];
-    this.labelTitle.text = data.title;
-    this.state = Player.PLAYING;
+    if (data) {
+      this.data = data;
+      this.audio.autoPlay = true;
+      this.progressBar.loadRatio = 0;
+      this.progressBar.timeRatio = 0;
+      this.audio.src = data['audio_url'];
+      this.labelTitle.text = data.title;
+      this.state = Player.PLAYING;
+    } else {
+      this.audio.play();
+    }
+  }
+
+  pause() {
+    this.audio.pause();
   }
 
   onPlayClick() {
