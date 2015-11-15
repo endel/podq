@@ -35,7 +35,7 @@ export default class AudioPlayer  extends React.Component {
 
   componentDidMount() {
     this.audio = React.findDOMNode(this.refs.audio);
-    this.podcastPlayer = new PodcastPlayer(this.audio, true);
+    this.podcastPlayer = new PodcastPlayer(this.audio, app.settings.autoPlay);
     this.podcastPlayer.onChangeState = this.onChangeState.bind(this);
   }
 
