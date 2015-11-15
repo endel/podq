@@ -6,8 +6,10 @@ import Session from '../tools/Session';
 import app from '../app';
 import Cover from './Cover.jsx';
 import PodcastPlayer from 'podcast-player';
+import Keycode from 'keycode.js'
 
 export default class AudioPlayer  extends React.Component {
+
   constructor() {
     this.state = {
       url: null,
@@ -19,24 +21,36 @@ export default class AudioPlayer  extends React.Component {
     Notifier.get('playback').on('play', this.play.bind(this));
     Notifier.get('playback').on('pause', this.pause.bind(this));
 
-    this.playing = false;
     app.player = this;
   }
 
   play(data) {
     this.podcastPlayer.play(data);
-    this.playing = true;
   }
 
   pause() {
     this.podcastPlayer.pause();
-    this.playing = false;
   }
 
   componentDidMount() {
     this.audio = React.findDOMNode(this.refs.audio);
     this.podcastPlayer = new PodcastPlayer(this.audio, app.settings.autoPlay);
     this.podcastPlayer.onChangeState = this.onChangeState.bind(this);
+    document.addEventListener('keydown', this.onKeyDown.bind(this))
+  }
+
+  onKeyDown (e) {
+    // only toggle play if user isn't focused on Input element
+    if (!(e.path[0] instanceof HTMLInputElement)) {
+      if (e.keyCode == Keycode.SPACE) {
+        e.preventDefault()
+          if (this.podcastPlayer.playing) {
+            this.pause()
+          } else {
+            this.play()
+          }
+      }
+    }
   }
 
   onChangeState(state) {

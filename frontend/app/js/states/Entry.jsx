@@ -64,7 +64,7 @@ export default class Entry extends React.Component {
           </Link></h1>
           <p>{ tools.simpleDate(this.state.published) } - <Link to={`/feed/${ this.state.feed._id }`}>{ this.state.feed.title }</Link></p>
           <div dangerouslySetInnerHTML={{ __html: this.state.description }} />
-          { entryImage }
+          <p>{ entryImage }</p>
         </div>
       </section>
     );
