@@ -14,7 +14,8 @@ export default class ItemFeed extends React.Component {
     this.icon = null;
   }
 
-  handleClick() {
+  handleClick(e) {
+    e.preventDefault()
     app.feed = this.props.feed;
     app.entry = this.props.data;
     app.history.pushState(null, '/feed/' + this.props.data._id);
@@ -30,8 +31,7 @@ export default class ItemFeed extends React.Component {
 
   render() {
     return (
-      <div className='item feed'>
-        <div className='hitArea' onClick={this.handleClick.bind(this)}></div>
+      <div title={this.props.data.title} className='item feed' onClick={this.handleClick.bind(this)}>
         <Cover ref='cover' src={this.props.data.image} alt={this.props.data.title}/>
       </div>
     );

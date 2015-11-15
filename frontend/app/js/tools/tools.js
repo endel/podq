@@ -10,8 +10,15 @@ export function getDataType(data) {
 
 export function simpleDate(str) {
   var date = new Date(str);
-  var d = date.getDay();
-  var m = date.getMonth() + 1;
-  var y = date.getFullYear();
-  return `${m}/${d}/${y}`;
+
+  var d = date.getDate().toString();
+  var m = (date.getMonth() + 1).toString();
+  var y = (date.getFullYear()).toString();
+
+  return `${ padZero(m, 2) }/${ padZero(d, 2) }/${ y }`;
+}
+
+export function padZero(num, size) {
+  var s = "00" + num;
+  return s.substr(s.length - size);
 }

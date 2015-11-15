@@ -13,7 +13,7 @@ export default class Header extends React.Component {
       <span className="main-logo" />
       <SearchBar />
       <AddContent />
-      {/*<ProfileWidget />*/}
+      <ProfileWidget />
     </header>
   }
 

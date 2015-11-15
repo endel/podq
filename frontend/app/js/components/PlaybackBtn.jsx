@@ -22,6 +22,8 @@ export default class PlaybackBtn extends React.Component {
   }
 
   onClick(e) {
+    e.preventDefault();
+    e.stopPropagation();
     Notifier.get('playback').emit('toggle', this.props.data);
     this.updateIcon();
   }
@@ -47,6 +49,7 @@ export default class PlaybackBtn extends React.Component {
     var iconPlay = <img ref='play' id='play' className='icon-img' src='/images/play.svg'/>;
     var iconPause = <img ref='pause' id='pause' className='icon-img' src='/images/pause.svg'/>;
     var icon = status === 'stop' ? iconPlay : iconPause;
+
     return (
       <div className="playback-btn" onClick={this.onClick.bind(this)}>
         {icon}

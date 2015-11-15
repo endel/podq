@@ -93,8 +93,9 @@ class FeedWorker
 
     matches = description.scan(/#{AUDIO_FORMATS_DESCRIPTION}/)
     matches.each do |(match, extension)|
-      if match.index('soundcloud') && (track_id = match.match(/([0-9]+)/))
-        audio_url = "https://api.soundcloud.com/tracks/#{ track_id }/stream?client_id=#{ ENV['SOUNDCLOUD_CLIENT_ID'] }"
+      puts match.inspect
+      if match.index('soundcloud') && (track_id = match.match(/tracks\/([0-9]+)/))
+        audio_url = "https://api.soundcloud.com/tracks/#{ track_id[1] }/stream?client_id=#{ ENV['SOUNDCLOUD_CLIENT_ID'] }"
       else
         audio_url = match.match(/([^'"]+)/)[1]
       end
