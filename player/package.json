@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "babel-node tasks dev",
-    "release": "babel-node tasks release"
+    "release": "babel-node tasks release",
+    "prepublish": "npm run release"
   },
   "author": "",
   "license": "ISC",

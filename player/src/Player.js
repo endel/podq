@@ -1,6 +1,7 @@
 import PlayButton from './PlayButton';
 import ProgressBar from './ProgressBar';
 import VolumeControl from './VolumeControl';
+import Label from './Label';
 
 export default class Player {
   constructor(element) {
@@ -27,6 +28,9 @@ export default class Player {
     this.volumeControl = new VolumeControl();
     this.element.appendChild(this.volumeControl.element);
     this.volumeControl.onUpdate = this.onVolumeUpdate.bind(this);
+
+    this.labelTitle = new Label('title');
+    this.element.appendChild(this.labelTitle.element);
   }
 
   play(data) {
@@ -35,6 +39,7 @@ export default class Player {
     this.progressBar.loadRatio = 0;
     this.progressBar.timeRatio = 0;
     this.audio.src = data['audio_url'];
+    this.labelTitle.text = data.title;
   }
 
   onPlayClick() {

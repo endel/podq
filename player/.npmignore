@@ -1,0 +1,10 @@
+*.DS_Store
+.DS_Store
+.git*
+.editorconfig
+.gitignore
+.jshintrc
+sample
+src
+*.log.*
+player.js
