@@ -58,7 +58,10 @@ export default class Entry extends React.Component {
       <section className='section'>
         {hasAudio ? playButton : null}
         <div className='content'>
-          <h1>{ this.state.title }</h1>
+          <h1><Link to={ this.state.permalink } target="_blank">
+            { this.state.title }
+            {/*<img src="/images/link.png" />*/}
+          </Link></h1>
           <p>{ tools.simpleDate(this.state.published) } - <Link to={`/feed/${ this.state.feed._id }`}>{ this.state.feed.title }</Link></p>
           <div dangerouslySetInnerHTML={{ __html: this.state.description }} />
           { entryImage }

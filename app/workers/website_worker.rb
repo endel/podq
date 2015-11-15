@@ -25,59 +25,56 @@ class WebsiteWorker
       feed = Feed.find_or_create_by(permalink: permalink)
     end
 
-    #
-    # scan facebook open-graph data and update Feed data
-    #
-    if (data = html.scan(/property=["|']og:(.*)["|'].*content=["|'](.*)["|']/))
-      og = OpenStruct.new(Hash[ data ])
+    page_properties = HashWithIndifferentAccess.new
 
-      if og.title && og.description && og.image
-        feed.title = og.title.strip
-        feed.description = og.description.strip
-        feed.image = og.image
-        feed.has_og_tags = true
-      end
-
-      if !feed.language && feed.description
-        cld = CLD.detect_language(ActionView::Base.full_sanitizer.sanitize(feed.description))
-        feed.language = cld[:code]
-      end
-
-      feed.save
+    # scan page meta tags
+    if (meta = html.scan(/meta name=["|'](.*)["|'].*content=["|'](.*)["|']/i))
+      page_properties = HashWithIndifferentAccess[ meta.collect {|(name, value)| [name.downcase, value]} ]
     end
+
+    # scan page title
+    if (title = html.scan(/<title>([^<]+)<\/title>/i)[0])
+      page_properties[:title] = title.first
+    end
+
+    # scan all images, and get the first one
+    if (images = html.scan(/<img[^>]+/i))
+      first_image = images.first
+      if first_image && (image = first_image.scan(/src=['"]([^'"]+)['"]/i)[0])
+        page_properties[:image] = get_absolute_url(image.first, feed.permalink)
+      end
+    end
+
+    # scan facebook open-graph data, override previous fetched data
+    if (data = html.scan(/property=["|']og:(.*)["|'].*content=["|'](.*)["|']/i)) && data.length > 0
+      page_properties = page_properties.merge(HashWithIndifferentAccess[ data ])
+      feed.has_og_tags = true
+    end
+
+    # update Feed data
+    feed.title = page_properties[:title].strip if page_properties[:title]
+    feed.description = page_properties[:description].strip if page_properties[:description]
+    feed.image = page_properties[:image] if page_properties[:image]
+
+    if !feed.language && feed.description
+      cld = CLD.detect_language(ActionView::Base.full_sanitizer.sanitize(feed.description))
+      feed.language = cld[:code]
+    end
+
+    feed.save
 
     #
     # enqueue FeedWorker
     #
     if update_feed
       feed_tags = html.scan(/<link(.*)type=["|']application\/(rss|atom)\+xml["|']([^>]+)?>/i)
-      puts feed_tags.inspect
-
       feed_tags.each do |data|
-        puts data.inspect
 
         if (href = data.select {|d| (d||"").index('href=') != nil }[0])
-          puts href.inspect
-
           if (feed_url = href.match(/href=["|']([^"|']+)["|']/)[1])
-            puts feed_url.inspect
-
-            if feed_url.index('//') == 0
-              # append "http" on the beginning of url,
-              # if it's set as protocol agnostic (//)
-              feed_url = "http:#{feed_url}"
-            elsif feed_url.index('/') == 0
-              # remove "/" from the beginning of url, since it's already present
-              # on normalized permalink
-              feed_url = feed_url[1..-1]
-            end
-
-            # append base url on feed url, if needed
-            feed_url = "#{feed.permalink}#{feed_url}" unless feed_url.index(/https?:\/\//)
-
             # try to download & index all entries from all RSS links
             # feeds without audio files will be considered invalid
-            FeedWorker.perform_async(HTMLEntities.new.decode(feed_url), feed._id.to_s)
+            FeedWorker.perform_async(get_absolute_url(feed_url, feed.permalink), feed._id.to_s)
           end
         end
       end
@@ -85,6 +82,22 @@ class WebsiteWorker
     end
 
     true
+  end
+
+  def get_absolute_url(relative_url, permalink)
+    if relative_url.index('//') == 0
+      # append "http" on the beginning of url,
+      # if it's set as protocol agnostic (//)
+      relative_url = "http:#{relative_url}"
+    elsif relative_url.index('/') == 0
+      # remove "/" from the beginning of url, since it's already present
+      # on normalized permalink
+      relative_url = relative_url[1..-1]
+    end
+
+    # append base url on feed url, if needed
+    relative_url = "#{permalink}#{relative_url}" unless relative_url.index(/https?:\/\//)
+    HTMLEntities.new.decode(relative_url)
   end
 
 end

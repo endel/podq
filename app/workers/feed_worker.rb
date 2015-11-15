@@ -8,7 +8,7 @@ class FeedWorker
   AUDIO_FORMATS_DESCRIPTION = '(https?:\/\/.*(\.mp3|\.ogg|\.acc|\.flac|\.m4a|api\.soundcloud\.com\/tracks\/[0-9]+))'
 
   def perform(feed_url, feed_id = nil)
-    feed = Feed.find(feed_id) if feed_id
+    feed = if feed_id then Feed.find(feed_id) else nil end
 
     http = Faraday.new {|c|
       c.use FaradayMiddleware::FollowRedirects
@@ -40,6 +40,9 @@ class FeedWorker
     feed.permalink = feed_permalink
     feed.url = feed_url
 
+    #
+    # TODO: Website or RSS has more descriptive data?
+    #
     unless feed.has_og_tags?
       feed.title = xml_feed.title.strip if xml_feed.try(:title)
       feed.description = xml_feed.description.strip if xml_feed.try(:description)
