@@ -9,7 +9,7 @@ export default class PlaybackBtn extends React.Component {
   }
 
   get initialState() {
-    return {status:'stop'};
+    return {status:'pause'};
   }
 
   componentDidMount() {
@@ -22,9 +22,16 @@ export default class PlaybackBtn extends React.Component {
   }
 
   onClick(e) {
+    if (this.interactive()) {
+      if (this.getStatus() === 'play') {
+        Notifier.get('playback').emit('pause', this.props.data);
+      } else {
+        this.setState({status:'load'});
+        Notifier.get('playback').emit('play', this.props.data);
+      }
+    }
     e.preventDefault();
     e.stopPropagation();
-    Notifier.get('playback').emit('toggle', this.props.data);
     this.updateIcon();
   }
 
@@ -32,28 +39,44 @@ export default class PlaybackBtn extends React.Component {
     if (e.data._id === this.props.data._id) {
       this.setState({status:e.state});
     } else {
-      this.setState({status:'stop'});
+      this.setState({status:'pause'});
     }
   }
 
   updateIcon() {
-    if (app.player.data && app.player.data._id == this.props.data._id) {
+    if (app.player.data && app.player.data._id === this.props.data._id) {
       this.setState({status:'play'});
     } else {
-      this.setState({status:'stop'});
+      this.setState({status:'pause'});
     }
   }
 
-  render() {
-    var status = this.state.status || this.props.status;
-    var iconPlay = <img ref='play' id='play' className='icon-img' src='/images/play.svg'/>;
-    var iconPause = <img ref='pause' id='pause' className='icon-img' src='/images/pause.svg'/>;
-    var icon = status === 'stop' ? iconPlay : iconPause;
+  interactive() {
+    return this.getStatus() !== 'load';
+  }
 
-    return (
-      <div className="playback-btn" onClick={this.onClick.bind(this)}>
-        {icon}
-      </div>
-    );
+  getStatus() {
+    return this.state.status || this.props.status;
+  }
+
+  render() {
+    var status = this.getStatus();
+    if (status === 'load') {
+      return (
+        <div className="playback-btn"></div>
+      );
+    } else if (status === 'play') {
+      return (
+        <div className="playback-btn" onClick={this.onClick.bind(this)}>
+          <img ref='pause' id='pause' className='icon-img' src='/images/pause.svg'/>
+        </div>
+      );
+    } else {
+      return (
+        <div className="playback-btn" onClick={this.onClick.bind(this)}>
+          <img ref='play' id='play' className='icon-img' src='/images/play.svg'/>
+        </div>
+      );
+    }
   }
 }

@@ -7,40 +7,62 @@
   height 55px
   border-top 1px solid $layout_border_color
 
-  audio
-    display inline-block
-    width 70%
-    height 75%
-    margin 0px
-    padding 0px
-    float left
+  #intro
+    width 100%
+    height auto
 
-  ul
-    margin-top 8px
-    vertical-align top
-    display inline-block
-    float right
-    margin-right 10px
-    margin-top 10px
-    font-size $font_ss
-    color $primary_color1
-    li
-      display inline-block
-      margin-left 4px
-      button
-        cursor pointer
-        border 0
-        background $primary_color1
-        color $font_color2
-        width 40px
-        height 30px
-        display inline-block
-        border-radius 10%
-        opacity 0.8
-        font-size $font_s
-        &:hover
-          opacity 1
-        &.active
-          background #fffce0
-          color #3e4147
-          opacity 1
+  #idle
+    width 100%
+    margin-top 17px
+    text-align center
+    font-size $font_m
+
+  #container
+    width 100%
+    height auto
+
+  #playButton
+    position absolute
+    width 44px
+    height 44px
+    margin-left 10px
+    margin-top 6px
+
+  #progressBar
+    position absolute
+    width calc(100% - 180px)
+    height 26px
+    margin-left 64px
+    margin-top 15px
+    border-radius: 6px;
+    overflow: hidden;
+
+  #volumeControl
+    position absolute
+    width 40px
+    height 40px
+    margin-top 6px
+    right 64px
+
+  #speedButton
+    position absolute
+    width: 44px
+    height: 44px
+    right 10px
+    margin-top 6px
+
+  #title
+    position absolute
+    margin-top 19px
+    width 100%
+    text-align center
+    color black
+    pointer-events none
+    -webkit-touch-callout none
+    -webkit-user-select none
+    -khtml-user-select none
+    -moz-user-select none
+    -ms-user-select none
+    user-select none
+    z-index 1
+    font-weight bold
