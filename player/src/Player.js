@@ -17,20 +17,34 @@ export default class Player {
     this.audio.addEventListener('error', this.onError.bind(this));
     this.audio.addEventListener('timeupdate', this.onTimeUpdate.bind(this));
 
+    this.intro = document.createElement('div');
+    this.intro.id = 'intro';
+    this.element.appendChild(this.intro);
+
+    this.container = document.createElement('div');
+    this.container.id = 'container';
+    this.element.appendChild(this.container);
+
+    this.labelIdle = new Label('idle');
+    this.intro.appendChild(this.labelIdle.element);
+    this.labelIdle.text = 'Podcast Player';
+
     this.playButton = new PlayButton();
-    this.element.appendChild(this.playButton.element);
+    this.container.appendChild(this.playButton.element);
     this.playButton.onClick = this.onPlayClick.bind(this);
 
     this.progressBar = new ProgressBar();
-    this.element.appendChild(this.progressBar.element);
+    this.container.appendChild(this.progressBar.element);
     this.progressBar.onSeekUpdate = this.onSeekUpdate.bind(this);
 
     this.volumeControl = new VolumeControl();
-    this.element.appendChild(this.volumeControl.element);
+    this.container.appendChild(this.volumeControl.element);
     this.volumeControl.onUpdate = this.onVolumeUpdate.bind(this);
 
     this.labelTitle = new Label('title');
-    this.element.appendChild(this.labelTitle.element);
+    this.container.appendChild(this.labelTitle.element);
+    this._state = -1;
+    this.state = Player.IDLE;
   }
 
   play(data) {
@@ -40,6 +54,7 @@ export default class Player {
     this.progressBar.timeRatio = 0;
     this.audio.src = data['audio_url'];
     this.labelTitle.text = data.title;
+    this.state = Player.PLAYING;
   }
 
   onPlayClick() {
@@ -98,6 +113,25 @@ export default class Player {
   onTimeUpdate() {
     this.progressBar.timeRatio = this.audio.currentTime/this.audio.duration;
   }
+
+  get state() {
+    return this._state;
+  }
+
+  set state(value) {
+    if (value !== this._state) {
+      this._state = value;
+      this.updateState();
+    }
+  }
+
+  updateState() {
+    this.intro.style.display = this._state === Player.IDLE ? 'block' : 'none';
+    this.container.style.display = this._state === Player.PLAYING ? 'block' : 'none';
+  }
 }
+
+Player.IDLE = 0;
+Player.PLAYING = 1;
 
 window.Player = Player;
