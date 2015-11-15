@@ -7,6 +7,7 @@ import Notifier from '../tools/Notifier';
 import Session from '../tools/Session';
 import app from '../app';
 import Cover from './Cover.jsx';
+import PodcastPlayer from 'podcast-player';
 
 export default class AudioPlayer  extends React.Component {
   constructor() {
@@ -28,9 +29,9 @@ export default class AudioPlayer  extends React.Component {
   toggle(data) {
     if (data && this.data && data._id === this.data._id) {
       if (this.playing) {
-        this.audio.pause();
+        // this.audio.pause();
       } else {
-        this.audio.play();
+        // this.audio.play();
         this.playing = true;
       }
     } else if (data) {
@@ -40,13 +41,14 @@ export default class AudioPlayer  extends React.Component {
 
   play(data) {
     this.data = data;
-    this.audio.src = data.audio_url;
-    this.audio.autoPlay = true;
+    // this.audio.src = data.audio_url;
+    // this.audio.autoPlay = true;
     this.playing = true;
+    this.podcastPlayer.play(data);
   }
 
   stop() {
-    this.audio.pause();
+    // this.audio.pause();
     this.playing = false;
   }
 
@@ -61,33 +63,42 @@ export default class AudioPlayer  extends React.Component {
   }
 
   changePlaybackRate(rate, e) {
-    this.audio.playbackRate = rate
+    // this.audio.playbackRate = rate
     this.setState({ playbackRate: rate })
   }
 
   componentDidMount() {
+    // this.audio = React.findDOMNode(this.refs.audio);
+    // this.audio.addEventListener('play', this.onPlaybackStart.bind(this));
+    // this.audio.addEventListener('pause', this.onPlaybackStop.bind(this));
+    // this.audio.addEventListener('ended', this.onPlaybackStop.bind(this));
     this.audio = React.findDOMNode(this.refs.audio);
-    this.audio.addEventListener('play', this.onPlaybackStart.bind(this));
-    this.audio.addEventListener('pause', this.onPlaybackStop.bind(this));
-    this.audio.addEventListener('ended', this.onPlaybackStop.bind(this));
+    this.podcastPlayer = new PodcastPlayer(this.audio);
   }
 
   render () {
     return (
-      <div className="audio-player">
-        <audio ref='audio' controls autoPlay>
-          <source src={this.state.url} />
-        </audio>
-        <ul>
-          <li>Speed: </li>
-          <li><button className={classNames({ active: (this.state.playbackRate == 1) })} onClick={this.changePlaybackRate.bind(this, 1)}>1x</button></li>
-          <li><button className={classNames({ active: (this.state.playbackRate == 1.25) })} onClick={this.changePlaybackRate.bind(this, 1.25)}>1.25x</button></li>
-          <li><button className={classNames({ active: (this.state.playbackRate == 1.50) })} onClick={this.changePlaybackRate.bind(this, 1.50)}>1.50x</button></li>
-          <li><button className={classNames({ active: (this.state.playbackRate == 1.75) })} onClick={this.changePlaybackRate.bind(this, 1.75)}>1.75x</button></li>
-        </ul>
-
+      <div ref="audio" className="audio-player">
       </div>
     );
   }
+
+  // render () {
+  //   return (
+  //     <div ref="audio" className="audio-player">
+  //       <audio ref='audio' controls autoPlay>
+  //         <source src={this.state.url} />
+  //       </audio>
+  //       <ul>
+  //         <li>Speed: </li>
+  //         <li><button className={classNames({ active: (this.state.playbackRate == 1) })} onClick={this.changePlaybackRate.bind(this, 1)}>1x</button></li>
+  //         <li><button className={classNames({ active: (this.state.playbackRate == 1.25) })} onClick={this.changePlaybackRate.bind(this, 1.25)}>1.25x</button></li>
+  //         <li><button className={classNames({ active: (this.state.playbackRate == 1.50) })} onClick={this.changePlaybackRate.bind(this, 1.50)}>1.50x</button></li>
+  //         <li><button className={classNames({ active: (this.state.playbackRate == 1.75) })} onClick={this.changePlaybackRate.bind(this, 1.75)}>1.75x</button></li>
+  //       </ul>
+  //
+  //     </div>
+  //   );
+  // }
 
 }

@@ -71,7 +71,6 @@ export default class Player {
 
   onSeekUpdate() {
     var time = this.audio.duration*this.progressBar.timeRatio;
-    console.log(time);
     this.audio.currentTime = time;
   }
 
@@ -134,4 +133,4 @@ export default class Player {
 Player.IDLE = 0;
 Player.PLAYING = 1;
 
-window.Player = Player;
+window.PodcastPlayer = Player;

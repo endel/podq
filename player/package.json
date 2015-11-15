@@ -1,8 +1,8 @@
 {
-  "name": "proj-js",
-  "version": "0.0.1",
+  "name": "podcast-player",
+  "version": "0.0.2",
   "description": "",
-  "main": "index.js",
+  "main": "player.js",
   "scripts": {
     "start": "babel-node tasks dev",
     "release": "babel-node tasks release",
