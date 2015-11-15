@@ -22,32 +22,38 @@
     height auto
 
   #playButton
+    position absolute
     width 44px
     height 44px
-    float left
     margin-left 10px
     margin-top 6px
 
   #progressBar
-    width calc(100% - 130px)
+    position absolute
+    width calc(100% - 180px)
     height 20px
-    float left
-    margin-left 10px
-    margin-right 10px
-    margin-top 17px
+    margin-left 64px
+    margin-top 19px
     border-radius: 6px;
     overflow: hidden;
 
   #volumeControl
-    width 44px
-    height 44px
-    float right
-    margin-top 2px
-    margin-right 10px
+    position absolute
+    width 40px
+    height 40px
+    margin-top 6px
+    right 64px
+
+  #speedButton
+    position absolute
+    width: 44px
+    height: 44px
+    right 10px
+    margin-top 6px
 
   #title
     position absolute
-    margin-top 17px
+    margin-top 19px
     width 100%
     text-align center
     color black
@@ -58,3 +64,5 @@
     -moz-user-select none
     -ms-user-select none
     user-select none
+    z-index 1
+    font-weight bold
