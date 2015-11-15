@@ -12,8 +12,6 @@ export default class Player {
 
     this.progressBar = new ProgressBar();
     this.element.appendChild(this.progressBar.element);
-    this.progressBar.loadRatio = 0.75;
-    this.progressBar.timeRatio = 0.5;
 
     this.volumeControl = new VolumeControl();
     this.element.appendChild(this.volumeControl.element);
@@ -35,7 +33,6 @@ export default class Player {
     this.audio.autoPlay = true;
     this.progressBar.loadRatio = 0;
     this.progressBar.timeRatio = 0;
-    this.playButton.state = PlayButton.LOADING;
     this.audio.src = data['audio_url'];
   }
 
@@ -67,8 +64,8 @@ export default class Player {
     this.playButton.state = PlayButton.PAUSED;
   }
 
-  onLoadStart(e) {
-    console.log('onLoadStart', e);
+  onLoadStart() {
+    this.playButton.state = PlayButton.LOADING;
   }
 
   onLoadProgress() {
@@ -82,12 +79,12 @@ export default class Player {
     this.progressBar.loadRatio = e - s;
   }
 
-  onLoadMetaData(e) {
-    console.log('onLoadMetaData', e);
+  onLoadMetaData() {
+    // console.log('onLoadMetaData', e);
   }
 
   onError(e) {
-    console.log('onError', e);
+    console.log('AUDIO LOAD ERROR!', e);
   }
 
   onTimeUpdate() {

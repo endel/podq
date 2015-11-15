@@ -11,7 +11,8 @@ var html = `
 export default class ProgressBar extends Graphics {
   constructor() {
     super('progressBar', html);
-    this._timeRatio = 1;
+    this.timeRatio = 0;
+    this.loadRatio = 0;
   }
 
   get timeRatio() {
