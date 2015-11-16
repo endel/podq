@@ -1,5 +1,5 @@
 var settings = {
-  autoPlay: false
+  autoPlay: true
 };
 
 var app = {

@@ -1,8 +1,7 @@
 .main-search
-
   position relative
   margin-top 14px
-  margin-left 10px
+  width 20%
 
   a
     display block
@@ -16,7 +15,7 @@
     left 8px
 
   input[type=search]
-    width 250px
+    width 100%
     height 27px
     vertical-align middle
     border-radius 20px
@@ -27,6 +26,9 @@
 
     &::-webkit-input-placeholder
       color $font_color1
+
+    &:focus
+      outline-width 0
 
 .main-search-results
 
@@ -121,4 +123,3 @@
       overflow hidden
       text-overflow ellipsis
       white-space nowrap
-
