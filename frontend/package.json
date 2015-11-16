@@ -22,7 +22,7 @@
     "eventemitter3": "^1.1.1",
     "history": "^1.12.5",
     "keycode.js": "0.0.1",
-    "podcast-player": "./player",
+    "podcast-player": "file:./player",
     "react": "^0.13.3",
     "react-ga": "^1.2.0",
     "react-router": "^1.0.0-rc4",
