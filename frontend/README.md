@@ -4,6 +4,8 @@
 - [x] Top bar breaking on resize
 - [ ] Remove text field highlights
 - [ ] Login/logout
+- [ ] Change player colors
+- [ ] Update color system
 - [ ] Rethink loading screen
 - [ ] Unify spinners
 - [ ] User preferences
