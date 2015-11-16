@@ -1,9 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router'
-
+import { Link } from 'react-router';
 import main from '../main';
 import ItemList from '../components/ItemList.jsx';
-import SubscribeButton from '../components/SubscribeButton.jsx'
+import SubscribeButton from '../components/SubscribeButton.jsx';
 import Notifier from '../tools/Notifier';
 import Client from '../tools/Client';
 import app from '../app';
@@ -64,11 +63,13 @@ export default class Feed extends React.Component {
         <h1>
           {this.state.feed.title} <SubscribeButton feed={ this.state.feed } />
         </h1>
-        { description }
+          { description }
         <p className="permalink">
           { permalink }
           <Link className="rss" to={ this.state.feed.url } target="_blank"><img src="/images/rss.png" alt="RSS Feed" /></Link>
         </p>
+        <hr></hr>
+        <br />
         <ItemList
           ref='list'
           info={this.state.feed}
