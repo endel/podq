@@ -15,12 +15,18 @@ class FeedWorker
       c.adapter :net_http
     }
     xml = http.get(feed_url).body
-    xml_feed = Feedjira::Feed.parse(xml)
 
-    num_audio_matches = xml.scan(/#{AUDIO_FORMATS}/).length
-    if num_audio_matches < (xml_feed.entries.length / 2) # a high amount of mp3 shall be found
-      logger.info("STATS: #{num_audio_matches} / #{xml_feed.entries.length}")
-      raise 'invalid RSS file'
+    # Prioritize ITunesRSS format
+    xml_feed = Feedjira::Feed.parse_with(Feedjira::Parser::ITunesRSS, xml)
+
+    unless is_valid_feed?(xml, xml_feed)
+      xml_feed = Feedjira::Feed.parse(xml)
+
+      # Maybe feed is not in ITunesRSS format.
+      # Try to use whatever format it finds
+      unless is_valid_feed?(xml, xml_feed)
+        raise 'invalid RSS file'
+      end
     end
 
     feed_permalink = Feed.normalize_url(xml_feed.url)
@@ -113,6 +119,11 @@ class FeedWorker
       description.
         gsub(/style=["']([^'"]+)["']/, "")
     end
+  end
+
+  def is_valid_feed?(xml, xml_feed)
+    num_audio_matches = xml.scan(/#{AUDIO_FORMATS}/).length
+    return (num_audio_matches > (xml_feed.entries.length / 2))
   end
 
 end
