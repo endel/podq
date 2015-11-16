@@ -1,4 +1,5 @@
 import React from 'react';
+import * as tools from '../tools/tools';
 
 export default class Cover extends React.Component {
   constructor() {
@@ -6,8 +7,9 @@ export default class Cover extends React.Component {
   }
 
   render() {
+    var title = tools.clampString(this.props.alt, 60);
     var img = <img src={this.props.src} alt={this.props.alt}/>;
-    var alt = <h1>{this.props.alt}</h1>
+    var alt = <h1>{title}</h1>
     var content = this.props.src ? img : alt;
 
     return (
