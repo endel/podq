@@ -18,7 +18,7 @@ var html = `
     </defs>
 
     <circle id="spinner" cx="50" cy="50" r="25"
-    stroke="white" stroke-width="4" stroke-linecap="butt"
+    stroke="white" fill="black" stroke-width="4" stroke-linecap="butt"
     clip-path="url(#cut-off-bottom)"></circle>
   </svg>
 `;

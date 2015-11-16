@@ -1,6 +1,6 @@
 export default class Client {
   constructor() {
-    this.url = `${ BACKEND_ENDPOINT }/`;
+    this.url = `${BACKEND_ENDPOINT}/`;
     this.mockurl = '/mockdata/';
     this.mockdata = false;
     this.debug = false;

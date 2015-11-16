@@ -3,7 +3,7 @@
   position fixed
   width 100vw
   bottom 0
-  background-color $color_a
+  background-color $color_e
   height 55px
   border-top 1px solid black
   -webkit-touch-callout none
@@ -12,28 +12,12 @@
   -moz-user-select none
   -ms-user-select none
   user-select none
+  color $color_a
+  font-weight bold
 
   #circle
     stroke $color_d
     fill $color_b
-
-  #volumeControl rect
-    fill $color_d
-
-  #play
-    stroke $color_d
-    fill $color_b
-
-  #pause
-    stroke $color_d
-    fill $color_b
-
-  #spinner
-    stroke $color_d
-    fill $color_b
-
-  #progressBar rect
-    fill $color_c
 
   #intro
     width 100%
@@ -56,6 +40,13 @@
     margin-left 10px
     margin-top 6px
 
+    #play,#pause,#spinner
+      stroke $color_c
+      fill $color_c
+
+    #spinner
+      fill $color_b
+
   #progressBar
     position absolute
     width calc(100% - 180px)
@@ -64,6 +55,8 @@
     margin-top 15px
     border-radius: 4px;
     overflow: hidden;
+    rect
+      fill $color_d
 
   #volumeControl
     position absolute
@@ -71,6 +64,9 @@
     height 40px
     margin-top 6px
     right 64px
+
+    rect
+      fill $color_c
 
   #speedButton
     position absolute
@@ -85,7 +81,6 @@
     width 100%
     text-align left
     left 74px
-    color black
     pointer-events none
     user-select none
     z-index 1
@@ -98,7 +93,6 @@
     line-height 55px
     width 100%
     text-align right
-    color black
     pointer-events none
     z-index 1
     right 130px

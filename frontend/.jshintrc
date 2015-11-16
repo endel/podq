@@ -14,5 +14,6 @@
   "undef": true,
   "unused": true,
   "strict": true,
-  "sub": true
+  "sub": true,
+  "predef": ["BACKEND_ENDPOINT", "fetch"]
 }
