@@ -2,9 +2,9 @@
 
 # TO-DO
 - [x] Top bar breaking on resize
-- [ ] Remove text field highlights
+- [x] Remove text field highlights
 - [ ] Login/logout
-- [ ] Change player colors
+- [x] Change player colors
 - [ ] Update color system
 - [ ] Rethink loading screen
 - [ ] Unify spinners
@@ -12,3 +12,4 @@
 - [ ] Include feeds in search results
 - [ ] Close search popup after selecting 'All results'
 - [ ] Store pause/play state
+- [ ] Section mask clamping 5~10px at the top
