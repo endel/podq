@@ -3,7 +3,7 @@ import Player from './Player';
 
 var html = `
   <svg width="100%" viewbox="0 0 100 100">
-    <circle id="circle" cx="50" cy="50" r="40" stroke="white" stroke-width="8"/>
+    <circle id="circle" cx="50" cy="50" r="40" stroke="white" stroke-width="6"/>
 
     <polygon id="play" points="45,40 45,60, 60,50" fill="white"
     stroke="white" stroke-width="8" stroke-linecap="butt"></polygon>

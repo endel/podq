@@ -13,12 +13,6 @@ HEIGHT = 200px
   &:hover
     opacity 1
 
-  .btn
-    transition opacity 0.2s
-    opacity 0.3
-    &:hover
-      opacity 1
-
   .top
     font-size $font_ss
     color $font_color2
@@ -55,10 +49,11 @@ HEIGHT = 200px
     width 80px
     height 80px
     z-index 3
-    background-color rgba(255,255,255,0.75)
-    border-radius 100%
     left 50%
     top 50%
     transform translate(-50%, -50%)
     -webkit-transform translate(-50%, -50%)
-    opacity 0.3
+    transition opacity 0.2s
+    opacity 0.5
+    &:hover
+      opacity 1

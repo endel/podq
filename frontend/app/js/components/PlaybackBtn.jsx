@@ -65,14 +65,14 @@ export default class PlaybackBtn extends React.Component {
       return (
         <div className="playback-btn" onClick={this.onClick.bind(this)}>
           <svg width="100%" viewBox="0 0 100 100">
-            <circle id="circle" cx="50" cy="50" r="40" stroke="black" strokeWidth="8"/>
+            <circle id="circle" cx="50" cy="50" r="40" stroke="black" strokeWidth="6"/>
             <defs>
               <clipPath id="cut-off-bottom">
                 <rect x="0" y="0" width="50" height="100" />
               </clipPath>
             </defs>
             <circle id="spinner" cx="50" cy="50" r="25"
-            stroke="white" strokeWidth="4" strokeLinecap="butt"
+            stroke="white" fill="black" strokeWidth="4" strokeLinecap="butt"
             clipPath="url(#cut-off-bottom)"></circle>
           </svg>
         </div>
@@ -81,7 +81,7 @@ export default class PlaybackBtn extends React.Component {
       return (
         <div className="playback-btn" onClick={this.onClick.bind(this)}>
           <svg width="100%" viewBox="0 0 100 100">
-            <circle id="circle" cx="50" cy="50" r="40" stroke="black" strokeWidth="8"/>
+            <circle id="circle" cx="50" cy="50" r="40" stroke="black" strokeWidth="6"/>
             <path id="pause" d="M40,32V68 M60,32V68" fill="white"
             stroke="white" strokeWidth="8" strokeLinecap="butt"></path>
           </svg>
@@ -91,7 +91,7 @@ export default class PlaybackBtn extends React.Component {
       return (
         <div className="playback-btn" onClick={this.onClick.bind(this)}>
           <svg width="100%" viewBox="0 0 100 100">
-            <circle id="circle" cx="50" cy="50" r="40" stroke="black" strokeWidth="8"/>
+            <circle id="circle" cx="50" cy="50" r="40" stroke="black" strokeWidth="6"/>
             <polygon id="play" points="45,40 45,60, 60,50" fill="white"
             stroke="white" strokeWidth="8" strokeLinecap="butt"></polygon>
           </svg>

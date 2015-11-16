@@ -1,6 +1,12 @@
 .playback-btn
   cursor pointer
   display inline-block
+  stroke $color_c
+  fill $color_a
+
+  #circle
+    stroke $color_c
+    fill $color_a
 
   @keyframes frames {
     0% {
@@ -13,5 +19,11 @@
     }
   }
 
+  #play,#pause,#spinner
+    stroke $color_c
+    fill $color_c
+
   #spinner
+    stroke $color_c
+    fill $color_a
     animation frames 500ms infinite linear

@@ -2,7 +2,7 @@ import Graphics from './Graphics';
 
 var html = `
 <svg width="100%" viewbox="0 0 100 100">
-  <circle id="circle" cx="50" cy="50" r="40" stroke="white" stroke-width="8"/>
+  <circle id="circle" cx="50" cy="50" r="40" stroke="white" stroke-width="6"/>
   <text id="speed" x="50" y="57" text-anchor="middle" style=
               "font-family: Verdana;
                font-size  : 20;
