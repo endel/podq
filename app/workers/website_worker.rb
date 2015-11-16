@@ -29,7 +29,9 @@ class WebsiteWorker
 
     # scan page meta tags
     if (meta = html.scan(/meta name=["|'](.*)["|'].*content=["|'](.*)["|']/i))
-      page_properties = HashWithIndifferentAccess[ meta.collect {|(name, value)| [name.downcase, value]} ]
+      page_properties = HashWithIndifferentAccess[ meta.collect {|(name, value)|
+        [ name.downcase.gsub("twitter:", ""), value ]
+      } ]
     end
 
     # scan page title
@@ -38,7 +40,7 @@ class WebsiteWorker
     end
 
     # scan all images, and get the first one
-    if (images = html.scan(/<img[^>]+/i))
+    if !page_properties[:image].present? && (images = html.scan(/<img[^>]+/i))
       first_image = images.first
       if first_image && (image = first_image.scan(/src=['"]([^'"]+)['"]/i)[0])
         page_properties[:image] = get_absolute_url(image.first, feed.permalink)
