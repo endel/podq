@@ -31,11 +31,10 @@ export default class ItemEntry extends React.Component {
   render() {
     var date = tools.simpleDate(this.props.data.published);
     var img = this.props.data.image || this.props.info.image;
-    var top = this.props.info.title ? `${date} - ${this.props.info.title}` : date;
 
     return (
       <div className='item entry' onClick={this.onClickDetails.bind(this)}>
-        <div className='top text'>{top}</div>
+        <div className='top text'>{this.props.info.title}</div>
         <div className='mid'>
           <div className='btn'>
             <PlaybackBtn data={this.props.data}/>
@@ -43,7 +42,7 @@ export default class ItemEntry extends React.Component {
           <Cover src={img}/>
         </div>
 
-        <div className='bot text'>{this.props.data.title}</div>
+        <div className='bot text'>{date} - {this.props.data.title}</div>
       </div>
     );
   }
