@@ -1,6 +1,7 @@
 .section
   padding $default_margin
   min-height 100vh
+  color $color_c
 
   .permalink
     .rss
@@ -8,6 +9,8 @@
       height 12px
       opacity 0.8
       transition opacity 0.2s
+      a
+        color $color_a
       &:hover
         opacity 1
       img
@@ -18,7 +21,6 @@
     width 140px
     height 140px
     display inline-block
-    background-color #CCC
     vertical-align top
     float left
     border-radius 100%
@@ -40,14 +42,7 @@
     margin 0px
     margin-bottom $default_margin
     font-size $font_l
-    // img
-    //   margin-left $default_margin
-
-  .title
-    paddig 0px
-    margin 0px
-    margin-bottom $default_margin
-    font-size $font_l
+    color $color_d
 
   button.follow-btn
     position relative
