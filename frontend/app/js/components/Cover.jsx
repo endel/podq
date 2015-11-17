@@ -14,7 +14,7 @@ export default class Cover extends React.Component {
 
     return (
       <div className="cover">
-        <div className="shadow"></div>
+        <div className="cover-shadow"></div>
         {content}
       </div>
     );

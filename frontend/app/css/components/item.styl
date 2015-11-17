@@ -2,6 +2,7 @@ WIDTH = 200px
 HEIGHT = 200px
 
 .item
+  position relative
   cursor pointer
   margin-bottom $default_margin*2
   margin-right $default_margin*2
@@ -21,11 +22,22 @@ HEIGHT = 200px
     .bot,.top
       color $color_c
 
+  .shadow
+    position absolute
+    left:0px;
+    top:0px;
+    right:0px;
+    bottom:0px;
+    z-index 1
+    box-shadow inset 0 0 100px rgba(0,0,0,0.2)
 
   .top
     font-size $font_ss
     color $color_b
     background-color $color_a
+    z-index 3
+    div
+      z-index 10
 
   .mid
     position relative
@@ -36,6 +48,8 @@ HEIGHT = 200px
     font-size $font_s
     background-color $color_a
     color $color_b
+    div
+      z-index 3
 
   .text
     width WIDTH
@@ -47,12 +61,12 @@ HEIGHT = 200px
     height WIDTH
     z-index 0
 
-    .shadow
+    .cover-shadow
       position absolute
       width WIDTH
       height HEIGHT
       z-index 2
-      box-shadow inset 0 0 80px #000000
+      box-shadow inset 0 0 80px rgba(0,0,0,0.5)
 
   .btn
     position absolute

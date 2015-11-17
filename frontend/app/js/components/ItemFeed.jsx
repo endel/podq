@@ -32,6 +32,7 @@ export default class ItemFeed extends React.Component {
   render() {
     return (
       <div title={this.props.data.title} className='item feed' onClick={this.handleClick.bind(this)}>
+        <div className="shadow"></div>
         <Cover ref='cover' src={this.props.data.image} alt={this.props.data.title}/>
       </div>
     );
