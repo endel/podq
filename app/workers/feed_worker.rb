@@ -65,7 +65,7 @@ class FeedWorker
     xml_feed.entries.each do |xml_entry|
       keywords = xml_entry.try(:categories) || xml_entry.try(:itunes_keywords)
 
-      entry = Entry.find_or_create_by(permalink: Feed.normalize_url(xml_entry.try(:url) || xml_entry.try(:entry_id) || xml_entry.try(:enclosure_url)))
+      entry = Entry.find_or_create_by(permalink: Feed.normalize_url(follow_permalink_redirect(xml_entry.try(:url) || xml_entry.try(:entry_id) || xml_entry.try(:enclosure_url))))
       entry.feed_id = feed._id
       entry.published = xml_entry.published
       entry.title = xml_entry.title
@@ -112,6 +112,17 @@ class FeedWorker
     end
 
     audio_url
+  end
+
+  def follow_permalink_redirect(permalink)
+    http = Faraday.new {|c|
+      c.use FaradayMiddleware::FollowRedirects
+      c.adapter :net_http
+    }
+    data = http.head(permalink)
+    data.env.url.to_s
+  rescue
+    permalink
   end
 
   def sanitize_description(description)
