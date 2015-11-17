@@ -68,8 +68,7 @@ export default class Feed extends React.Component {
           { permalink }
           <Link className="rss" to={ this.state.feed.url } target="_blank"><img src="/images/rss.png" alt="RSS Feed" /></Link>
         </p>
-        <hr></hr>
-        <br />
+        
         <ItemList
           ref='list'
           info={this.state.feed}
