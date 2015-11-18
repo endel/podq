@@ -17,10 +17,10 @@ HEIGHT = 200px
   border-color rgba(0,0,0,0)
   border-width 2px 2px
   &:hover
-    border-color $color_c
+    border-color $color_d
 
     .bot,.top
-      color $color_c
+      opacity 1
 
   .shadow
     position absolute
@@ -33,11 +33,10 @@ HEIGHT = 200px
 
   .top
     font-size $font_ss
-    color $color_b
+    color $color_d
     background-color $color_a
     z-index 3
-    div
-      z-index 10
+    opacity 0.4
 
   .mid
     position relative
@@ -45,11 +44,10 @@ HEIGHT = 200px
     height HEIGHT
 
   .bot
+    opacity 0.4
     font-size $font_s
     background-color $color_a
-    color $color_b
-    div
-      z-index 3
+    color $color_c
 
   .text
     width WIDTH
