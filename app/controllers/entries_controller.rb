@@ -4,6 +4,8 @@ class EntriesController < ApplicationController
     data = {}
     query = nil
 
+    params[:limit] = 10 unless params[:limit]
+
     if params[:feed_id]
       data[:feed] = Feed.find(params[:feed_id])
       query = data[:feed].entries.criteria
@@ -12,7 +14,7 @@ class EntriesController < ApplicationController
     end
 
     query = query.where(:$text => { :$search => params[:search] }) if params[:search]
-    query = query.limit(params[:limit]) if params[:limit]
+    query = query.limit(params[:limit])
 
     # always order by published date desc
     query = query.order_by(:published => 'desc')

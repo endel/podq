@@ -1,4 +1,6 @@
 import React from 'react'
+import { findDOMNode } from 'react-dom'
+
 import Header from './Header.jsx'
 import Sidebar from './Sidebar.jsx'
 import AudioPlayer from '../components/AudioPlayer.jsx'
@@ -8,7 +10,7 @@ import app from '../app';
 export default class Application extends React.Component {
 
   componentDidMount () {
-    app.stateElement = React.findDOMNode(this.refs.stateElement)
+    app.stateElement = findDOMNode(this.refs.stateElement)
   }
 
   componentWillUnmount () {

@@ -1,9 +1,12 @@
 import React from 'react';
+import { findDOMNode } from 'react-dom'
+
 import { Link } from 'react-router';
-import main from '../main';
+
 import ItemList from '../components/ItemList.jsx';
 import SubscribeButton from '../components/SubscribeButton.jsx';
-import Notifier from '../tools/Notifier';
+import ReportButton from '../components/ReportButton.jsx';
+
 import Client from '../tools/Client';
 import app from '../app';
 
@@ -22,7 +25,7 @@ export default class Feed extends React.Component {
 
   componentDidMount() {
     app.resetScroll()
-    this.list = React.findDOMNode(this.refs.list);
+    this.list = findDOMNode(this.refs.list);
     this.load(`feeds/${this.props.params.id}/entries`);
   }
 
@@ -61,14 +64,15 @@ export default class Feed extends React.Component {
     ) : (
       <section className='section'>
         <h1>
-          {this.state.feed.title} <SubscribeButton feed={ this.state.feed } />
+          {this.state.feed.title}
+          <SubscribeButton feed={ this.state.feed } />
         </h1>
           { description }
         <p className="permalink">
           { permalink }
           <Link className="rss" to={ this.state.feed.url } target="_blank"><img src="/images/rss.png" alt="RSS Feed" /></Link>
         </p>
-        
+
         <ItemList
           ref='list'
           info={this.state.feed}

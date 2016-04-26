@@ -2,10 +2,11 @@ import React from 'react';
 import Cover from './Cover.jsx';
 import PlaybackBtn from './PlaybackBtn.jsx';
 import Notifier from '../tools/Notifier';
-import * as tools from '../tools/tools';
+import { simpleDate } from '../tools/tools';
 import app from '../app';
 
 export default class ItemFeed extends React.Component {
+
   constructor() {
     super();
     this.onSelect = null;
@@ -21,19 +22,21 @@ export default class ItemFeed extends React.Component {
     app.history.pushState(null, '/feed/' + this.props.data._id);
   }
 
-  componentDidMount() {
-    this.cover = React.findDOMNode(this.refs.cover);
-  }
+  // componentDidMount() {
+  //   this.cover = React.findDOMNode(this.refs.cover);
+  // }
 
-  componentWillUnmount() {
-    this.cover = null;
-  }
+  // componentWillUnmount() {
+  //   this.cover = null;
+  // }
 
   render() {
     return (
-      <div title={this.props.data.title} className='item feed' onClick={this.handleClick.bind(this)}>
+      <div title={ this.props.data.title } className='item feed' onClick={ this.handleClick.bind(this) }>
         <div className="shadow"></div>
-        <Cover ref='cover' src={this.props.data.image} alt={this.props.data.title}/>
+        <div className='top text'><div>{ this.props.data.title }</div></div>
+        <Cover ref='cover' src={ this.props.data.image } alt={ this.props.data.title }/>
+        <div className='bottom text'><div>{ simpleDate( this.props.data.most_recent_entry_date ) }</div></div>
       </div>
     );
   }

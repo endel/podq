@@ -7,7 +7,7 @@ export default class AddContent extends React.Component {
 
     this.state = {
       hasFocus: false,
-      url: null,
+      url: "",
       open: false,
       loading: false
     }
@@ -31,16 +31,17 @@ export default class AddContent extends React.Component {
       method: 'post',
       body: new FormData(React.findDOMNode(this.refs.form))
     }).then( () => {
-      this.setState({ loading: false, url: null, thanks: true })
-      setTimeout(() => {
-        this.setState({ thanks: false })
-      }, 4000)
+      this.setState({ loading: false, url: "", thanks: true })
+
+      setTimeout(() => { this.setState({ thanks: false }) }, 4000)
+
     })
     this.setState({ loading: true })
   }
 
   render() {
     return (!this.state.thanks) ? (
+
       <form ref="form" className="add-content">
         <input name="url" placeholder="Enter podcast website URL or RSS"
           onFocus={this.handleChange.bind(this)}
@@ -51,10 +52,13 @@ export default class AddContent extends React.Component {
           { (this.state.loading) ? "Sending..." : "Import feed" }
         </button>
       </form>
+
       ) : (
+
         <div className="add-content">
           <p>Thanks, we'll import it in a few minutes, stay tuned!</p>
         </div>
+
       )
   }
 }

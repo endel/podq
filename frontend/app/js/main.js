@@ -1,6 +1,7 @@
 import React from 'react'
-import { IndexRoute, Router, Route, Link, Redirect } from 'react-router'
-import { createHistory } from 'history'
+import { render } from 'react-dom'
+
+import { IndexRoute, Router, Route, Link, Redirect, browserHistory } from 'react-router'
 
 import Application from './layout/Application.jsx'
 import Index from './states/Index.jsx'
@@ -11,14 +12,15 @@ import SearchResults from './states/SearchResults.jsx'
 import UserSubscriptions from './states/UserSubscriptions.jsx'
 
 import app from './app';
+import { timeFractionRegex } from './tools/tools';
 require('whatwg-fetch')
 
-window.BACKEND_ENDPOINT = (process.env.RAILS_ENV)
-  ? `${ location.protocol }//${ location.hostname }`
+window.BACKEND_ENDPOINT = (process.env.NODE_ENV !== 'production')
+  ? `${ location.protocol }//${ location.hostname }:5000`
   : 'http://webstdio.r15.railsrumble.com/'
 
-app.container = document.getElementsByTagName('body')[0]
-app.history = createHistory()
+app.container = document.querySelector('main')
+app.history = browserHistory
 
 //
 // analytics / page view tracker
@@ -26,15 +28,28 @@ app.history = createHistory()
 import ga from 'react-ga'
 ga.initialize(((process.env.RAILS_ENV) ? 'UA-67917511-3' : 'UA-XXXXXXXX-X'))
 
-var lastPathName = ""
+let lastPathName = ""
+
 app.history.listen(location => {
+
+  if ( location.hash.length > 1 ) {
+    let timeFraction = location.hash.match(timeFractionRegex)
+
+    if ( timeFraction.length == 1 ) {
+    }
+
+    // goto some location
+    return false
+  }
+
   if (lastPathName !== location.pathname) {
     ga.pageview(location.pathname)
   }
+
   lastPathName = location.pathname
 })
 
-React.render((
+render((
   <Router history={app.history}>
     <Route path="/" component={Application}>
       <IndexRoute component={Browse} />

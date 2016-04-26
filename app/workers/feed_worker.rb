@@ -74,6 +74,9 @@ class FeedWorker
       entry.audio_url = xml_entry.try(:enclosure_url)
       entry.image = xml_entry.try(:itunes_image) || xml_entry.try(:image)
 
+      # update Feed most_recent_entry_date
+      feed.most_recent_entry_date = entry.published if entry.published > feed.most_recent_entry_date
+
       # entry image
       if !entry.audio_url && entry.image && entry.image.match(/#{AUDIO_FORMATS}$/)
         entry.audio_url = entry.image

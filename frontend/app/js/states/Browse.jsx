@@ -1,4 +1,6 @@
 import React from 'react';
+import { findDOMNode } from 'react-dom';
+
 import ItemList from '../components/ItemList.jsx';
 import Notifier from '../tools/Notifier';
 import Client from '../tools/Client';
@@ -39,7 +41,7 @@ export default class Browse extends React.Component {
 
   componentDidMount() {
     app.resetScroll()
-    this.list = React.findDOMNode(this.refs.list);
+    this.list = findDOMNode( this.refs.list );
     this.load('feeds');
   }
 

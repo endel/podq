@@ -26,6 +26,7 @@ export default class SubscribeButton extends React.Component {
 
       result = <button onClick={this.handleClick.bind(this)}
                        className={classNames({
+                         'btn': true,
                          'follow-btn': true,
                          'is-following': isFollowing
                        })}></button>

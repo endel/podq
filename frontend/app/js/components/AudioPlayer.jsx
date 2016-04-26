@@ -1,4 +1,6 @@
 import React from 'react';
+import { findDOMNode } from 'react-dom';
+
 import {Link} from 'react-router';
 import classNames from 'classnames';
 import Notifier from '../tools/Notifier';
@@ -33,7 +35,7 @@ export default class AudioPlayer  extends React.Component {
   }
 
   componentDidMount() {
-    this.audio = React.findDOMNode(this.refs.audio);
+    this.audio = findDOMNode( this.refs.audio );
     this.podcastPlayer = new PodcastPlayer(this.audio, app.settings.autoPlay);
     this.podcastPlayer.onChangeState = this.onChangeState.bind(this);
     document.addEventListener('keydown', this.onKeyDown.bind(this))

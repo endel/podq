@@ -25,6 +25,7 @@ class Feed
   field :language, type: String
   field :keywords, type: Array
   field :published, type: Boolean, default: -> { false }
+  field :most_recent_entry_date, type: DateTime, default: -> { DateTime.new }
 
   # Meta
   field :has_og_tags, type: Boolean
