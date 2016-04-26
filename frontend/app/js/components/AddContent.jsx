@@ -1,4 +1,5 @@
 import React from 'react';
+import { findDOMNode } from 'react-dom';
 
 export default class AddContent extends React.Component {
 
@@ -29,7 +30,7 @@ export default class AddContent extends React.Component {
 
     fetch(`${ BACKEND_ENDPOINT }/feeds`, {
       method: 'post',
-      body: new FormData(React.findDOMNode(this.refs.form))
+      body: new FormData(findDOMNode(this.refs.form))
     }).then( () => {
       this.setState({ loading: false, url: "", thanks: true })
 

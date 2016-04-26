@@ -1,8 +1,11 @@
 import React from 'react'
+import { findDOMNode } from 'react-dom'
 import { Link } from 'react-router'
 import classNames from 'classnames'
 import SearchBarResult from './SearchBarResult.jsx'
 import Throttling from '../helpers/Throttling.js'
+
+import app from '../app.js'
 
 export default class SearchBar extends React.Component {
 
@@ -20,9 +23,22 @@ export default class SearchBar extends React.Component {
     this.debouncedSearch = Throttling.debounce(this.search, 300).bind(this);
   }
 
-  handleSubmit (evt) {
+  onKeyPress (e) {
 
-    evt.preventDefault();
+    // ENTER pressed
+    if ( e.which === 13 ) {
+
+      e.preventDefault()
+      app.history.pushState(null, '/search?q=' + this.state.term);
+      this.closeResults ()
+
+    }
+
+  }
+
+  handleSubmit (e) {
+
+    e.preventDefault();
 
     this.search();
 
@@ -39,24 +55,23 @@ export default class SearchBar extends React.Component {
 
   search () {
 
-    var self = this,
-        localTerm = self.state.term;
+    var localTerm = this.state.term;
 
-    if (!self.state.term) {
+    if (!this.state.term) {
 
-      self.closeResults();
+      this.closeResults();
 
       return;
 
     }
 
-    if (self.state.lastSearchedTerm === self.state.term) {
+    if (this.state.lastSearchedTerm === this.state.term) {
       return;
     }
 
-    self.setState({
+    this.setState({
       phase: 'SEARCHING',
-      lastSearchedTerm: self.state.term,
+      lastSearchedTerm: this.state.term,
       entriesResult: null,
       feedsResult: null
     });
@@ -66,12 +81,12 @@ export default class SearchBar extends React.Component {
         return res.json();
       }).then((res) => {
 
-        if (localTerm !== self.state.lastSearchedTerm) {
+        if (localTerm !== this.state.lastSearchedTerm) {
           // Prevent older responses to be parsed after the newers ones
           return false;
         }
 
-        self.setState({
+        this.setState({
           phase: 'READY',
           entriesResult: res.entries
         });
@@ -83,12 +98,12 @@ export default class SearchBar extends React.Component {
         return res.json();
       }).then((res) => {
 
-        if (localTerm !== self.state.lastSearchedTerm) {
+        if (localTerm !== this.state.lastSearchedTerm) {
           // Prevent older responses to be parsed after the newers ones
           return false;
         }
 
-        self.setState({
+        this.setState({
           phase: 'READY',
           feedsResult: res
         });
@@ -97,10 +112,10 @@ export default class SearchBar extends React.Component {
 
   }
 
-  handleChange (evt) {
+  handleChange (e) {
 
     this.setState({
-      term: evt.target.value
+      term: e.target.value
     });
 
     this.debouncedSearch();
@@ -117,12 +132,12 @@ export default class SearchBar extends React.Component {
 
     return <form onSubmit={this.handleSubmit.bind(this)} className="main-search">
 
-      <input type="search" placeholder="Search" onFocus={handleChange} onChange={handleChange} value={this.state.term} />
+      <input type="search" placeholder="Search" onKeyPress={this.onKeyPress.bind(this)} onFocus={handleChange} onChange={handleChange} value={this.state.term} />
 
       <div className={resultsClass}>
 
         {this.state.phase === 'READY' && ((this.state.entriesResult && this.state.entriesResult.length) || (this.state.feedsResult && this.state.feedsResult.length)) ?
-          <Link to="/search" query={{ q: this.state.term }} className="result-section result-item result-see-all">
+          <Link ref="allResultsLink" to="/search" query={{ q: this.state.term }} onClick={this.closeResults.bind(this)} className="result-section result-item result-see-all">
             Show All Results...
           </Link>
         : null}
@@ -131,8 +146,13 @@ export default class SearchBar extends React.Component {
 
           <h3>ENTRIES RESULTS</h3>
 
-          {this.state.entriesResult === null ? <span className="result-status">Searching...</span> : null}
-          {this.state.entriesResult && !this.state.entriesResult.length ? <span className="result-status">No entries found with <strong>{this.state.lastSearchedTerm}</strong> term...</span> : null}
+          {this.state.entriesResult === null
+            ? <span className="result-status">Searching...</span>
+            : null}
+
+          {this.state.entriesResult && !this.state.entriesResult.length
+            ? <span className="result-status">No entries found with '<strong>{this.state.lastSearchedTerm}</strong>' term...</span>
+            : null}
 
           <ul>
             {this.state.entriesResult && this.state.entriesResult.map(entry => {

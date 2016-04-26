@@ -28,7 +28,7 @@ app.history = browserHistory
 import ga from 'react-ga'
 ga.initialize(((process.env.RAILS_ENV) ? 'UA-67917511-3' : 'UA-XXXXXXXX-X'))
 
-let lastPathName = ""
+let lastPathName = "", lastQueryString = ""
 
 app.history.listen(location => {
 
@@ -36,17 +36,20 @@ app.history.listen(location => {
     let timeFraction = location.hash.match(timeFractionRegex)
 
     if ( timeFraction.length == 1 ) {
+      // set player at that time fraction
+      app.player
     }
 
     // goto some location
     return false
   }
 
-  if (lastPathName !== location.pathname) {
+  if (lastPathName !== location.pathname || lastQueryString !== location.query) {
     ga.pageview(location.pathname)
   }
 
   lastPathName = location.pathname
+  lastQueryString = location.query
 })
 
 render((

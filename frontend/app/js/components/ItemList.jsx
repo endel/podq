@@ -25,7 +25,7 @@ export default class ItemList extends React.Component {
     list.forEach(data => {
       var type = tools.getDataType(data);
       if (type === 'entry') {
-        items.push(<ItemEntry info={info} data={data} key={data._id} />);
+        items.push(<ItemEntry showTitle={ this.props.showTitle } info={info} data={data} key={data._id} />);
       } else {
         items.push(<ItemFeed info={info} data={data} key={data._id} />);
       }

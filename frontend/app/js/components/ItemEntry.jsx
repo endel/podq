@@ -35,7 +35,11 @@ export default class ItemEntry extends React.Component {
     return (
       <div className='item entry' onClick={this.onClickDetails.bind(this)}>
         <div className="shadow"></div>
-        {/* <div className='top text'><div>{this.props.info.title}</div></div> */}
+
+        {/* (this.props.showTitle)
+          ? <div className='top text'><div>{this.props.info.title}</div></div>
+          : null */}
+
         <div className='mid'>
           <div className='btn'>
             <PlaybackBtn data={this.props.data}/>
