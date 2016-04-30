@@ -66,6 +66,7 @@ export default class Player {
 
     var lastEntry = this.settings.get('entry');
     if (lastEntry && autoSave) {
+      this.data = lastEntry
       this.play(lastEntry, false);
       this.audio.currentTime = this.settings.get('time');
     }

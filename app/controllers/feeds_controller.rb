@@ -8,9 +8,14 @@ class FeedsController < ApplicationController
   def index
     query = Feed.where(:published => true)
 
+    search = if params[:search] != "" then params[:search] else nil end
+    limit = [ params[:limit].to_i, 20 ].min
+    offset = params[:offset].to_i
+
     query = query.where(:_id => { :$in => params[:_ids] }) if params[:_ids]
-    query = query.where(:$text => { :$search => params[:search] }) if params[:search]
-    query = query.limit(params[:limit]) if params[:limit]
+    query = query.where(:$text => { :$search => search }) if search
+    query = query.limit( limit )
+    query = query.offset( offset )
     query = query.order_by(:most_recent_entry_date => 'desc')
 
     render json: query

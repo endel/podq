@@ -1,5 +1,6 @@
 Sidekiq.configure_server do |config|
   config.redis = { url: ENV['REDIS_URL'] }
+	config.failures_max_count = false
 end
 
 Sidekiq.configure_client do |config|

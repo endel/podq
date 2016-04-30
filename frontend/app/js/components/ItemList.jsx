@@ -1,39 +1,40 @@
 import React from 'react';
 import ItemFeed from './ItemFeed.jsx';
 import ItemEntry from './ItemEntry.jsx';
-import * as tools from '../tools/tools';
+import { getDataType } from '../tools/tools';
 
 export default class ItemList extends React.Component {
+
   constructor() {
     super();
-    this.state = this.initialState;
-  }
-
-  get initialState() {
-    return {info:{}, list:[]};
   }
 
   render() {
-    var items = [];
-    var info = this.props.info || this.state.info;
-    var list = this.props.list || this.state.list;
+    var entries = this.props.entries;
 
-    if (!list || !list.length) {
+    if (!entries || !entries.length) {
       return <div></div>;
     }
 
-    list.forEach(data => {
-      var type = tools.getDataType(data);
-      if (type === 'entry') {
-        items.push(<ItemEntry showTitle={ this.props.showTitle } info={info} data={data} key={data._id} />);
-      } else {
-        items.push(<ItemFeed info={info} data={data} key={data._id} />);
-      }
-    });
     return (
       <div className='item-list'>
-        <div>{items}</div>
+
+        <div>{ entries.map( data => {
+          var type = getDataType(data);
+
+          if (type === 'entry') {
+
+            return <ItemEntry showTitle={ this.props.showTitle } info={ this.props.info } data={data} key={data._id} />
+
+          } else {
+
+            return <ItemFeed info={ this.props.info } data={data} key={data._id} />
+
+          }
+        } ) }</div>
+
       </div>
     );
   }
+
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import Cover from './Cover.jsx';
 import PlaybackBtn from './PlaybackBtn.jsx';
-import Notifier from '../tools/Notifier';
 import * as tools from '../tools/tools';
 import app from '../app';
 

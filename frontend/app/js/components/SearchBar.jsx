@@ -3,7 +3,9 @@ import { findDOMNode } from 'react-dom'
 import { Link } from 'react-router'
 import classNames from 'classnames'
 import SearchBarResult from './SearchBarResult.jsx'
-import Throttling from '../helpers/Throttling.js'
+import debounce from 'debounce'
+
+import Keycode from 'keycode.js'
 
 import app from '../app.js'
 
@@ -20,17 +22,18 @@ export default class SearchBar extends React.Component {
       feedsResult: null
     };
 
-    this.debouncedSearch = Throttling.debounce(this.search, 300).bind(this);
+    this.debouncedSearch = debounce( this.search, 300 ).bind( this )
+
   }
 
   onKeyPress (e) {
 
     // ENTER pressed
-    if ( e.which === 13 ) {
+    if ( e.which === Keycode.ENTER ) {
 
       e.preventDefault()
+      this.closeResults ( this.state.term )
       app.history.pushState(null, '/search?q=' + this.state.term);
-      this.closeResults ()
 
     }
 
@@ -44,10 +47,12 @@ export default class SearchBar extends React.Component {
 
   }
 
-  closeResults () {
+  closeResults ( lastSearchedTerm = '' ) {
 
     this.setState({
-      lastSearchedTerm: '',
+      lastSearchedTerm: lastSearchedTerm,
+      entriesResult: null,
+      feedsResult: null,
       phase: 'IDLE'
     });
 
@@ -65,7 +70,7 @@ export default class SearchBar extends React.Component {
 
     }
 
-    if (this.state.lastSearchedTerm === this.state.term) {
+    if (this.state.lastSearchedTerm === this.state.term && this.state.phase === "READY") {
       return;
     }
 
@@ -86,10 +91,14 @@ export default class SearchBar extends React.Component {
           return false;
         }
 
-        this.setState({
-          phase: 'READY',
-          entriesResult: res.entries
-        });
+        if ( this.state.phase !== "IDLE" ){
+
+          this.setState({
+            phase: 'READY',
+            entriesResult: res.entries
+          });
+
+        }
 
       });
 
@@ -103,10 +112,14 @@ export default class SearchBar extends React.Component {
           return false;
         }
 
-        this.setState({
-          phase: 'READY',
-          feedsResult: res
-        });
+        if ( this.state.phase !== "IDLE" ){
+
+          this.setState({
+            phase: 'READY',
+            feedsResult: res
+          });
+
+        }
 
       });
 
@@ -124,35 +137,38 @@ export default class SearchBar extends React.Component {
 
   render () {
 
-    var handleChange= this.handleChange.bind(this),
-        resultsClass = classNames({
-          'main-search-results': true,
-          'opened': this.state.phase !== 'IDLE'
-        });
-
     return <form onSubmit={this.handleSubmit.bind(this)} className="main-search">
 
-      <input type="search" placeholder="Search" onKeyPress={this.onKeyPress.bind(this)} onFocus={handleChange} onChange={handleChange} value={this.state.term} />
+      <input
+        type="search"
+        placeholder="Search"
+        onKeyPress={this.onKeyPress.bind(this)}
+        onFocus={this.handleChange.bind(this)}
+        onChange={this.handleChange.bind(this)}
+        value={this.state.term} />
 
-      <div className={resultsClass}>
+      <div className={classNames({
+          'main-search-results': true,
+          'opened': this.state.phase !== 'IDLE'
+        })}>
 
-        {this.state.phase === 'READY' && ((this.state.entriesResult && this.state.entriesResult.length) || (this.state.feedsResult && this.state.feedsResult.length)) ?
+        { this.state.phase === 'READY' && ((this.state.entriesResult && this.state.entriesResult.length) || (this.state.feedsResult && this.state.feedsResult.length)) ?
           <Link ref="allResultsLink" to="/search" query={{ q: this.state.term }} onClick={this.closeResults.bind(this)} className="result-section result-item result-see-all">
             Show All Results...
           </Link>
-        : null}
+        : null }
 
         <div className="result-section feed-results clearfix">
 
-          <h3>ENTRIES RESULTS</h3>
+          <h3>EPISODES</h3>
 
           {this.state.entriesResult === null
             ? <span className="result-status">Searching...</span>
             : null}
 
-          {this.state.entriesResult && !this.state.entriesResult.length
-            ? <span className="result-status">No entries found with '<strong>{this.state.lastSearchedTerm}</strong>' term...</span>
-            : null}
+          { this.state.entriesResult && !this.state.entriesResult.length
+            ? <span className="result-status">No episodes found for "<strong>{ this.state.lastSearchedTerm }</strong>"...</span>
+            : null }
 
           <ul>
             {this.state.entriesResult && this.state.entriesResult.map(entry => {
@@ -167,10 +183,15 @@ export default class SearchBar extends React.Component {
 
         <div className="result-section feed-results clearfix">
 
-          <h3>FEED RESULTS</h3>
+          <h3>PODCASTS</h3>
 
-          {this.state.feedsResult === null ? <span className="result-status">Searching...</span> : null}
-          {this.state.feedsResult && !this.state.feedsResult.length ? <span className="result-status">No feed found with <strong>{this.state.lastSearchedTerm}</strong> term...</span> : null}
+          { this.state.feedsResult === null
+            ? <span className="result-status">Searching...</span>
+            : null }
+
+          { this.state.feedsResult && !this.state.feedsResult.length
+            ? <span className="result-status">No podcasts found for "<strong>{ this.state.lastSearchedTerm }</strong>"...</span>
+            : null }
 
           <ul>
             {this.state.feedsResult && this.state.feedsResult.map(entry => {

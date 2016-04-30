@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
 import classNames from 'classnames'
-import Notifier from '../tools/Notifier';
 import app from '../app';
 
 export default class SearchBarResult extends React.Component {

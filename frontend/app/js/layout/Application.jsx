@@ -6,27 +6,49 @@ import Sidebar from './Sidebar.jsx'
 import AudioPlayer from '../components/AudioPlayer.jsx'
 
 import app from '../app';
+import throttle from 'throttle.js'
+
+const SCROLL_THRESHOLD = 150
 
 export default class Application extends React.Component {
 
-  componentDidMount () {
-    app.stateElement = findDOMNode(this.refs.stateElement)
+  constructor () {
+
+    super()
+
+    this.state = { isScrolling: false }
+
   }
 
-  componentWillUnmount () {
-    app.stateElement = null
+  componentDidMount () {
+
+    this.onScrollCallback = throttle( this.onScroll, 200 ).bind( this )
+
+    app.stateElement = findDOMNode(this.refs.stateElement)
+    app.stateElement.addEventListener( 'scroll', this.onScrollCallback )
+
+  }
+
+  onScroll ( e ) {
+
+    this.setState({
+      isScrolling: ( e.target.scrollTop > SCROLL_THRESHOLD )
+    })
+
+
   }
 
   render () {
     return (
       <div>
+
         <Header />
         <AudioPlayer />
         <div className="app-container">
           <Sidebar />
           <main ref="stateElement" className="state-container">
-            <div className="vertical-scroll">
-              {this.props.children}
+            <div className={`vertical-scroll ${ ( this.state.isScrolling ) ? 'scrolling' : null }`}>
+              { this.props.children }
             </div>
           </main>
         </div>

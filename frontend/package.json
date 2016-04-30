@@ -19,14 +19,16 @@
   },
   "dependencies": {
     "classnames": "^2.2.0",
+    "debounce": "^1.0.0",
     "eventemitter3": "^1.1.1",
     "keycode.js": "0.0.1",
     "podcast-player": "file:./player",
     "react": "^15.0.1",
-    "react-dom": "^15.0.1",
     "react-disqus-thread": "^0.3.1",
+    "react-dom": "^15.0.1",
     "react-ga": "^1.4.1",
     "react-router": "^2.3.0",
+    "throttle.js": "^1.0.1",
     "whatwg-fetch": "^0.10.1"
   },
   "devDependencies": {

@@ -66,15 +66,20 @@ class WebsiteWorker
     #
     if update_feed
       feed_tags = html.scan(/<link(.*)type=["|']application\/(rss|atom)\+xml["|']([^>]+)?>/i)
+
       feed_tags.each do |data|
 
         if (href = data.select {|d| (d||"").index('href=') != nil }[0])
           if (feed_url = href.match(/href=["|']([^"|']+)["|']/)[1])
+
             # try to download & index all entries from all RSS links
             # feeds without audio files will be considered invalid
-            FeedWorker.perform_async(get_absolute_url(feed_url, feed.permalink), feed._id.to_s)
+            absulute_url = get_absolute_url(feed_url, feed.permalink)
+            FeedWorker.perform_async(absulute_url, feed._id.to_s) if absulute_url
+
           end
         end
+
       end
 
     end

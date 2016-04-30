@@ -54,7 +54,7 @@ export default class Entry extends React.Component {
 
     this.setState(this.initialState);
 
-    this.load(`entries/${props.params.id}`);
+    this.load(`entries/${ props.params.id }`);
 
   }
 
@@ -93,28 +93,33 @@ export default class Entry extends React.Component {
     ) : (
 
       <section className='section'>
-        { hasAudio ? playButton : null }
-        <div className='content'>
 
-          <h1><Link to={ this.state.permalink } target="_blank">
-            { this.state.title }
-            {/*<img src="/images/link.png" />*/}
-          </Link></h1>
+        <h1>
 
-          <p>{ simpleDate(this.state.published) } - <Link to={`/feed/${ this.state.feed._id }`}>{ this.state.feed.title }</Link></p>
+          <Link to={`/feed/${ this.state.feed._id }`}>
+            { this.state.feed.title }
+          </Link> &raquo; { this.state.title }
 
-          <div dangerouslySetInnerHTML={{ __html: this.parseDescription() }} />
+          { hasAudio ? playButton : null }
 
-          {/* <p>{ entryImage }</p> */}
-          <h2>Comments</h2>
-          <ReactDisqusThread
-            shortname="podcastplayer"
-            identifier="comments"
-            title={ this.state.title }
-            url={ this.state.permalink }
-            onNewComment={this.handleNewComment}/>
+        </h1>
 
-        </div>
+        <p>Published on <Link target="_blank" to={ this.state.permalink }>{ simpleDate(this.state.published) }</Link></p>
+
+        <div
+          className="thirdparty-content"
+          dangerouslySetInnerHTML={{ __html: this.parseDescription() }}
+          />
+
+        {/* <p>{ entryImage }</p> */}
+        <h2>Comments</h2>
+        <ReactDisqusThread
+          shortname="podcastplayer"
+          identifier="comments"
+          title={ this.state.title }
+          url={ this.state.permalink }
+          onNewComment={this.handleNewComment}/>
+
       </section>
 
     );

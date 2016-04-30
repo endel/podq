@@ -1,3 +1,9 @@
+require('whatwg-fetch')
+
+window.BACKEND_ENDPOINT = (process.env.NODE_ENV !== 'production')
+  ? `${ location.protocol }//${ location.hostname }:5000`
+  : 'http://webstdio.r15.railsrumble.com/'
+
 export default class Client {
   constructor() {
     this.url = `${BACKEND_ENDPOINT}/`;
@@ -18,7 +24,6 @@ export default class Client {
     this.log('fetch', url);
     return fetch(url)
               .then((response) => {
-                this.log('fetch', 'complete');
                 return response.json();
               }).catch((ex) => {
                 this.log('FETCH FAILED!', ex);
