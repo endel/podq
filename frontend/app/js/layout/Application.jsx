@@ -8,6 +8,8 @@ import AudioPlayer from '../components/AudioPlayer.jsx'
 import app from '../app';
 import throttle from 'throttle.js'
 
+import Notifier from '../tools/Notifier.js'
+
 const SCROLL_THRESHOLD = 150
 
 export default class Application extends React.Component {
@@ -15,6 +17,8 @@ export default class Application extends React.Component {
   constructor () {
 
     super()
+
+    this.paginationNotifier = Notifier.get('pagination')
 
     this.state = { isScrolling: false }
 
@@ -35,6 +39,10 @@ export default class Application extends React.Component {
       isScrolling: ( e.target.scrollTop > SCROLL_THRESHOLD )
     })
 
+    if ( e.target.scrollTop + e.target.clientHeight === e.target.scrollHeight ) {
+      this.paginationNotifier.emit('next')
+    }
+
 
   }
 
@@ -43,14 +51,21 @@ export default class Application extends React.Component {
       <div>
 
         <Header />
+
         <AudioPlayer />
+
         <div className="app-container">
+
           <Sidebar />
+
           <main ref="stateElement" className="state-container">
+
             <div className={`vertical-scroll ${ ( this.state.isScrolling ) ? 'scrolling' : null }`}>
               { this.props.children }
             </div>
+
           </main>
+
         </div>
 
       </div>

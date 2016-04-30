@@ -17,11 +17,15 @@ export default class Entry extends React.Component {
     this.client = new Client();
   }
 
-  get initialState() {
-    return { feed:{}, entry:{}, loading: true };
+  get initialState ( ) {
+    return {
+      feed: {},
+      entry: {},
+      loading: true
+    };
   }
 
-  load( service ) {
+  load ( service ) {
 
     this.client.fetch(service)
       .then((data) => {
@@ -44,7 +48,11 @@ export default class Entry extends React.Component {
 
     } else {
 
-      this.setState({feed:app.feed, entry:app.entry, loading: false});
+      this.setState({
+        feed: app.feed,
+        entry: app.entry,
+        loading: false
+      });
 
     }
 

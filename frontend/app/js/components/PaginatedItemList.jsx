@@ -2,18 +2,20 @@ import React from 'react';
 
 import ItemList from './ItemList.jsx';
 import Client from '../tools/Client';
+import Notifier from '../tools/Notifier.js'
 
 import debounce from 'debounce'
 
 export default class PaginatedItemList extends React.Component {
 
   constructor() {
+
     super();
 
     this.client = new Client()
 
     this.state = {
-      offset: 0,
+      offset: -1,
       limit: 20,
       entries: [],
       loading: true
@@ -21,9 +23,25 @@ export default class PaginatedItemList extends React.Component {
 
   }
 
+  gotoNextPage ( ) {
+
+    this.query( this.state.offset + this.state.limit, this.props.search || "" )
+
+  }
+
   componentDidMount () {
 
+    this.paginationNotifier = Notifier.get('pagination')
+
+    this.paginationNotifier.on( 'next', debounce( this.gotoNextPage, 100 ).bind(this) )
+
     this.query( this.props.offset || 0, this.props.search || "" )
+
+  }
+
+  componentWillUnmount () {
+
+    this.paginationNotifier.off('next')
 
   }
 
@@ -37,8 +55,12 @@ export default class PaginatedItemList extends React.Component {
 
     let segments = `${ this.props.service }?offset=${ offset }&limit=${ this.state.limit }&search=${ search }`
 
-    // don't repeat the same query
-    if ( this.state.lastQuery === segments ) {
+    if (
+      this.state.lastQuery === segments || // don't repeat the same query
+      offset <= this.state.offset       || // don't use a lower offset than previously used
+      ( this.state.total_count !== null && offset >= this.state.total_count )
+    ) {
+      console.log("skip. offset:", offset)
       return;
     }
 
@@ -58,7 +80,7 @@ export default class PaginatedItemList extends React.Component {
 
       this.setState({
         offset: offset,
-        entries: entries,
+        entries: entries.concat( this.state.entries ),
         total_count: data.total_count || entries.length,
         loading: false
       });
