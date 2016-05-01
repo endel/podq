@@ -12,8 +12,7 @@ export default class Browse extends React.Component {
 
     this.state = {
       title: 'Browse',
-      description: "Discover free podcasts around the world.",
-      loading: true
+      description: "Discover free podcasts around the world."
     };
 
   }

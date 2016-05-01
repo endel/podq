@@ -62,7 +62,7 @@ export default class PaginatedItemList extends React.Component {
 
   query ( service, offset = 0, search = "", reset = false ) {
 
-    let segments = `${ service }?offset=${ offset }&limit=${ this.state.limit }&search=${ search }`
+    let segments = `${ service }${ ( service.indexOf('?') >= 0 ) ? "&" : "?" }offset=${ offset }&limit=${ this.state.limit }&search=${ search }`
 
     let isLastPage = false
 
