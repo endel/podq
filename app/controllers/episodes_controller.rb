@@ -1,4 +1,4 @@
-class EntriesController < ApplicationController
+class EpisodesController < ApplicationController
 
   def index
     response = {}
@@ -8,8 +8,8 @@ class EntriesController < ApplicationController
     limit = [ params[:limit].to_i, 20 ].min
     offset = params[:offset].to_i
 
-    if params[:feed_id]
-      response[:feed] = Feed.find(params[:feed_id])
+    if params[:podcast_id]
+      response[:feed] = Feed.find(params[:podcast_id])
       query = response[:feed].entries.criteria
     else
       query = Entry.criteria
@@ -32,8 +32,13 @@ class EntriesController < ApplicationController
   end
 
   def show
-    entry = Entry.find(params[:id])
-    render json: entry.to_json(include: :feed)
+    @entry = Entry.find(params[:id])
+
+    respond_to do |format|
+      format.json { render json: @entry.to_json(include: :feed) }
+      format.html { render 'sharing/episode', :layout => nil }
+    end
+
   end
 
 end

@@ -36,7 +36,7 @@ export default class SearchResults extends React.Component {
         <h1>{`Search results for "${ this.props.location.query.q }":`}</h1>
 
         <PaginatedItemList
-          service="entries"
+          service="episodes"
           showTitle={ true }
           search={ this.props.location.query.q }
           />

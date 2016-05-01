@@ -30,7 +30,7 @@ export default class Browse extends React.Component {
         <p>{this.state.description}</p>
 
         <PaginatedItemList
-          service="feeds"
+          service="podcasts"
           />
 
       </section>

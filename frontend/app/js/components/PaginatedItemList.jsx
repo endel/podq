@@ -76,7 +76,7 @@ export default class PaginatedItemList extends React.Component {
       return;
     }
 
-    console.log("query, offset:", offset)
+    console.log("query, offset:", offset, "segments:", segments)
 
     this.setState({
       lastQuery: segments,

@@ -22,8 +22,8 @@ render((
       <Route path="browse" component={Browse} />
       <Route path="subscriptions" component={UserSubscriptions} />
 
-      <Route path="feed/:id" component={Feed} />
-      <Route path="entry/:id" component={Entry} />
+      <Route path="podcasts/:id" component={Feed} />
+      <Route path="episodes/:id" component={Entry} />
 
       <Route path="search" component={SearchResults} />
 

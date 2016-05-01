@@ -60,7 +60,7 @@ export default class Feed extends React.Component {
         </div>) : null }
 
         <PaginatedItemList
-          service={ `feeds/${ this.props.params.id }/entries` }
+          service={ `podcasts/${ this.props.params.id }/episodes` }
           onLoadComplete={ this.onLoadComplete.bind(this) }
           />
 

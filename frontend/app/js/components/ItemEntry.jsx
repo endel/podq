@@ -18,13 +18,13 @@ export default class ItemEntry extends React.Component {
     e.preventDefault()
     app.entry = this.props.data.data;
     app.feed = this.props.data.info;
-    app.history.pushState(null, '/entry/' + this.props.data._id);
+    app.history.pushState(null, '/episodes/' + this.props.data._id);
   }
 
   onClickFeed(e) {
     app.entry = this.props.data.data;
     app.feed = this.props.data.info;
-    app.history.pushState(null, '/feed/' + this.props.info._id);
+    app.history.pushState(null, '/podcasts/' + this.props.info._id);
   }
 
   render() {

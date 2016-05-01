@@ -99,7 +99,7 @@ export default class AudioPlayer  extends React.Component {
       <div className="audio-player">
 
         { this.data._id
-          ? <Link to={ `/entry/${ this.data._id }` } title={ this.data.title }><img src={ this.data.image } /></Link>
+          ? <Link to={ `/episodes/${ this.data._id }` } title={ this.data.title }><img src={ this.data.image } /></Link>
           : null }
 
         <div className="player" ref="audio"></div>

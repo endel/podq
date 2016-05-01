@@ -81,7 +81,7 @@ export default class SearchBar extends React.Component {
       feedsResult: null
     });
 
-    fetch(`${ BACKEND_ENDPOINT }/entries?limit=5&search=` + encodeURIComponent(this.state.term))
+    fetch(`${ BACKEND_ENDPOINT }/episodes?limit=5&search=` + encodeURIComponent(this.state.term))
       .then((res) => {
         return res.json();
       }).then((res) => {
@@ -102,7 +102,7 @@ export default class SearchBar extends React.Component {
 
       });
 
-    fetch(`${ BACKEND_ENDPOINT }/feeds?limit=5&search=` + encodeURIComponent(this.state.term))
+    fetch(`${ BACKEND_ENDPOINT }/podcasts?limit=5&search=` + encodeURIComponent(this.state.term))
       .then((res) => {
         return res.json();
       }).then((res) => {

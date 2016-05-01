@@ -1,4 +1,4 @@
-class FeedsController < ApplicationController
+class PodcastsController < ApplicationController
 
   def create
     WebsiteWorker.perform_async(params[:url], nil, true)
@@ -22,8 +22,12 @@ class FeedsController < ApplicationController
   end
 
   def show
-    feed = Feed.find(params[:id])
-    render json: feed
+    @feed = Feed.find(params[:id])
+
+    respond_to do |format|
+      format.json { render json: @feed }
+      format.html { render 'sharing/podcast', :layout => nil }
+    end
   end
 
 end

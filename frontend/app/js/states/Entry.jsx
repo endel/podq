@@ -44,7 +44,7 @@ export default class Entry extends React.Component {
 
     if ( !app.entry && !app.feed ) {
 
-      this.load(`entries/${this.props.params.id}`);
+      this.load(`episodes/${this.props.params.id}`);
 
     } else {
 
@@ -62,7 +62,7 @@ export default class Entry extends React.Component {
 
     this.setState(this.initialState);
 
-    this.load(`entries/${ props.params.id }`);
+    this.load(`episodes/${ props.params.id }`);
 
   }
 
@@ -106,7 +106,7 @@ export default class Entry extends React.Component {
           ? (
             <h1>
 
-              <Link to={`/feed/${ this.state.feed._id }`}>
+              <Link to={`/podcasts/${ this.state.feed._id }`}>
                 { this.state.feed.title }
               </Link> &raquo; { this.state.title }
 

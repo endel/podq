@@ -28,7 +28,7 @@ export default class AddContent extends React.Component {
       return
     }
 
-    fetch(`${ BACKEND_ENDPOINT }/feeds`, {
+    fetch(`${ BACKEND_ENDPOINT }/podcasts`, {
       method: 'post',
       body: new FormData(findDOMNode(this.refs.form))
     }).then( () => {

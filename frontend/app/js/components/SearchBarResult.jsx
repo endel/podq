@@ -18,7 +18,7 @@ export default class SearchBarResult extends React.Component {
           'result-item': true,
           'no-image': !data.image
         }),
-        destination = (this.props.type === 'feed' ? '/feed/' : '/entry/') + data._id;
+        destination = (this.props.type === 'feed' ? '/podcasts/' : '/episodes/') + data._id;
 
     // Ugly but functional HTML tags removal :)
     var tempDom = document.createElement('div');
