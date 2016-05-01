@@ -42,7 +42,7 @@ export default class Entry extends React.Component {
 
     app.resetScroll()
 
-    if (!app.entry) {
+    if ( !app.entry && !app.feed ) {
 
       this.load(`entries/${this.props.params.id}`);
 
@@ -102,15 +102,19 @@ export default class Entry extends React.Component {
 
       <section className='section'>
 
-        <h1>
+        { this.state.feed
+          ? (
+            <h1>
 
-          <Link to={`/feed/${ this.state.feed._id }`}>
-            { this.state.feed.title }
-          </Link> &raquo; { this.state.title }
+              <Link to={`/feed/${ this.state.feed._id }`}>
+                { this.state.feed.title }
+              </Link> &raquo; { this.state.title }
 
-          { hasAudio ? playButton : null }
+              { hasAudio ? playButton : null }
 
-        </h1>
+            </h1>
+            )
+          : null }
 
         <p>Published on <Link target="_blank" to={ this.state.permalink }>{ simpleDate(this.state.published) }</Link></p>
 

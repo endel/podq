@@ -18,8 +18,11 @@ export default class PaginatedItemList extends React.Component {
       offset: -1,
       limit: 20,
       entries: [],
-      loading: true
+      loading: true,
+      isLastPage: false
     }
+
+    this.onScrollCallback = debounce( this.gotoNextPage, 100 ).bind(this)
 
   }
 
@@ -33,7 +36,7 @@ export default class PaginatedItemList extends React.Component {
 
     this.paginationNotifier = Notifier.get('pagination')
 
-    this.paginationNotifier.on( 'next', debounce( this.gotoNextPage, 100 ).bind(this) )
+    this.paginationNotifier.on( 'next', this.onScrollCallback, this )
 
     this.query( this.props.offset || 0, this.props.search || "" )
 
@@ -41,7 +44,7 @@ export default class PaginatedItemList extends React.Component {
 
   componentWillUnmount () {
 
-    this.paginationNotifier.off('next')
+    this.paginationNotifier.clean( this )
 
   }
 
@@ -55,18 +58,29 @@ export default class PaginatedItemList extends React.Component {
 
     let segments = `${ this.props.service }?offset=${ offset }&limit=${ this.state.limit }&search=${ search }`
 
+    let isLastPage = false
+
+    if ( this.state.total_count !== null && offset >= this.state.total_count ) {
+
+      isLastPage = true
+      this.setState({ isLastPage: isLastPage })
+
+    }
+
     if (
       this.state.lastQuery === segments || // don't repeat the same query
       offset <= this.state.offset       || // don't use a lower offset than previously used
-      ( this.state.total_count !== null && offset >= this.state.total_count )
+      isLastPage
     ) {
-      console.log("skip. offset:", offset)
+      console.log("skip, offset:", offset)
       return;
     }
 
+    console.log("query, offset:", offset)
+
     this.setState({
       lastQuery: segments,
-      entries: []
+      // loading: true
     });
 
     this.client.fetch( segments ).then( data => {
@@ -80,7 +94,7 @@ export default class PaginatedItemList extends React.Component {
 
       this.setState({
         offset: offset,
-        entries: entries.concat( this.state.entries ),
+        entries: this.state.entries.concat( entries ),
         total_count: data.total_count || entries.length,
         loading: false
       });
@@ -95,7 +109,7 @@ export default class PaginatedItemList extends React.Component {
       <div className={ this.state.loading ? 'loading' : '' }>
 
         { !this.state.loading
-          ? <p className="pagination-overview">Showing { Math.min( (this.state.offset + 1) * this.state.limit, this.state.total_count ) } of { this.state.total_count } results.</p>
+          ? <p className="pagination-overview">Showing { this.state.entries.length } of { this.state.total_count } results.</p>
           : null }
 
         <ItemList
@@ -105,6 +119,10 @@ export default class PaginatedItemList extends React.Component {
 
         { this.state.loading
           ? <div className="loading-bar"></div>
+          : null }
+
+        { this.state.isLastPage
+          ? <div className="last-page-notice">That's all!</div>
           : null }
 
       </div>

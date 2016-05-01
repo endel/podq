@@ -26,7 +26,7 @@ export default class Application extends React.Component {
 
   componentDidMount () {
 
-    this.onScrollCallback = throttle( this.onScroll, 200 ).bind( this )
+    this.onScrollCallback = throttle( this.onScroll, 500 ).bind( this )
 
     app.stateElement = findDOMNode(this.refs.stateElement)
     app.stateElement.addEventListener( 'scroll', this.onScrollCallback )
