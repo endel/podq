@@ -19,7 +19,8 @@ export default class PaginatedItemList extends React.Component {
       limit: 20,
       entries: [],
       loading: true,
-      isLastPage: false
+      isLastPage: false,
+      lastSearch: ""
     }
 
     this.onScrollCallback = debounce( this.gotoNextPage, 100 ).bind(this)
@@ -28,7 +29,7 @@ export default class PaginatedItemList extends React.Component {
 
   gotoNextPage ( ) {
 
-    this.query( this.state.offset + this.state.limit, this.props.search || "" )
+    this.query( this.props.service, this.state.offset + this.state.limit, this.props.search || "" )
 
   }
 
@@ -38,7 +39,7 @@ export default class PaginatedItemList extends React.Component {
 
     this.paginationNotifier.on( 'next', this.onScrollCallback, this )
 
-    this.query( this.props.offset || 0, this.props.search || "" )
+    this.query( this.props.service, this.props.offset || 0, this.props.search || "" )
 
   }
 
@@ -50,13 +51,18 @@ export default class PaginatedItemList extends React.Component {
 
   componentWillReceiveProps ( props ) {
 
-    this.query( props.offset || 0, props.search || "" )
+    this.query(
+      props.service,
+      props.offset || 0,
+      props.search || "",
+      props.service !== this.props.service
+    )
 
   }
 
-  query ( offset = 0, search = "" ) {
+  query ( service, offset = 0, search = "", reset = false ) {
 
-    let segments = `${ this.props.service }?offset=${ offset }&limit=${ this.state.limit }&search=${ search }`
+    let segments = `${ service }?offset=${ offset }&limit=${ this.state.limit }&search=${ search }`
 
     let isLastPage = false
 
@@ -67,18 +73,27 @@ export default class PaginatedItemList extends React.Component {
 
     }
 
-    if (
-      this.state.lastQuery === segments || // don't repeat the same query
-      offset <= this.state.offset       || // don't use a lower offset than previously used
-      isLastPage
-    ) {
-      console.log("skip, offset:", offset)
-      return;
+    if ( this.state.lastSearch !== search || reset ) {
+
+      this.setState({ entries: [] })
+
+    } else {
+
+      if (
+        this.state.lastQuery === segments || // don't repeat the same query
+        offset <= this.state.offset       || // don't use a lower offset than previously used
+        isLastPage
+      ) {
+        console.log("skip, offset:", offset)
+        return;
+      }
+
     }
 
     console.log("query, offset:", offset, "segments:", segments)
 
     this.setState({
+      lastSearch: search,
       lastQuery: segments,
       // loading: true
     });
