@@ -9,8 +9,8 @@ class Session {
       following: []
     };
 
-    if ( !this.data.following ) this.data.following = []
-    if ( !this.data.name )      this.data.name = ""
+    if ( !this.data.following ) { this.data.following = [] }
+    if ( !this.data.name ) { this.data.name = "" }
 
   }
 
@@ -22,7 +22,7 @@ class Session {
 
   isLogged () {
 
-    return this.data.name !== null;
+    return this.data.name !== "";
 
   }
 

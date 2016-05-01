@@ -1,0 +1,16 @@
+<html>
+  <head>
+    <title><%= @feed.title %></title>
+    <meta property="fb:app_id"      content="<%= ENV['FACEBOOK_KEY'] %>" />
+    <meta property="og:url"         content="<%= request.original_url %>" />
+    <meta property="og:type"        content="website" />
+    <meta property="og:title"       content="<%= @feed.title %>" />
+    <meta property="og:description" content="<%= @feed.description %>" />
+    <meta property="og:image"       content="<%= @feed.image %>" />
+  </head>
+  <body>
+    <script type="text/javascript">
+      window.location.href = "<%= root_url %>";
+    </script>
+  </body>
+</html>

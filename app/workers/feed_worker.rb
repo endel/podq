@@ -73,6 +73,7 @@ class FeedWorker
       entry.keywords = Feed.sanitize_keywords(keywords) if keywords
       entry.audio_url = xml_entry.try(:enclosure_url)
       entry.image = xml_entry.try(:itunes_image) || xml_entry.try(:image) || feed.try(:image)
+      entry.duration = xml_entry.try(:itunes_duration) || xml_entry.try(:duration) || nil
 
       # update Feed most_recent_entry_date
       feed.most_recent_entry_date = entry.published if entry.published > feed.most_recent_entry_date

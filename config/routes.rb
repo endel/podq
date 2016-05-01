@@ -12,15 +12,15 @@ Rails.application.routes.draw do
   get '/logout' => 'sessions#destroy', as: :logout
   match '/auth/:provider/callback' => 'sessions#create', via: [:get, :post]
 
-  resources :feeds, :only => [:create, :index, :show] do
-    resources :entries, :only => [:index]
+  resources :podcasts, :only => [:create, :index, :show] do
+    resources :episodes, :only => [:index]
   end
 
-  resources :entries, :only => [:index, :show]
+  resources :episodes, :only => [:index, :show]
 
   mount Sidekiq::Web => '/sidekiq'
 
-  get '*path' => redirect('/')
+  # get '*path' => redirect('/')
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

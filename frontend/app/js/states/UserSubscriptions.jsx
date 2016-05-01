@@ -1,26 +1,43 @@
-import Browse from './Browse.jsx'
+import React from 'react'
 import Session from '../tools/Session'
 
-export default class UserSubscriptions extends Browse {
+import PaginatedItemList from '../components/PaginatedItemList.jsx'
 
-  load(service) {
-    this.clean();
+import app from '../app.js'
 
-    var feed_ids = Session.data.following.map((feed) => {
-      return `_ids[]=${ feed._id }`
-    })
+export default class UserSubscriptions extends React.Component {
 
-    this.client.fetch(`feeds?${ feed_ids.join('&') }`).then( (data) => {
-      this.setState({ list: data });
-    })
+  constructor() {
+    super();
+
+    this.state = {
+      title: 'Your Subscriptions',
+      description: "",
+      podcastIds: Session.data.following.map( podcast => podcast._id )
+    };
+
   }
 
-  get defaultState() {
-    return {
-      title: 'Your subscriptions',
-      list: [],
-      description: ""
-    };
+  componentDidMount() {
+    app.resetScroll()
+  }
+
+  render() {
+
+    var queryString = this.state.podcastIds.map( _id => `_ids[]=${ _id }` )
+
+    return (
+      <section className='section'>
+
+        <h1>{this.state.title}</h1>
+        <p>{this.state.description}</p>
+
+        { this.state.podcastIds.length > 0
+          ? <PaginatedItemList service={`podcasts?${ queryString }`} />
+          : <p>You're not following any podcast.</p> }
+
+      </section>
+    );
   }
 
 }

@@ -8,7 +8,7 @@ class UpdateWorker
 
     feeds = Feed.where(:updated_at => { :$lt => last_update })
     feeds.each do |feed|
-      FeedWorker.perform_async(feed.url, feed._id.to_s)
+      FeedWorker.perform_async(feed.url, feed._id.to_s) if feed.url && feed.published
     end
 
     Redis.current.set('last_update', now)

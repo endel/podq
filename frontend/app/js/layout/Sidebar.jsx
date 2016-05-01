@@ -35,9 +35,15 @@ export default class Sidebar extends React.Component {
       <ul>
         <li><Link to="/subscriptions" activeClassName="active">All</Link></li>
         { this.state.following.map((feed) => {
-          return <li key={feed._id}><Link to={`/feed/${ feed._id }`} activeClassName="active">{ feed.title }</Link></li>
+          return <li key={feed._id}><Link to={`/podcasts/${ feed._id }`} activeClassName="active">{ feed.title }</Link></li>
         }) }
       </ul>
+
+      <h3>Support PodQ.fm</h3>
+
+      <p className="donate">
+        If you enjoy this service, please consider supporting us by <a href="https://salt.bountysource.com/checkout/amount?team=podqfm" target="_blank">donating any amount</a> you like.
+      </p>
 
     </aside>
   }

@@ -21,6 +21,7 @@ gem 'bson_ext'
 # Workers
 gem 'sinatra', :require => nil
 gem 'sidekiq', '~> 3.5.3'
+gem 'sidekiq-failures', '~> 0.4.5'
 gem 'sidekiq-cron', '~> 0.3.1'
 gem 'sidekiq-unique-jobs', '~> 4.0.8'
 gem 'feedjira', '~> 2.0.0'

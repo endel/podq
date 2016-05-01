@@ -19,7 +19,8 @@ export default class AudioPlayer  extends React.Component {
       url: null,
       status: 'stopped',
       position: 0,
-      playbackRate: 1
+      playbackRate: 1,
+      data: {}
     };
 
     Notifier.get('playback').on('play', this.play.bind(this));
@@ -30,6 +31,7 @@ export default class AudioPlayer  extends React.Component {
 
   play(data) {
     this.podcastPlayer.play(data);
+    this.forceUpdate()
   }
 
   pause() {
@@ -41,6 +43,8 @@ export default class AudioPlayer  extends React.Component {
     this.podcastPlayer = new PodcastPlayer(this.audio, app.settings.autoPlay);
     this.podcastPlayer.onChangeState = this.onChangeState.bind(this);
     document.addEventListener('keydown', this.onKeyDown.bind(this))
+
+    this.forceUpdate()
   }
 
   onKeyDown (e) {
@@ -72,7 +76,7 @@ export default class AudioPlayer  extends React.Component {
   }
 
   get data() {
-    return this.podcastPlayer.data;
+    return (this.podcastPlayer && this.podcastPlayer.data) || {};
   }
 
   get playbackState() {
@@ -92,8 +96,17 @@ export default class AudioPlayer  extends React.Component {
   }
 
   render() {
+
     return (
-      <div ref="audio" className="audio-player"></div>
+      <div className="audio-player">
+
+        { this.data._id
+          ? <Link to={ `/episodes/${ this.data._id }` } title={ this.data.title }><img src={ this.data.image } /></Link>
+          : null }
+
+        <div className="player" ref="audio"></div>
+      </div>
     );
+
   }
 }

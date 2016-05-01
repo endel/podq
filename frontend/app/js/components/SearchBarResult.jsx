@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
 import classNames from 'classnames'
-import Notifier from '../tools/Notifier';
 import app from '../app';
 
 export default class SearchBarResult extends React.Component {
@@ -19,7 +18,7 @@ export default class SearchBarResult extends React.Component {
           'result-item': true,
           'no-image': !data.image
         }),
-        destination = (this.props.type === 'feed' ? '/feed/' : '/entry/') + data._id;
+        destination = (this.props.type === 'feed' ? '/podcasts/' : '/episodes/') + data._id;
 
     // Ugly but functional HTML tags removal :)
     var tempDom = document.createElement('div');

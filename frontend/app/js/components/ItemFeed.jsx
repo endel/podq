@@ -1,7 +1,6 @@
 import React from 'react';
 import Cover from './Cover.jsx';
 import PlaybackBtn from './PlaybackBtn.jsx';
-import Notifier from '../tools/Notifier';
 import { simpleDate } from '../tools/tools';
 import app from '../app';
 
@@ -19,7 +18,7 @@ export default class ItemFeed extends React.Component {
     e.preventDefault()
     app.feed = this.props.feed;
     app.entry = this.props.data;
-    app.history.pushState(null, '/feed/' + this.props.data._id);
+    app.history.pushState(null, '/podcasts/' + this.props.data._id);
   }
 
   // componentDidMount() {
