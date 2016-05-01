@@ -3,7 +3,6 @@
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var SpritesmithPlugin = require('webpack-spritesmith');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var autoprefixer = require('autoprefixer');
@@ -16,7 +15,7 @@ module.exports = {
     path.join(__dirname, 'app/js/main.js')
   ],
   output: {
-    path: path.join(__dirname, '/dist/'),
+    path: path.join(__dirname, '/../public/'),
     filename: '[name].js',
     publicPath: '/'
   },

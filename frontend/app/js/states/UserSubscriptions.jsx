@@ -33,7 +33,7 @@ export default class UserSubscriptions extends React.Component {
         <p>{this.state.description}</p>
 
         { this.state.podcastIds.length > 0
-          ? <PaginatedItemList service={`podcasts?${ queryString }`} />
+          ? <PaginatedItemList service={`podcasts?${ queryString.join('&') }`} />
           : <p>You're not following any podcast.</p> }
 
       </section>

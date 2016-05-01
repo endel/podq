@@ -5,7 +5,7 @@
   },
   "scripts": {
     "start": "node dev-server",
-    "build": "rimraf dist && webpack --config ./webpack.config.js --progress --profile --colors",
+    "build": "rimraf ../public/ && webpack --config ./webpack.config.js --progress --profile --colors",
     "eslint": "eslint .",
     "jscs": "jscs .",
     "test": "jest"
