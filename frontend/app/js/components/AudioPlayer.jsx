@@ -13,6 +13,8 @@ import Keycode from 'keycode.js'
 export default class AudioPlayer  extends React.Component {
 
   constructor() {
+    super();
+
     this.state = {
       url: null,
       status: 'stopped',

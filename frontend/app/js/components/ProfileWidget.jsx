@@ -74,7 +74,7 @@ export default class ProfileWidget extends React.Component {
 
       <button className="profile-widget-button">
 
-        {() => {
+        {(() => {
 
           switch (this.state.phase) {
 
@@ -97,7 +97,7 @@ export default class ProfileWidget extends React.Component {
 
           }
 
-        }()}
+        })()}
 
       </button>
 

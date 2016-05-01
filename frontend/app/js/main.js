@@ -12,8 +12,10 @@ import SearchResults from './states/SearchResults.jsx'
 import UserSubscriptions from './states/UserSubscriptions.jsx'
 
 import app from './app';
-import { timeFractionRegex } from './tools/tools';
+import { timeFractionRegex } from './tools/tools'
 require('whatwg-fetch')
+
+require('../css/main.styl')
 
 window.BACKEND_ENDPOINT = (process.env.NODE_ENV !== 'production')
   ? `${ location.protocol }//${ location.hostname }:5000`
