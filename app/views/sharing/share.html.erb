@@ -1,17 +1,28 @@
 <html>
   <head>
     <title><%= @entry.title %></title>
+
+    <meta name="description" content="<%= @entry.description %>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <meta property="fb:app_id"      content="<%= ENV['FACEBOOK_KEY'] %>" />
     <meta property="og:url"         content="<%= request.original_url %>" />
     <meta property="og:type"        content="website" />
     <meta property="og:title"       content="<%= @entry.title %>" />
     <meta property="og:description" content="<%= @entry.description %>" />
     <meta property="og:image"       content="<%= @entry.image %>" />
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="icon" type="image/png" href="/images/favicon.png">
+
+    <link href="/index.css" rel="stylesheet"></head>
+
   </head>
   <body>
-    <script type="text/javascript">
-      window.location.href = "<%= root_url %>";
-    </script>
+
+    <main></main>
+    <script src="/main.js"></script>
+
   </body>
 </html>
 

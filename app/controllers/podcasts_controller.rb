@@ -22,11 +22,11 @@ class PodcastsController < ApplicationController
   end
 
   def show
-    @feed = Feed.find(params[:id])
+    @entry = Feed.find(params[:id])
 
     respond_to do |format|
-      format.json { render json: @feed }
-      format.html { render 'sharing/podcast', :layout => nil }
+      format.json { render json: @entry }
+      format.html { render 'sharing/share', :layout => nil }
     end
   end
 

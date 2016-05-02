@@ -36,7 +36,7 @@ class EpisodesController < ApplicationController
 
     respond_to do |format|
       format.json { render json: @entry.to_json(include: :feed) }
-      format.html { render 'sharing/episode', :layout => nil }
+      format.html { render 'sharing/share', :layout => nil }
     end
 
   end
