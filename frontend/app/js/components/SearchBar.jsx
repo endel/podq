@@ -33,7 +33,7 @@ export default class SearchBar extends React.Component {
 
       e.preventDefault()
       this.closeResults ( this.state.term )
-      app.history.pushState(null, '/search?q=' + this.state.term);
+      app.history.push('/search?q=' + this.state.term);
 
     }
 

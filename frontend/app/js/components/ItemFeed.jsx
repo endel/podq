@@ -18,7 +18,7 @@ export default class ItemFeed extends React.Component {
     e.preventDefault()
     app.feed = this.props.feed;
     app.entry = this.props.data;
-    app.history.pushState(null, '/podcasts/' + this.props.data._id);
+    app.history.push('/podcasts/' + this.props.data._id);
   }
 
   // componentDidMount() {
