@@ -3,7 +3,7 @@
     "postinstall": "npm --prefix ./frontend install && npm --prefix ./frontend run build"
   },
   "engines": {
-    "node": "4.1.1"
+    "node": "5.0.0"
   }
 }
 
