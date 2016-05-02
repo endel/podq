@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "postinstall": "npm --prefix ./frontend install && npm --prefix ./frontend run build"
+    "postinstall": "npm --prefix ./frontend/player install && npm --prefix ./frontend install && npm --prefix ./frontend run build"
   },
   "engines": {
     "node": "5.0.0"

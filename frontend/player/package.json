@@ -2,10 +2,11 @@
   "name": "podcast-player",
   "version": "0.1.21",
   "description": "",
-  "main": "./src/player.js",
+  "main": "./player.js",
   "scripts": {
     "start": "babel-node tasks dev",
-    "release": "babel-node tasks release"
+    "release": "babel-node tasks release",
+    "prepublish": "npm run release"
   },
   "author": "",
   "license": "ISC",
