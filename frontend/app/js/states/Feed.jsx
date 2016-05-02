@@ -10,6 +10,8 @@ import PaginatedItemList from '../components/PaginatedItemList.jsx';
 
 import app from '../app';
 
+const rssImage = require( "../../images/rss.png" )
+
 export default class Feed extends React.Component {
 
   constructor() {
@@ -54,7 +56,7 @@ export default class Feed extends React.Component {
             { this.state.feed.permalink
               ? <a href={this.state.feed.permalink} target="_blank">{this.state.feed.permalink}</a>
               : null }
-            <Link className="rss" to={ this.state.feed.url } target="_blank"><img src="/images/rss.png" alt="RSS Feed" /></Link>
+            <Link className="rss" to={ this.state.feed.url } target="_blank"><img src={ rssImage } alt="RSS Feed" /></Link>
           </p>
 
         </div>) : null }

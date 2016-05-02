@@ -5,5 +5,4 @@
 .gitignore
 .jshintrc
 sample
-src
 *.log.*
