@@ -39,10 +39,10 @@ export default class AudioPlayer  extends React.Component {
   }
 
   componentDidMount() {
-    console.log("mount podcastPlayer ")
 
     this.podcastPlayer = new PodcastPlayer( findDOMNode( this.refs.player ), app.settings.autoPlay);
     this.podcastPlayer.onChangeState = this.onChangeState.bind(this);
+
     document.addEventListener('keydown', this.onKeyDown.bind(this))
 
     this.forceUpdate()

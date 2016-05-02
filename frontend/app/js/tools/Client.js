@@ -2,7 +2,7 @@ require('whatwg-fetch')
 
 window.BACKEND_ENDPOINT = (process.env.NODE_ENV !== 'production')
   ? `${ location.protocol }//${ location.hostname }:5000`
-  : `${ location.protocol }//webstdio.r15.railsrumble.com/`
+  : `${ location.protocol }//webstdio.r15.railsrumble.com`
 
 export default class Client {
   constructor() {

@@ -27,11 +27,10 @@ export default class Entry extends React.Component {
 
   load ( service ) {
 
-    this.client.fetch(service)
-      .then((data) => {
-        data.loading = false
-        this.setState(data);
-      });
+    this.client.fetch(service).then( data => {
+      data.loading = false
+      this.setState(data);
+    });
 
   }
 
@@ -42,7 +41,7 @@ export default class Entry extends React.Component {
 
     app.resetScroll()
 
-    if ( !app.entry && !app.feed ) {
+    if ( !app.entry || !app.feed ) {
 
       this.load(`episodes/${this.props.params.id}`);
 
@@ -94,7 +93,7 @@ export default class Entry extends React.Component {
       ? <img src={this.state.image} alt={this.state.title}/>
       : null
 
-    return (this.state.loading) ? (
+    return (this.state.loading || !this.state.feed) ? (
 
       <section className='section loading'></section>
 
