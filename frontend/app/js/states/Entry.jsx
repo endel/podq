@@ -126,7 +126,7 @@ export default class Entry extends React.Component {
         <h2>Comments</h2>
         <ReactDisqusThread
           shortname="podcastplayer"
-          identifier="comments"
+          identifier={ this.state.permalink }
           title={ this.state.title }
           url={ this.state.permalink }
           onNewComment={this.handleNewComment}/>
