@@ -1,3 +1,14 @@
-https://changelog.com
-http://grokpodcast.com
-http://jogabilida.de
+https://changelog.com/feed/
+http://feeds.feedwrench.com/TheFreelancersShow.rss
+http://feeds.feedwrench.com/iPhreaks.rss
+http://feeds.feedwrench.com/AdventuresInAngular.rss
+http://feeds.feedwrench.com/JavaScriptJabber.rss
+http://feeds.feedwrench.com/RubyRogues.rss
+http://www.se-radio.net/feed/
+http://hwpod.libsyn.com/rss
+http://feeds.feedwrench.com/react-native-radio.rss
+http://feeds.feedwrench.com/remoteconfs-audio.rss
+http://feeds.feedwrench.com/websecwarriors.rss
+https://mostlyerlang.com/feed/
+http://www.lostdecadegames.com/lostcast.xml
+http://simplecast.com/podcasts/279/rss

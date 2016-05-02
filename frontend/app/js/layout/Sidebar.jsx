@@ -39,11 +39,11 @@ export default class Sidebar extends React.Component {
         }) }
       </ul>
 
-      <h3>Support PodQ.fm</h3>
+      {/*<h3>Support PodQ.fm</h3>
 
       <p className="donate">
         If you enjoy this service, please consider supporting us by <a href="https://salt.bountysource.com/checkout/amount?team=podqfm" target="_blank">donating any amount</a> you like.
-      </p>
+      </p>*/}
 
     </aside>
   }
