@@ -11,7 +11,9 @@ import SearchResults from './states/SearchResults.jsx'
 import UserSubscriptions from './states/UserSubscriptions.jsx'
 
 import app from './app';
+
 require('../css/main.styl')
+require('../images/logo.png')
 
 app.container = document.querySelector('main')
 
