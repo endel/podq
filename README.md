@@ -1,4 +1,4 @@
-PodQ.fm | Browser-based Podcast Player for Developers
+podq | Browser-based Podcast Player for Developers
 ===
 
 Simple Brower-based Podcast Player.
