@@ -1,14 +1,14 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 
-import {Link} from 'react-router';
+import { Link } from 'react-router';
 import classNames from 'classnames';
 import Notifier from '../tools/Notifier';
-import Session from '../tools/Session';
-import app from '../app';
-import Cover from './Cover.jsx';
+
 import PodcastPlayer from 'podcast-player';
 import Keycode from 'keycode.js'
+
+import app from '../app';
 
 export default class AudioPlayer  extends React.Component {
 
@@ -39,8 +39,9 @@ export default class AudioPlayer  extends React.Component {
   }
 
   componentDidMount() {
-    this.audio = findDOMNode( this.refs.audio );
-    this.podcastPlayer = new PodcastPlayer(this.audio, app.settings.autoPlay);
+    console.log("mount podcastPlayer ")
+
+    this.podcastPlayer = new PodcastPlayer( findDOMNode( this.refs.player ), app.settings.autoPlay);
     this.podcastPlayer.onChangeState = this.onChangeState.bind(this);
     document.addEventListener('keydown', this.onKeyDown.bind(this))
 
@@ -104,7 +105,7 @@ export default class AudioPlayer  extends React.Component {
           ? <Link to={ `/episodes/${ this.data._id }` } title={ this.data.title }><img src={ this.data.image } /></Link>
           : null }
 
-        <div className="player" ref="audio"></div>
+        <div className="player" ref="player"></div>
       </div>
     );
 

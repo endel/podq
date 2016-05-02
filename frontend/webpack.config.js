@@ -10,18 +10,22 @@ var stylusLoader = ExtractTextPlugin.extract("style-loader", "css-loader!postcss
 
 module.exports = {
   devtool: 'source-map',
+
   entry: [
-    'webpack-hot-middleware/client?reload=true',
+    // 'webpack-hot-middleware/client?reload=true',
     path.join(__dirname, 'app/js/main.js')
   ],
+
   output: {
     path: path.join(__dirname, '/../public/'),
     filename: '[name].js',
     publicPath: '/'
   },
+
   resolve: {
     extensions: ['', '.js', '.jsx']
   },
+
   plugins: [
     new HtmlWebpackPlugin({
       template: 'app/index.html',
@@ -29,16 +33,18 @@ module.exports = {
       filename: 'index.html'
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
+    // new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     }),
     new ExtractTextPlugin("index.css")
   ],
+
   postcss: function () {
     return [ autoprefixer ]
   },
+
   module: {
     loaders: [
     {
@@ -46,7 +52,7 @@ module.exports = {
       exclude: /node_modules/,
       loader: 'babel',
       query: {
-        "presets": ["react", "es2015", "stage-0", "react-hmre"]
+        "presets": ["react", "es2015", "stage-0"]
       }
     },
     {
@@ -57,4 +63,5 @@ module.exports = {
     { test: /\.styl$/, loader: stylusLoader }
     ]
   }
+
 };

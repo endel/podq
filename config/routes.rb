@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   get '/login' => 'sessions#new', as: :login
   get '/logout' => 'sessions#destroy', as: :logout
+
   match '/auth/:provider/callback' => 'sessions#create', via: [:get, :post]
 
   resources :podcasts, :only => [:create, :index, :show] do
