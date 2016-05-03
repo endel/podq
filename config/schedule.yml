@@ -1,4 +1,4 @@
 update_worker:
-  cron: "0,30 * * * *"
+  cron: "0 */6 * * *"
   class: "UpdateWorker"
   queue: default
