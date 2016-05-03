@@ -24,12 +24,12 @@ async function clean() {
 }
 
 async function jsRelease() {
-  var cmd = 'browserify src/Player.js -s Player -t [ babelify --stage 0 ] | uglifyjs -mc > player.js';
+  var cmd = 'browserify src/Player.js -s Player -t [ babelify ] | uglifyjs -mc > player.js';
   shell.exec(cmd);
 }
 
 async function jsWatch() {
-  var cmd = 'watchify src/Player.js -s Player -t [ babelify --stage 0 ] -o player.js -d -v';
+  var cmd = 'watchify src/Player.js -s Player -t [ babelify ] -o player.js -d -v';
   var server = 'http-server . -p 8080 -s';
   shell.exec(`${cmd} & ${server}`);
 }
