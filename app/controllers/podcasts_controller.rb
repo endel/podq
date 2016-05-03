@@ -6,6 +6,7 @@ class PodcastsController < ApplicationController
   end
 
   def index
+    response = {}
     query = Feed.where(:published => true)
 
     search = if params[:search] != "" then params[:search] else nil end
@@ -14,11 +15,17 @@ class PodcastsController < ApplicationController
 
     query = query.where(:_id => { :$in => params[:_ids] }) if params[:_ids]
     query = query.where(:$text => { :$search => search }) if search
+
+    # Add total results on response headers
+    response[:total_count] = query.count
+
     query = query.limit( limit )
     query = query.offset( offset )
     query = query.order_by(:most_recent_entry_date => 'desc')
 
-    render json: query
+    response[:entries] = query
+
+    render json: response
   end
 
   def show
