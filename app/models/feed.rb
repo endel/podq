@@ -46,7 +46,12 @@ class Feed
       # probably what we have is better than 'new_info'
       new_info.delete(:title) if self.title
       new_info.delete(:description) if self.description
-      new_info.delete(:image) if self.image
+
+      #
+      # Can't always trust open-graph image.
+      # Some of them use a blank image like this one: "https://s0.wp.com/i/blank.jpg"
+      #
+      # new_info.delete(:image) if self.image
     end
 
     # sanitize keywords
