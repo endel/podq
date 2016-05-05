@@ -98,11 +98,13 @@ export default class AudioPlayer  extends React.Component {
 
   render() {
 
+    let imageSrc = `https://i.embed.ly/1/display/resize?width=200&height=200&url=${ encodeURIComponent( this.data.image ) }&key=00193985e12540c98f5a8a595480c62c`
+
     return (
       <div className="audio-player">
 
         { this.data._id
-          ? <Link to={ `/episodes/${ this.data._id }` } title={ this.data.title }><img src={ this.data.image } /></Link>
+          ? <Link to={ `/episodes/${ this.data._id }` } title={ this.data.title }><img src={ imageSrc } /></Link>
           : null }
 
         <div className="player" ref="player"></div>
