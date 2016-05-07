@@ -8,7 +8,9 @@ import ga from 'react-ga'
 //
 // analytics / page view tracker
 //
-ga.initialize(((process.env.RAILS_ENV) ? 'UA-67917511-3' : 'UA-XXXXXXXX-X'))
+if (process.env.RAILS_ENV) {
+  ga.initialize('UA-67917511-3')
+}
 
 var app = {
   title: '',
