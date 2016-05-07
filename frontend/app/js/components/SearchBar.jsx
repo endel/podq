@@ -23,51 +23,36 @@ export default class SearchBar extends React.Component {
     };
 
     this.debouncedSearch = debounce( this.search, 300 ).bind( this )
-
   }
 
   onKeyPress (e) {
-
     // ENTER pressed
     if ( e.which === Keycode.ENTER ) {
-
       e.preventDefault()
       this.closeResults ( this.state.term )
       app.history.push('/search?q=' + this.state.term);
-
     }
-
   }
 
   handleSubmit (e) {
-
     e.preventDefault();
-
     this.search();
-
   }
 
   closeResults ( lastSearchedTerm = '' ) {
-
     this.setState({
       lastSearchedTerm: lastSearchedTerm,
       entriesResult: null,
       feedsResult: null,
       phase: 'IDLE'
     });
-
   }
 
   search () {
-
     var localTerm = this.state.term;
-
     if (!this.state.term) {
-
       this.closeResults();
-
       return;
-
     }
 
     if (this.state.lastSearchedTerm === this.state.term && this.state.phase === "READY") {
@@ -91,13 +76,11 @@ export default class SearchBar extends React.Component {
           return false;
         }
 
-        if ( this.state.phase !== "IDLE" ){
-
+        if (this.state.phase !== "IDLE" ){
           this.setState({
             phase: 'READY',
             entriesResult: res.entries
           });
-
         }
 
       });
@@ -126,7 +109,6 @@ export default class SearchBar extends React.Component {
   }
 
   handleChange (e) {
-
     this.setState({
       term: e.target.value
     });
