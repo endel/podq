@@ -98,7 +98,7 @@ export default class AudioPlayer  extends React.Component {
 
   render() {
 
-    let imageSrc = `https://i.embed.ly/1/display/resize?width=200&height=200&url=${ encodeURIComponent( this.data.image.replace("https://", "http://") ) }&key=00193985e12540c98f5a8a595480c62c`
+    let imageSrc = `https://i.embed.ly/1/display/resize?width=200&height=200&url=${ encodeURIComponent( ( this.data.image || "" ).replace("https://", "http://") ) }&key=00193985e12540c98f5a8a595480c62c`
 
     return (
       <div className="audio-player">
