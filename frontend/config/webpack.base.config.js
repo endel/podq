@@ -1,23 +1,23 @@
 'use strict';
 
-var path = require('path');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+import path from 'path';
+import webpack from 'webpack';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
-var autoprefixer = require('autoprefixer');
-var stylusLoader = ExtractTextPlugin.extract("style-loader", "css-loader!postcss-loader!stylus-loader");
+const autoprefixer = require('autoprefixer');
+const stylusLoader = ExtractTextPlugin.extract("style-loader", "css-loader!postcss-loader!stylus-loader");
 
-module.exports = {
+export default {
   devtool: 'source-map',
 
   entry: [
     // 'webpack-hot-middleware/client?reload=true',
-    path.join(__dirname, 'app/js/main.js')
+    path.join(__dirname, '/../app/js/main.js')
   ],
 
   output: {
-    path: path.join(__dirname, '/../public/'),
+    path: path.join(__dirname, '/../dist/'),
     filename: '[name].js',
     publicPath: '/'
   },
