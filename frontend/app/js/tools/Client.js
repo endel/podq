@@ -1,9 +1,5 @@
 require('whatwg-fetch')
 
-window.BACKEND_ENDPOINT = (process.env.NODE_ENV !== 'production')
-  ? `${ location.protocol }//${ location.hostname }:5000`
-  : `${ location.protocol }//podq.devstd.io`
-
 export default class Client {
   constructor() {
     this.url = `${BACKEND_ENDPOINT}/`;

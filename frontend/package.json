@@ -3,19 +3,23 @@
   "engines": {
     "node": "5.0.0"
   },
+  "main": "main.js",
   "scripts": {
-    "start": "node -r babel-register dev-server.js",
-    "build": "rimraf ./public/ && node -r babel-register ./node_modules/webpack/bin/webpack --config ./config/webpack.browser.config.js --progress --profile --colors",
+    "start": "cross-env HOT=1 NODE_ENV=development node -r babel-register dev-server.js",
+    "build": "rimraf ../public/ && node -r babel-register ./node_modules/webpack/bin/webpack --config ./config/webpack.browser.config.js --progress --profile --colors",
     "eslint": "eslint .",
     "jscs": "jscs .",
-    "test": "jest"
+    "test": "jest",
+    "electron-build": "rimraf ../public/ && node -r babel-register ./node_modules/webpack/bin/webpack --config ./config/webpack.electron-renderer.config.js --progress --profile --color",
+    "electron-open": "cross-env ELECTRON=1 NODE_ENV=development electron -r babel-register ./app/js/main.electron.js",
+    "electron-build-main": "",
+    "electron-build-renderer": "rimraf ../public/ && node -r babel-register ./node_modules/webpack/bin/webpack --config ./config/webpack.electron-renderer.config.js --progress --profile --colors"
   },
   "dependencies": {
     "classnames": "^2.2.0",
     "debounce": "^1.0.0",
     "eventemitter3": "^1.1.1",
     "keycode.js": "0.0.1",
-    "podcast-player": "file:./player",
     "react": "^15.0.1",
     "react-disqus-thread": "^0.3.1",
     "react-dom": "^15.0.1",
@@ -35,28 +39,32 @@
     "babel-preset-react": "^6.3.13",
     "babel-preset-stage-0": "^6.3.13",
     "babel-register": "^6.8.0",
+    "cross-env": "^1.0.7",
     "css-loader": "^0.19.0",
     "enzyme": "^2.2.0",
     "eslint": "^1.5.0",
     "eslint-plugin-react": "^3.4.2",
     "express": "^4.13.3",
     "extract-text-webpack-plugin": "^0.8.2",
+    "fbjs-scripts": "^0.7.0",
     "file-loader": "^0.8.5",
     "html-webpack-plugin": "^1.6.1",
     "jest-cli": "^12.0.2",
     "jscs": "^2.1.1",
     "jsdom": "^6.5.1",
     "json-loader": "^0.5.3",
+    "node-loader": "^0.5.0",
     "postcss-loader": "^0.6.0",
     "react-addons-test-utils": "^15.0.0",
+    "react-hot-loader": "2.0.0-alpha-4",
     "rimraf": "^2.4.3",
     "stats-webpack-plugin": "^0.2.1",
     "style-loader": "^0.12.4",
     "stylus": "^0.54.5",
     "stylus-loader": "^2.0.0",
     "webpack": "^1.12.2",
-    "webpack-dev-middleware": "^1.2.0",
-    "webpack-hot-middleware": "^2.2.0"
+    "webpack-dev-server": "^1.14.1",
+    "webpack-target-electron-renderer": "^0.4.0"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
@@ -72,5 +80,8 @@
       "es2015",
       "react"
     ]
+  },
+  "optionalDependencies": {
+    "dbus": "^0.2.18"
   }
 }

@@ -15,21 +15,31 @@ import app from './app';
 require('../css/main.styl')
 require('../images/logo.png')
 
-app.container = document.querySelector('main')
+export default class Main {
+  constructor (config) {
+    app.container = document.querySelector('main')
 
-render((
-  <Router history={ app.history }>
-    <Route path="/" component={Application}>
-      <IndexRoute component={Browse} />
+    if (config) {
+      if (config.history) {
+        app.setHistory(config.history);
+      }
+    }
 
-      <Route path="browse" component={Browse} />
-      <Route path="subscriptions" component={UserSubscriptions} />
+    render((
+      <Router history={ app.history }>
+        <Route path="/" component={Application}>
+          <IndexRoute component={Browse} />
 
-      <Route path="podcasts/:id" component={Feed} />
-      <Route path="episodes/:id" component={Entry} />
+          <Route path="browse" component={Browse} />
+          <Route path="subscriptions" component={UserSubscriptions} />
 
-      <Route path="search" component={SearchResults} />
+          <Route path="podcasts/:id" component={Feed} />
+          <Route path="episodes/:id" component={Entry} />
 
-    </Route>
-  </Router>
-), app.container)
+          <Route path="search" component={SearchResults} />
+
+        </Route>
+      </Router>
+    ), app.container)
+  }
+};

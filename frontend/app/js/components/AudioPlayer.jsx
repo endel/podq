@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 import classNames from 'classnames';
 import Notifier from '../tools/Notifier';
 
-import PodcastPlayer from 'podcast-player';
+import PodcastPlayer from '../player/Player';
 import Keycode from 'keycode.js'
 
 import app from '../app';
@@ -76,12 +76,23 @@ export default class AudioPlayer  extends React.Component {
     }
   }
 
+  set data(value) {
+  }
+
   get data() {
     return (this.podcastPlayer && this.podcastPlayer.data) || {};
   }
 
+  set playbackState(value) {
+  }
+
   get playbackState() {
     var s = 'pause';
+
+    if (!this.podcastPlayer) {
+      return s;
+    }
+
     switch (this.podcastPlayer.state) {
       case PodcastPlayer.LOADING:
         s = 'load';

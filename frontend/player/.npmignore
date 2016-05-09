@@ -1,8 +1,0 @@
-*.DS_Store
-.DS_Store
-.git*
-.editorconfig
-.gitignore
-.jshintrc
-sample
-*.log.*

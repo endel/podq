@@ -11,16 +11,16 @@ const stylusLoader = ExtractTextPlugin.extract("style-loader", "css-loader!postc
 export default {
   devtool: 'source-map',
 
-  entry: [
-    // 'webpack-hot-middleware/client?reload=true',
-    path.join(__dirname, '/../app/js/main.js')
-  ],
-
   output: {
-    path: path.join(__dirname, '/../dist/'),
+    path: path.join(__dirname, '/../../public/'),
     filename: '[name].js',
     publicPath: '/'
   },
+
+  entry: [
+    'webpack-dev-server/client?http://localhost:9000',
+    'webpack/hot/only-dev-server',
+  ],
 
   resolve: {
     extensions: ['', '.js', '.jsx']
@@ -33,7 +33,7 @@ export default {
       filename: 'index.html'
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
-    // new webpack.HotModuleReplacementPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
@@ -47,20 +47,15 @@ export default {
 
   module: {
     loaders: [
-    {
-      test: /\.jsx?$/,
-      exclude: /node_modules/,
-      loader: 'babel',
-      query: {
-        "presets": ["react", "es2015", "stage-0"]
-      }
-    },
-    {
-      test: /\.json?$/,
-      loader: 'json'
-    },
-    { test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'file?name=[path][name].[ext]&context=./app' },
-    { test: /\.styl$/, loader: stylusLoader }
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loaders: ['react-hot', 'babel']
+      },
+      {test: /\.json?$/, loader: 'json'},
+      {test: /\.(png|woff|woff2|eot|ttf|svg|node)$/, loader: 'file?name=[path][name].[ext]&context=./app'},
+      {test: /\.styl$/, loader: stylusLoader},
+      {test: /\.node$/, loader: 'node'},
     ]
   }
 

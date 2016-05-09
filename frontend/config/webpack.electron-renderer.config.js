@@ -7,9 +7,13 @@ import baseConfig from './webpack.base.config';
 module.exports = {
   ...baseConfig,
 
+  output: {
+    ...baseConfig.output,
+    publicPath: ''
+  },
   entry: [
-    ...baseConfig.entry,
-    path.join(__dirname, '/../app/js/platforms/browser.js')
+    path.join(__dirname, '/../app/js/platforms/electron.js')
   ],
 
+  target: 'electron-renderer',
 };
