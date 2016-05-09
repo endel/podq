@@ -10,7 +10,7 @@ let config = {
   devtool: 'source-map',
 
   entry: [
-    path.join(__dirname, '/../app/js/main.electron.js')
+    path.join(__dirname, '/../app/js/platforms/electron.main.js')
   ],
 
   output: {

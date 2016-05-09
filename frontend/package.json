@@ -11,7 +11,7 @@
     "jscs": "jscs .",
     "test": "jest",
     "electron-build": "rimraf ../public/ && node -r babel-register ./node_modules/webpack/bin/webpack --config ./config/webpack.electron-renderer.config.js --progress --profile --color",
-    "electron-open": "cross-env ELECTRON=1 NODE_ENV=development electron -r babel-register ./app/js/main.electron.js",
+    "electron-open": "cross-env ELECTRON=1 NODE_ENV=development electron -r babel-register ./app/js/platforms/electron.main.js",
     "electron-build-main": "",
     "electron-build-renderer": "rimraf ../public/ && node -r babel-register ./node_modules/webpack/bin/webpack --config ./config/webpack.electron-renderer.config.js --progress --profile --colors"
   },

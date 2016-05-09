@@ -12,7 +12,7 @@ module.exports = {
     publicPath: ''
   },
   entry: [
-    path.join(__dirname, '/../app/js/platforms/electron.js')
+    path.join(__dirname, '/../app/js/platforms/electron.renderer.js')
   ],
 
   target: 'electron-renderer',
