@@ -41,6 +41,9 @@ export default {
     new ExtractTextPlugin("index.css")
   ],
 
+  externals: [
+  ],
+
   postcss: function () {
     return [ autoprefixer ]
   },

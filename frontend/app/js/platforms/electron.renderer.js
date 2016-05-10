@@ -4,7 +4,7 @@ const DBus = window.require('dbus');
 
 window.BACKEND_ENDPOINT = (process.env.NODE_ENV !== 'production')
   ? `http://localhost:5000`
-  : `https://podq.devstd.io`
+  : `http://podq.devstd.io`
 
 
 const main = new Main({

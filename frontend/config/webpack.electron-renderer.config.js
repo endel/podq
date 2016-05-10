@@ -9,6 +9,7 @@ module.exports = {
 
   output: {
     ...baseConfig.output,
+    path: path.join(__dirname, '/../dist/'),
     publicPath: ''
   },
   entry: [

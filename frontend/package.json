@@ -1,4 +1,6 @@
 {
+  "productName": "PodQ",
+  "version": "0.0.1",
   "private": true,
   "engines": {
     "node": "5.0.0"
@@ -10,10 +12,14 @@
     "eslint": "eslint .",
     "jscs": "jscs .",
     "test": "jest",
+
     "electron-build": "rimraf ../public/ && node -r babel-register ./node_modules/webpack/bin/webpack --config ./config/webpack.electron-renderer.config.js --progress --profile --color",
     "electron-open": "cross-env ELECTRON=1 NODE_ENV=development electron -r babel-register ./app/js/platforms/electron.main.js",
-    "electron-build-main": "",
-    "electron-build-renderer": "rimraf ../public/ && node -r babel-register ./node_modules/webpack/bin/webpack --config ./config/webpack.electron-renderer.config.js --progress --profile --colors"
+
+    "electron-package": "cross-env ELECTRON=1 NODE_ENV=production node -r babel-register package.js",
+
+    "electron-build-main": "cross-env ELECTRON=1 NODE_ENV=production node -r babel-register ./node_modules/webpack/bin/webpack --config ./config/webpack.electron-main.config.js --progress --profile --color",
+    "electron-build-renderer": "rimraf ./dist/ && node -r babel-register ./node_modules/webpack/bin/webpack --config ./config/webpack.electron-renderer.config.js --progress --profile --color"
   },
   "dependencies": {
     "classnames": "^2.2.0",
@@ -41,6 +47,7 @@
     "babel-register": "^6.8.0",
     "cross-env": "^1.0.7",
     "css-loader": "^0.19.0",
+    "electron-packager": "^7.0.1",
     "enzyme": "^2.2.0",
     "eslint": "^1.5.0",
     "eslint-plugin-react": "^3.4.2",
@@ -53,6 +60,7 @@
     "jscs": "^2.1.1",
     "jsdom": "^6.5.1",
     "json-loader": "^0.5.3",
+    "minimist": "^1.2.0",
     "node-loader": "^0.5.0",
     "postcss-loader": "^0.6.0",
     "react-addons-test-utils": "^15.0.0",

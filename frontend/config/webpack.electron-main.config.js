@@ -7,15 +7,15 @@ import baseConfig from './webpack.base.config';
 let config = {
   ...baseConfig,
 
-  devtool: 'source-map',
+  devtool: '',
 
   entry: [
     path.join(__dirname, '/../app/js/platforms/electron.main.js')
   ],
 
   output: {
-    path: __dirname,
-    filename: path.join(__dirname, '/../main.js')
+    path: path.join(__dirname, '..'),
+    filename: 'main.js'
   },
 
   plugins: [
@@ -24,10 +24,10 @@ let config = {
         warnings: false
       }
     }),
-    new webpack.BannerPlugin(
-      'require("source-map-support").install();',
-      { raw: true, entryOnly: false }
-    ),
+    //new webpack.BannerPlugin(
+    //  'require("source-map-support").install();',
+    //  { raw: true, entryOnly: false }
+    //),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production')

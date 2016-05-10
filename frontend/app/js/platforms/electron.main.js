@@ -10,13 +10,19 @@ let mainWindow
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 1300, height: 600})
+  mainWindow = new BrowserWindow({width: 1300, height: 800})
 
   // and load the index.html of the app.
-  mainWindow.loadURL('file://' + path.join(__dirname, '../../../../public/index.html'))
+  if (process.env.NODE_ENV === 'production') {
+    mainWindow.loadURL('file://' + path.join(__dirname, '/dist/index.html'))
+  } else if (process.env.NODE_ENV === 'development') {
+    mainWindow.loadURL('file://' + path.join(__dirname, '../../../../public/index.html'))
+  }
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  if (process.env.NODE_ENV === 'development') {
+    mainWindow.webContents.openDevTools();
+  }
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
