@@ -55,7 +55,7 @@ describe('<Cover />', () => {
     const imgNode = cover.find('img');
     console.log();
     expect(imgNode).toBeDefined();
-    expect(imgNode.prop('src')).toBe('someFakeImage.jpg');
+    expect(imgNode.prop('src')).toContain('someFakeImage.jpg');
     expect(imgNode.prop('alt')).toBe('Some Title');
   });
 });
